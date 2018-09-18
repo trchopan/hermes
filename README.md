@@ -1,26 +1,15 @@
-# boba-prince-backend
+# boba-prince-manager
 
-## Project setup
-```
-npm install
-```
+## Project
+Manager app for Boba Prince 
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## TODO
+- [ ] Firebase Authentication for Mangers (by emails)
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## KNOWN BUGS
+- Emtpy -
 
-### Lints and fixes files
-```
-npm run lint
-```
+## PROGRESS
+### September 18, 2018
+- [x] Setup workflow (Github, Firebase Hosting, README)
 
-### Run your unit tests
-```
-npm run test:unit
-```
