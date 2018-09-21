@@ -5,11 +5,12 @@ Manager app for Boba Prince
 
 ## TODO
 - [ ] Firebase Authentication for Mangers (by emails)
+- [ ] Setup TDD workflow
 
 ## KNOWN BUGS
-- Emtpy -
+Emtpy
 
 ## PROGRESS
 ### September 18, 2018
-- [x] Setup workflow (Github, Firebase Hosting, README)
+- [x] Setup Github, Firebase Hosting, README
 
