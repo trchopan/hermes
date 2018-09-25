@@ -1,15 +1,22 @@
 {
   "name": "boba-prince-manager",
   "version": "0.1.0",
+  "description": "Front page for Boba Prince app",
+  "keywords": "bopaprince.app frontend website",
+  "licience": "MIT",
+  "author": "Chop Tr <logan1011001@gmail.com>",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "deploy": "firebase deploy --only hosting:boba-prince-manager",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit --watch"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "firebase": "^5.5.1",
+    "normalize.css": "^8.0.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
