@@ -13,7 +13,7 @@ describe("@/store/modules/auth.js", () => {
   let fakeAuth;
 
   beforeEach(() => {
-    fakeAuth = auth(() => {});
+    fakeAuth = auth();
     state = fakeAuth.state;
   });
 
@@ -30,6 +30,19 @@ describe("@/store/modules/auth.js", () => {
   });
 
   // Actions
+  it("inits", async () => {
+    let fakeCommit = jest.fn();
+    let fakeDepsAuthState = {
+      onAuthStateChanged: jest.fn(cb => cb(fakeFirebaseUser))
+    };
+    let fakeAuthInit = auth(fakeDepsAuthState);
+    await fakeAuthInit.actions.init({ commit: fakeCommit });
+    expect(fakeDepsAuthState.onAuthStateChanged).toHaveBeenCalled();
+    expect(fakeCommit.mock.calls).toEqual([
+      ["loading"],
+      ["inited", fakeFirebaseUser]
+    ]);
+  });
   it("logins and handle async api results", async () => {
     let fakeCommit = jest.fn();
 
@@ -86,6 +99,15 @@ describe("@/store/modules/auth.js", () => {
   });
 
   // Mutations
+  it("mutates when inited", () => {
+    state.loading = true;
+    fakeAuth.mutations.inited(state, fakeFirebaseUser);
+    expect(state.loading).toBe(false);
+    expect(state.inited).toBe(true);
+    expect(state.currentUser).toBe(fakeFirebaseUser.user);
+    fakeAuth.mutations.inited(state, undefined);
+    expect(state.currentUser).toBe(null);
+  });
   it("mutates when loading", () => {
     state.loading = false;
     fakeAuth.mutations.loading(state);

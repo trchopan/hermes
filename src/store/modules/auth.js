@@ -1,6 +1,7 @@
 import { logger } from "@/helpers.js";
 
 const state = {
+  inited: false,
   currentUser: null,
   loading: false,
   error: null
@@ -15,6 +16,14 @@ const getters = {
 };
 
 const actions = firebaseAuth => {
+  const init = async ({ commit }) => {
+    commit("loading");
+    const userPromise = new Promise((resolve, reject) =>
+      firebaseAuth.onAuthStateChanged(user => resolve(user))
+    );
+    commit("inited", await userPromise);
+  };
+
   const loginWithEmailPassword = async ({ commit }, credential) => {
     logger("Logging in...");
     commit("loading");
@@ -40,10 +49,16 @@ const actions = firebaseAuth => {
     }
   };
 
-  return Object.freeze({ loginWithEmailPassword, logout });
+  return Object.freeze({ init, loginWithEmailPassword, logout });
 };
 
 const mutations = {
+  inited(state, firebaseUser) {
+    state.loading = false;
+    state.inited = true;
+    state.currentUser = firebaseUser ? firebaseUser.user : null;
+    logger("Inited with", firebaseUser);
+  },
   loading(state) {
     state.loading = true;
   },

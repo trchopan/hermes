@@ -1,8 +1,25 @@
 <template>
   <div id="app">
+    <div v-if="!inited" id="loading">
+      <p>Loading...</p>
+    </div>
     <router-view/>
   </div>
 </template>
+
+<script>
+import { mapGetters } from "vuex";
+
+export default {
+  name: "App",
+  computed: mapGetters({
+    inited: "auth/inited"
+  }),
+  created() {
+    this.$store.dispatch("auth/init");
+  }
+};
+</script>
 
 <style lang="scss">
 @import url("https://fonts.googleapis.com/css?family=Muli:400,600|Merriweather:400,700");

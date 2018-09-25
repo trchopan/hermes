@@ -11,8 +11,6 @@ describe("views/Login.vue", () => {
   let actions;
   let mutations;
   let store;
-  let routes;
-  let router;
   let fakeDepsSuccess;
 
   beforeEach(() => {
@@ -41,19 +39,22 @@ describe("views/Login.vue", () => {
 
   it("connects the form with user inputs when submit", () => {
     const wrapper = shallowMount(Login, { store, localVue });
-    const form = wrapper.find("form");
-    const email = wrapper.find('form > input[type="text"]');
-    const password = wrapper.find('form > input[type="password"]');
-    email.element.value = "email";
-    email.trigger("input");
-    password.element.value = "password";
-    password.trigger("input");
+    const formEl = wrapper.find("form");
+    const emailEl = wrapper.find('form > input[type="text"]');
+    const passwordEl = wrapper.find('form > input[type="password"]');
+    expect(formEl.exists()).toBe(true);
+    expect(emailEl.exists()).toBe(true);
+    expect(passwordEl.exists()).toBe(true);
+    emailEl.element.value = "email";
+    emailEl.trigger("input");
+    passwordEl.element.value = "password";
+    passwordEl.trigger("input");
     expect(wrapper.vm.$data.email).toBe("email");
     expect(wrapper.vm.$data.password).toBe("password");
-    form.trigger("submit");
+    formEl.trigger("submit");
     expect(actions["auth/loginWithEmailPassword"].mock.calls[0][1]).toEqual({
-      email: email.element.value,
-      password: password.element.value
+      email: emailEl.element.value,
+      password: passwordEl.element.value
     });
   });
 
