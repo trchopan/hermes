@@ -3,7 +3,7 @@
     <div v-if="!inited" id="loading">
       <p>Loading...</p>
     </div>
-    <router-view/>
+    <router-view v-else />
   </div>
 </template>
 

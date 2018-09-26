@@ -45,4 +45,23 @@ describe("@/App.vue", () => {
     loadingEl = wrapper.find("#loading");
     expect(loadingEl.exists()).toBe(false);
   });
+  it("renders router-view after inited", () => {
+    const wrapper = shallowMount(App, {
+      stubs: ["router-view"],
+      store,
+      localVue
+    });
+    store.commit("inited");
+    expect(wrapper.find("router-view-stub").exists()).toBe(true);
+  });
+  it("matchs snapshot", () => {
+    const wrapper = shallowMount(App, {
+      stubs: ["router-view"],
+      store,
+      localVue
+    });
+    expect(wrapper.element).toMatchSnapshot();
+    store.commit("inited");
+    expect(wrapper.element).toMatchSnapshot();
+  });
 });
