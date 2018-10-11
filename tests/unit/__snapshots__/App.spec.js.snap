@@ -4,20 +4,6 @@ exports[`@/App.vue matchs snapshot 1`] = `
 <div
   id="app"
 >
-  <div
-    id="loading"
-  >
-    <p>
-      Loading...
-    </p>
-  </div>
-</div>
-`;
-
-exports[`@/App.vue matchs snapshot 2`] = `
-<div
-  id="app"
->
   <router-view-stub />
 </div>
 `;

@@ -1,22 +1,29 @@
 <template>
   <div id="app">
-    <div v-if="!inited" id="loading">
-      <p>Loading...</p>
-    </div>
-    <router-view v-else />
+    <button @click="logout()">logout</button>
+    <Navigation />
+    <router-view/>
+    <pre>{{ JSON.stringify(currentUser) }}</pre>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import Navigation from "@/components/Navigation/Navigation.vue";
 
 export default {
   name: "App",
+  components: {
+    Navigation
+  },
   computed: mapGetters({
-    inited: "auth/inited"
+    currentUser: "auth/currentUser"
   }),
-  created() {
-    this.$store.dispatch("auth/init");
+  methods: {
+    async logout() {
+      const loggedOut = await this.$store.dispatch("auth/logout");
+      if (loggedOut) this.$router.replace("/login");
+    }
   }
 };
 </script>

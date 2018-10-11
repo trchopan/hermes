@@ -10,10 +10,12 @@ console.log("author", process.env.VUE_APP_AUTHOR);
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
 
-router.beforeEach(globalGuard);
+router.beforeEach(globalGuard(store));
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount("#app");
+store.dispatch("auth/init").then(() =>
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount("#app")
+);

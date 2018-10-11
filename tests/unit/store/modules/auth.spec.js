@@ -21,7 +21,7 @@ describe("@/store/modules/auth.js", () => {
   it("gets the correct values", () => {
     state.currentUser = null;
     expect(fakeAuth.getters.isLoggedIn(state)).toBe(false);
-    state.currentUser = fakeFirebaseUser.user;
+    state.currentUser = fakeFirebaseUser;
     expect(fakeAuth.getters.isLoggedIn(state)).toBe(true);
 
     expect(fakeAuth.getters.currentUser(state)).toBe(state.currentUser);
@@ -30,19 +30,12 @@ describe("@/store/modules/auth.js", () => {
   });
 
   // Actions
-  it("inits", async () => {
+  it("change user accordingly", async () => {
     let fakeCommit = jest.fn();
-    let fakeDepsAuthState = {
-      onAuthStateChanged: jest.fn(cb => cb(fakeFirebaseUser))
-    };
-    let fakeAuthInit = auth(fakeDepsAuthState);
-    await fakeAuthInit.actions.init({ commit: fakeCommit });
-    expect(fakeDepsAuthState.onAuthStateChanged).toHaveBeenCalled();
-    expect(fakeCommit.mock.calls).toEqual([
-      ["loading"],
-      ["inited", fakeFirebaseUser]
-    ]);
+    fakeAuth.actions.changeUser({ commit: fakeCommit }, fakeFirebaseUser);
+    expect(fakeCommit.mock.calls).toEqual([["userChanged", fakeFirebaseUser]]);
   });
+
   it("logins and handle async api results", async () => {
     let fakeCommit = jest.fn();
 
@@ -73,6 +66,7 @@ describe("@/store/modules/auth.js", () => {
       ["errorCatched", fakeError]
     ]);
   });
+
   it("logouts and handle async api results", async () => {
     let fakeCommit = jest.fn();
 
@@ -99,14 +93,9 @@ describe("@/store/modules/auth.js", () => {
   });
 
   // Mutations
-  it("mutates when inited", () => {
-    state.loading = true;
-    fakeAuth.mutations.inited(state, fakeFirebaseUser);
-    expect(state.loading).toBe(false);
-    expect(state.inited).toBe(true);
-    expect(state.currentUser).toBe(fakeFirebaseUser.user);
-    fakeAuth.mutations.inited(state, undefined);
-    expect(state.currentUser).toBe(null);
+  it("mutates when user changed", () => {
+    fakeAuth.mutations.userChanged(state, fakeFirebaseUser);
+    expect(state.currentUser).toBe(fakeFirebaseUser);
   });
   it("mutates when loading", () => {
     state.loading = false;

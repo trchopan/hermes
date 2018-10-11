@@ -1,8 +1,11 @@
 <template>
-  <form @submit="onSubmit()">
-    <input type="text" v-model="email" />
-    <input type="password" v-model="password" />
-    <button type="submit" />
+  <form @submit.prevent="onSubmit()">
+    <p id="error" class="error">{{ error }}</p>
+    <label for="email">Email:</label>
+    <input id="email" type="text" v-model="email" />
+    <label for="password">Password:</label>
+    <input id="password" type="password" v-model="password" />
+    <button type="submit">Submit</button>
   </form>
 </template>
 
@@ -17,23 +20,27 @@ export default {
       password: ""
     };
   },
-  computed: mapGetters({ isLoggedIn: "auth/isLoggedIn" }),
-  watch: {
-    isLoggedIn(newValue, oldValue) {
-      if (newValue) this.$router.push("/home");
-    }
-  },
+  computed: mapGetters({
+    error: "auth/error",
+    currentUser: "auth/currentUser"
+  }),
   methods: {
-    onSubmit() {
-      const someApi = () => "hello";
-      this.$store.dispatch("auth/loginWithEmailPassword", {
-        email: this.email,
-        password: this.password
-      });
+    async onSubmit() {
+      const success = await this.$store.dispatch(
+        "auth/loginWithEmailPassword",
+        {
+          email: this.email,
+          password: this.password
+        }
+      );
+      if (success) this.$router.replace("/");
     }
   }
 };
 </script>
 
 <style lang="scss">
+.error {
+  color: red;
+}
 </style>

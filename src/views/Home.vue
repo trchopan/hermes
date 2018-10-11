@@ -6,6 +6,11 @@
 
 <script>
 export default {
-  name: "home"
+  name: "home",
+  methods: {
+    logout() {
+      this.$store.dispatch("auth/logout");
+    }
+  }
 };
 </script>

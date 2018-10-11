@@ -1,5 +1,7 @@
 import { logger } from "@/helpers.js";
 
+const log = logger("[auth]");
+
 const state = {
   inited: false,
   currentUser: null,
@@ -8,44 +10,50 @@ const state = {
 };
 
 const getters = {
-  isLoggedIn: state =>
-    state.currentUser && state.currentUser.uid ? true : false,
+  inited: state => state.inited,
   currentUser: state => state.currentUser,
   loading: state => state.loading,
   error: state => state.error
 };
 
-const actions = firebaseAuth => {
+const actions = (fireAuth, parser) => {
   const init = async ({ commit }) => {
+    log("Initializing...");
     commit("loading");
-    const userPromise = new Promise((resolve, reject) =>
-      firebaseAuth.onAuthStateChanged(user => resolve(user))
-    );
-    commit("inited", await userPromise);
+    await new Promise(resolve => {
+      fireAuth.onAuthStateChanged(user => {
+        commit("userChanged", parser(user));
+        resolve();
+      });
+    });
+    commit("inited");
+    return;
   };
 
   const loginWithEmailPassword = async ({ commit }, credential) => {
-    logger("Logging in...");
+    log("Logging in...");
     commit("loading");
     const { email, password } = credential;
     try {
-      const firebaseUser = await firebaseAuth.signInWithEmailAndPassword(
-        email,
-        password
-      );
-      commit("loggedIn", firebaseUser.user);
+      await fireAuth.signInWithEmailAndPassword(email, password);
+      commit("loggedIn");
+      return true;
     } catch (error) {
       commit("errorCatched", error);
+      return false;
     }
   };
 
   const logout = async ({ commit }) => {
+    log("Loggin out...");
     commit("loading");
     try {
-      await firebaseAuth.signOut();
+      await fireAuth.signOut();
       commit("loggedOut");
+      return true;
     } catch (error) {
       commit("errorCatched", error);
+      return false;
     }
   };
 
@@ -53,36 +61,37 @@ const actions = firebaseAuth => {
 };
 
 const mutations = {
-  inited(state, firebaseUser) {
-    state.loading = false;
-    state.inited = true;
-    state.currentUser = firebaseUser ? firebaseUser.user : null;
-    logger("Inited with", firebaseUser);
-  },
   loading(state) {
     state.loading = true;
   },
-  loggedIn(state, user) {
+  inited(state) {
+    state.inited = true;
     state.loading = false;
+    log("Initialized");
+  },
+  userChanged(state, user) {
     state.currentUser = user;
-    logger("Logged in", state.currentUser);
+    log("User changed", user);
+  },
+  loggedIn(state) {
+    state.loading = false;
+    log("Logged in");
   },
   loggedOut(state) {
     state.loading = false;
-    state.currentUser = null;
-    logger("Logged out");
+    log("Logged out");
   },
   errorCatched(state, error) {
     state.error = error;
     state.loading = false;
-    logger("Error catched", state.error);
+    log("Error catched", state.error);
   }
 };
 
-export default deps => ({
+export default (auth, parser) => ({
   namespaced: true,
   state,
   getters,
-  actions: actions(deps),
+  actions: actions(auth, parser),
   mutations
 });

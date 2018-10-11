@@ -1,17 +1,25 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
-
-var config = {
-  apiKey: "AIzaSyCnt43CwpP1kiZPWq5IL1F43gLSRDZ0Vdk",
-  authDomain: "boba-prince.firebaseapp.com",
-  databaseURL: "https://boba-prince.firebaseio.com",
-  projectId: "boba-prince",
-  storageBucket: "boba-prince.appspot.com",
-  messagingSenderId: "1037108039121"
-};
+import { config } from "@/firebase.conf";
 
 firebase.initializeApp(config);
-
-export const fireStore = firebase.firestore();
 export const fireAuth = firebase.auth();
+export const fireStore = firebase.firestore();
+const settings = { timestampsInSnapshots: true };
+fireStore.settings(settings);
+
+//
+// export const vuefire = {
+//   auth: fireAuth,
+//   firestore: fireStore
+// };
+//
+// Vue.mixin({
+//   beforeCreate() {
+//     const options = this.$options;
+//     if (options.vuefire) this.$vuefire = options.vuefire;
+//     else if (options.parent && options.parent.$vuefire)
+//       this.$vuefire = options.parent.$vuefire;
+//   }
+// });
