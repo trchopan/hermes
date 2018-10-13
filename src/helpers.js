@@ -30,12 +30,3 @@ export function shuffle(array) {
 
   return array;
 }
-
-export function parseFireAuth(data) {
-  return data
-    ? {
-        email: data.email,
-        uid: data.uid
-      }
-    : null;
-}

@@ -1,8 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import InitPage from "./views/InitPage.vue";
 import Home from "./views/Home.vue";
-// import About from "./views/About.vue";
 import Login from "./views/Login.vue";
 import { logger } from "@/helpers";
 
@@ -36,30 +34,29 @@ export const globalGuard = store => (to, from, next) => {
 export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
+  /**
+   * Routes order will be used in these components:
+   * - @/components/Navigation
+   */
   routes: [
     {
-      path: "/init",
-      name: "init",
-      component: InitPage
+      path: "/login",
+      name: "login",
+      component: Login,
+      meta: { text: "Login", redirectHome: true }
     },
     {
       path: "/",
       name: "home",
       component: Home,
-      meta: { requiresAuth: true }
-    },
-    {
-      path: "/login",
-      name: "login",
-      component: Login,
-      meta: { redirectHome: true }
+      meta: { text: "Home" }
     },
     {
       path: "/about",
       name: "about",
-      // component: About
       component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
+        import(/* webpackChunkName: "about" */ "./views/About.vue"),
+      meta: { text: "About" }
     }
   ]
 });

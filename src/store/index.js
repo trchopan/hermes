@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import auth from "./modules/auth";
-import { parseFireAuth } from "@/helpers";
+import auth, { parseFireAuth } from "./modules/auth";
 import { fireAuth } from "@/firebase";
 
 Vue.use(Vuex);

@@ -6,11 +6,12 @@
 
 <script>
 export default {
-  name: "home",
-  methods: {
-    logout() {
-      this.$store.dispatch("auth/logout");
-    }
-  }
+  name: "Home"
 };
 </script>
+
+<style lang="scss" scoped>
+.home {
+  text-align: center;
+}
+</style>

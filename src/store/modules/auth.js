@@ -95,3 +95,12 @@ export default (auth, parser) => ({
   actions: actions(auth, parser),
   mutations
 });
+
+export function parseFireAuth(data) {
+  return data
+    ? {
+        email: data.email,
+        uid: data.uid
+      }
+    : null;
+}
