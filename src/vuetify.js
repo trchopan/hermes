@@ -5,7 +5,6 @@ export const components = {
   VApp,
   VBtn,
   VCard,
-  VBottomNav,
   VIcon,
   transitions
 };
