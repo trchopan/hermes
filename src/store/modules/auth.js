@@ -5,6 +5,7 @@ const log = logger("[auth]");
 const state = {
   inited: false,
   currentUser: null,
+  redirect: null,
   loading: false,
   error: null
 };
@@ -16,18 +17,18 @@ const getters = {
   error: state => state.error
 };
 
-const actions = (fireAuth, parser) => {
+const actions = fireAuth => {
   const init = async ({ commit }) => {
     log("Initializing...");
     commit("loading");
-    await new Promise(resolve => {
-      fireAuth.onAuthStateChanged(user => {
-        commit("userChanged", parser(user));
-        resolve();
-      });
+    log("location", window.location.pathname);
+    commit("redirectInited", window.location.pathname);
+    fireAuth.onAuthStateChanged(user => {
+      const authUser = user
+        ? { uid: user.uid, email: user.email }
+        : { uid: "", email: "" };
+      commit("userChanged", authUser);
     });
-    commit("inited");
-    return;
   };
 
   const loginWithEmailPassword = async ({ commit }, credential) => {
@@ -36,7 +37,6 @@ const actions = (fireAuth, parser) => {
     const { email, password } = credential;
     try {
       await fireAuth.signInWithEmailAndPassword(email, password);
-      commit("loggedIn");
       return true;
     } catch (error) {
       commit("errorCatched", error);
@@ -49,7 +49,6 @@ const actions = (fireAuth, parser) => {
     commit("loading");
     try {
       await fireAuth.signOut();
-      commit("loggedOut");
       return true;
     } catch (error) {
       commit("errorCatched", error);
@@ -66,20 +65,16 @@ const mutations = {
   },
   inited(state) {
     state.inited = true;
-    state.loading = false;
     log("Initialized");
+  },
+  redirectInited(state, path) {
+    state.redirect = path;
+    log("Redirect path changed", path);
   },
   userChanged(state, user) {
     state.currentUser = user;
+    state.loading = false;
     log("User changed", user);
-  },
-  loggedIn(state) {
-    state.loading = false;
-    log("Logged in");
-  },
-  loggedOut(state) {
-    state.loading = false;
-    log("Logged out");
   },
   errorCatched(state, error) {
     state.error = error;
@@ -88,19 +83,10 @@ const mutations = {
   }
 };
 
-export default (auth, parser) => ({
+export default auth => ({
   namespaced: true,
   state,
   getters,
-  actions: actions(auth, parser),
+  actions: actions(auth),
   mutations
 });
-
-export function parseFireAuth(data) {
-  return data
-    ? {
-        email: data.email,
-        uid: data.uid
-      }
-    : null;
-}
