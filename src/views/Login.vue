@@ -35,15 +35,6 @@
         </v-layout>
       </v-container>
     </v-content>
-
-
-
-    <!-- <p id="error" class="error">{{ error }}</p>
-    <label for="email">Email:</label>
-    <input id="email" type="text" v-model="email" />
-    <label for="password">Password:</label>
-    <input id="password" type="password" v-model="password" />
-    <button type="submit">Submit</button> -->
   </form>
 </template>
 
