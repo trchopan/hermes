@@ -1,7 +1,7 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import Login from "@/views/Login.vue";
-import { mockVuetifyComponents } from "../../../src/__mocks__/vuetify";
+import { mockVuetifyComponents } from "@/__mocks__/vuetify";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
