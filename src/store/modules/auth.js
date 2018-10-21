@@ -3,32 +3,33 @@ import { logger } from "@/helpers.js";
 const log = logger("[auth]");
 
 const state = {
-  inited: false,
-  currentUser: null,
-  redirect: null,
+  authUser: null,
+  userData: null,
   loading: false,
   error: null
 };
 
 const getters = {
   inited: state => state.inited,
-  currentUser: state => state.currentUser,
+  authUser: state => state.authUser,
   loading: state => state.loading,
   error: state => state.error
 };
 
-const actions = fireAuth => {
-  const init = async ({ commit }) => {
-    log("Initializing...");
-    commit("loading");
-    log("location", window.location.pathname);
-    commit("redirectInited", window.location.pathname);
-    fireAuth.onAuthStateChanged(user => {
-      const authUser = user
-        ? { uid: user.uid, email: user.email }
-        : { uid: "", email: "" };
-      commit("userChanged", authUser);
-    });
+const actions = (fireAuth, fireStore) => {
+  const changeUser = async ({ commit }, user) => {
+    commit("userChanged", user);
+    if (user) {
+      commit("loading");
+      const data = await fireStore
+        .collection("managers")
+        .doc(user.uid)
+        .get()
+        .then(snapshot => (snapshot.exists ? snapshot.data() : null));
+      commit("userDataChanged", data);
+    } else {
+      commit("userDataChanged", null);
+    }
   };
 
   const loginWithEmailPassword = async ({ commit }, credential) => {
@@ -56,25 +57,22 @@ const actions = fireAuth => {
     }
   };
 
-  return Object.freeze({ init, loginWithEmailPassword, logout });
+  return Object.freeze({ changeUser, loginWithEmailPassword, logout });
 };
 
 const mutations = {
   loading(state) {
     state.loading = true;
   },
-  inited(state) {
-    state.inited = true;
-    log("Initialized");
-  },
-  redirectInited(state, path) {
-    state.redirect = path;
-    log("Redirect path changed", path);
-  },
   userChanged(state, user) {
-    state.currentUser = user;
+    state.authUser = user;
     state.loading = false;
     log("User changed", user);
+  },
+  userDataChanged(state, data) {
+    state.userData = data;
+    state.loading = false;
+    log("UserData changed", data);
   },
   errorCatched(state, error) {
     state.error = error;
@@ -83,10 +81,10 @@ const mutations = {
   }
 };
 
-export default auth => ({
+export default (fireAuth, fireStore) => ({
   namespaced: true,
   state,
   getters,
-  actions: actions(auth),
+  actions: actions(fireAuth, fireStore),
   mutations
 });

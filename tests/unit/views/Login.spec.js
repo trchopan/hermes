@@ -16,18 +16,18 @@ describe.skip("views/Login.vue", () => {
   beforeEach(() => {
     // Setup the store module "auth"
     state = {
-      currentUser: null
+      authUser: null
     };
     getters = {
       "auth/isLoggedIn": jest.fn(
-        () => (state.currentUser && state.currentUser.uid ? true : false)
+        () => (state.authUser && state.authUser.uid ? true : false)
       )
     };
     actions = {
       "auth/loginWithEmailPassword": jest.fn()
     };
     mutations = {
-      "auth/loggedIn": state => (state.currentUser = { uid: "1234" })
+      "auth/loggedIn": state => (state.authUser = { uid: "1234" })
     };
     store = new Vuex.Store({
       state,

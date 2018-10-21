@@ -1,13 +1,13 @@
 <template>
   <v-app>
     <v-toolbar app flat clipped-left dark>
-      <v-toolbar-side-icon @click="drawerOpen = !drawerOpen"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click="drawerOpen = !drawerOpen" />
       <v-toolbar-title>{{ title }}</v-toolbar-title>
-      <v-spacer></v-spacer>
+      <v-spacer />
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat>Link One</v-btn>
-        <v-btn flat>Link Two</v-btn>
-        <v-btn flat>Link Three</v-btn>
+        <v-btn flat @click="navigate('/')">Home</v-btn>
+        <v-btn flat @click="navigate('/about')">About</v-btn>
+        <v-btn flat @click="navigate('/dashboard')">Dashboard</v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-navigation-drawer
@@ -54,11 +54,14 @@ export default {
       title: process.env.VUE_APP_TITLE
     };
   },
-  computed: mapGetters({ currentUser: "auth/currentUser" }),
+  computed: mapGetters({ authUser: "auth/authUser" }),
   methods: {
     async logout() {
       const loggedOut = await this.$store.dispatch("auth/logout");
       if (loggedOut) this.$router.replace("/login");
+    },
+    navigate(link) {
+      this.$router.push(link);
     }
   }
 };

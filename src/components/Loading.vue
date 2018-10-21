@@ -4,9 +4,10 @@
 
 <script>
 export default {
-  name: "Init"
+  name: "Loading"
 };
 </script>
+
 
 <style lang="scss" scoped>
 #initial-loading {

@@ -19,12 +19,12 @@ describe("@/store/modules/auth.js", () => {
 
   // Getters
   it("gets the correct values", () => {
-    state.currentUser = null;
+    state.authUser = null;
     expect(fakeAuth.getters.isLoggedIn(state)).toBe(false);
-    state.currentUser = fakeFirebaseUser;
+    state.authUser = fakeFirebaseUser;
     expect(fakeAuth.getters.isLoggedIn(state)).toBe(true);
 
-    expect(fakeAuth.getters.currentUser(state)).toBe(state.currentUser);
+    expect(fakeAuth.getters.authUser(state)).toBe(state.authUser);
     expect(fakeAuth.getters.loading(state)).toBe(state.loading);
     expect(fakeAuth.getters.error(state)).toBe(state.error);
   });
@@ -95,7 +95,7 @@ describe("@/store/modules/auth.js", () => {
   // Mutations
   it("mutates when user changed", () => {
     fakeAuth.mutations.userChanged(state, fakeFirebaseUser);
-    expect(state.currentUser).toBe(fakeFirebaseUser);
+    expect(state.authUser).toBe(fakeFirebaseUser);
   });
   it("mutates when loading", () => {
     state.loading = false;
@@ -106,13 +106,13 @@ describe("@/store/modules/auth.js", () => {
     state.loading = true;
     fakeAuth.mutations.loggedIn(state, fakeFirebaseUser.user);
     expect(state.loading).toBe(false);
-    expect(state.currentUser).toBe(fakeFirebaseUser.user);
+    expect(state.authUser).toBe(fakeFirebaseUser.user);
   });
   it("mutates when loggedOut", () => {
     state.loading = true;
     fakeAuth.mutations.loggedOut(state);
     expect(state.loading).toBe(false);
-    expect(state.currentUser).toBe(null);
+    expect(state.authUser).toBe(null);
   });
   it("mutates when errorCatched", () => {
     state.loading = true;
