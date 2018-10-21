@@ -10,8 +10,8 @@ const state = {
 };
 
 const getters = {
-  inited: state => state.inited,
   authUser: state => state.authUser,
+  userData: state => state.userData,
   loading: state => state.loading,
   error: state => state.error
 };
@@ -19,16 +19,22 @@ const getters = {
 const actions = (fireAuth, fireStore) => {
   const changeUser = async ({ commit }, user) => {
     commit("userChanged", user);
-    if (user) {
-      commit("loading");
-      const data = await fireStore
-        .collection("managers")
-        .doc(user.uid)
-        .get()
-        .then(snapshot => (snapshot.exists ? snapshot.data() : null));
-      commit("userDataChanged", data);
-    } else {
+    if (!user) {
       commit("userDataChanged", null);
+    } else {
+      commit("loading");
+      try {
+        const data = await fireStore
+          .collection("managers")
+          .doc(user.uid)
+          .get()
+          .then(
+            snapshot => (snapshot && snapshot.exists ? snapshot.data() : null)
+          );
+        commit("userDataChanged", data);
+      } catch (error) {
+        commit("errorCatched", error);
+      }
     }
   };
 

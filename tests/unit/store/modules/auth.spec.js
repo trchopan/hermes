@@ -1,67 +1,77 @@
 import auth from "@/store/modules/auth.js";
+import {
+  fireAuth,
+  fireStore,
+  fakeAuthUser,
+  fakeError,
+  docData
+} from "@/__mocks__/firebase.js";
 
 describe("@/store/modules/auth.js", () => {
-  const fakeFirebaseUser = {
-    user: { uid: "123456", email: "tester@arkham.city" }
-  };
-  const fakeError = { code: "fake-error" };
-  const fakeCredential = {
-    username: "tester@arkham.city",
-    password: "super_secret"
-  };
-  let state;
-  let fakeAuth;
-
-  beforeEach(() => {
-    fakeAuth = auth();
-    state = fakeAuth.state;
-  });
-
   // Getters
   it("gets the correct values", () => {
-    state.authUser = null;
-    expect(fakeAuth.getters.isLoggedIn(state)).toBe(false);
-    state.authUser = fakeFirebaseUser;
-    expect(fakeAuth.getters.isLoggedIn(state)).toBe(true);
-
+    let fakeAuth = auth();
+    let state = fakeAuth.state;
     expect(fakeAuth.getters.authUser(state)).toBe(state.authUser);
+    expect(fakeAuth.getters.userData(state)).toBe(state.userData);
     expect(fakeAuth.getters.loading(state)).toBe(state.loading);
     expect(fakeAuth.getters.error(state)).toBe(state.error);
   });
 
   // Actions
-  it("change user accordingly", async () => {
+  it("change and load authUser and userData", async () => {
     let fakeCommit = jest.fn();
-    fakeAuth.actions.changeUser({ commit: fakeCommit }, fakeFirebaseUser);
-    expect(fakeCommit.mock.calls).toEqual([["userChanged", fakeFirebaseUser]]);
+    let fakeAuth = auth(undefined, fireStore);
+
+    await fakeAuth.actions.changeUser({ commit: fakeCommit }, null);
+    expect(fakeCommit.mock.calls).toEqual([
+      // onAuthStateChanged has not any user
+      ["userChanged", null],
+      ["userDataChanged", null]
+    ]);
+
+    fakeCommit.mockClear();
+    await fakeAuth.actions.changeUser({ commit: fakeCommit }, fakeAuthUser);
+    expect(fakeCommit.mock.calls).toEqual([
+      // onAuthStateChanged has user
+      ["userChanged", fakeAuthUser],
+      ["loading"],
+      ["userDataChanged", docData]
+    ]);
+
+    fakeCommit.mockClear();
+    await fakeAuth.actions.changeUser({ commit: fakeCommit }, fakeAuthUser);
+    expect(fakeCommit.mock.calls).toEqual([
+      // fireStore has error
+      ["userChanged", fakeAuthUser],
+      ["loading"],
+      ["errorCatched", fakeError]
+    ]);
   });
 
-  it("logins and handle async api results", async () => {
+  it("logins", async () => {
     let fakeCommit = jest.fn();
+    let fakeAuth = auth(fireAuth, undefined);
+    let fakeCredential = { email: "test", password: "123" };
 
-    let fakeDepsLoginSuccess = {
-      signInWithEmailAndPassword: jest.fn().mockResolvedValue(fakeFirebaseUser)
-    };
-    let fakeAuthSuccess = auth(fakeDepsLoginSuccess);
-    await fakeAuthSuccess.actions.loginWithEmailPassword(
+    fakeCommit.mockClear();
+    const success = await fakeAuth.actions.loginWithEmailPassword(
       { commit: fakeCommit },
       fakeCredential
     );
-    expect(fakeDepsLoginSuccess.signInWithEmailAndPassword).toHaveBeenCalled();
+    expect(fireAuth.signInWithEmailAndPassword.mock.calls).toEqual([
+      [fakeCredential.email, fakeCredential.password]
+    ]);
+    expect(success).toEqual(true);
+    expect(fakeCommit.mock.calls).toEqual([["loading"]]);
 
-    let fakeDepsLoginFail = {
-      signInWithEmailAndPassword: jest.fn().mockRejectedValue(fakeError)
-    };
-    let fakeAuthFail = auth(fakeDepsLoginFail);
-    await fakeAuthFail.actions.loginWithEmailPassword(
+    fakeCommit.mockClear();
+    const fail = await fakeAuth.actions.loginWithEmailPassword(
       { commit: fakeCommit },
       fakeCredential
     );
-    expect(fakeDepsLoginFail.signInWithEmailAndPassword).toHaveBeenCalled();
-
+    expect(fail).toEqual(false);
     expect(fakeCommit.mock.calls).toEqual([
-      ["loading"],
-      ["loggedIn", fakeFirebaseUser.user],
       ["loading"],
       ["errorCatched", fakeError]
     ]);
@@ -69,24 +79,17 @@ describe("@/store/modules/auth.js", () => {
 
   it("logouts and handle async api results", async () => {
     let fakeCommit = jest.fn();
+    let fakeAuth = auth(fireAuth, undefined);
 
-    let fakeDepsLogoutSuccess = {
-      signOut: jest.fn().mockResolvedValue(undefined)
-    };
-    let fakeAuthSuccess = auth(fakeDepsLogoutSuccess);
-    await fakeAuthSuccess.actions.logout({ commit: fakeCommit });
-    expect(fakeDepsLogoutSuccess.signOut).toHaveBeenCalled();
+    fakeCommit.mockClear();
+    const success = await fakeAuth.actions.logout({ commit: fakeCommit });
+    expect(success).toEqual(true);
+    expect(fakeCommit.mock.calls).toEqual([["loading"]]);
 
-    let fakeDepsLogoutFail = {
-      signOut: jest.fn().mockRejectedValue(fakeError)
-    };
-    let fakeAuthFail = auth(fakeDepsLogoutFail);
-    await fakeAuthFail.actions.logout({ commit: fakeCommit });
-    expect(fakeDepsLogoutFail.signOut).toHaveBeenCalled();
-
+    fakeCommit.mockClear();
+    const fail = await fakeAuth.actions.logout({ commit: fakeCommit });
+    expect(fail).toEqual(false);
     expect(fakeCommit.mock.calls).toEqual([
-      ["loading"],
-      ["loggedOut"],
       ["loading"],
       ["errorCatched", fakeError]
     ]);
@@ -94,27 +97,27 @@ describe("@/store/modules/auth.js", () => {
 
   // Mutations
   it("mutates when user changed", () => {
-    fakeAuth.mutations.userChanged(state, fakeFirebaseUser);
-    expect(state.authUser).toBe(fakeFirebaseUser);
+    let fakeAuth = auth();
+    let state = fakeAuth.state;
+    fakeAuth.mutations.userChanged(state, fakeAuthUser);
+    expect(state.authUser).toBe(fakeAuthUser);
+  });
+  it("mutates when userData changed", () => {
+    let fakeAuth = auth();
+    let state = fakeAuth.state;
+    fakeAuth.mutations.userDataChanged(state, docData);
+    expect(state.userData).toBe(docData);
   });
   it("mutates when loading", () => {
+    let fakeAuth = auth();
+    let state = fakeAuth.state;
     state.loading = false;
     fakeAuth.mutations.loading(state);
     expect(state.loading).toBe(true);
   });
-  it("mutates when loggedIn", () => {
-    state.loading = true;
-    fakeAuth.mutations.loggedIn(state, fakeFirebaseUser.user);
-    expect(state.loading).toBe(false);
-    expect(state.authUser).toBe(fakeFirebaseUser.user);
-  });
-  it("mutates when loggedOut", () => {
-    state.loading = true;
-    fakeAuth.mutations.loggedOut(state);
-    expect(state.loading).toBe(false);
-    expect(state.authUser).toBe(null);
-  });
   it("mutates when errorCatched", () => {
+    let fakeAuth = auth();
+    let state = fakeAuth.state;
     state.loading = true;
     fakeAuth.mutations.errorCatched(state, fakeError);
     expect(state.loading).toBe(false);
