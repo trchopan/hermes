@@ -21,8 +21,6 @@
   --text-font: Roboto;
   --text-font__bold: 700;
   --text-font__normal: 400;
-
-  --container-width: 500px;
 }
 *,
 *::before,
@@ -42,7 +40,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: auto;
-  max-width: var(--container-width);
   color: var(--text-main-color);
 }
 

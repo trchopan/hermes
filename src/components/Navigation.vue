@@ -1,34 +1,45 @@
 <template>
-  <v-card height="200px" flat>
-    <div class="headline text-xs-center pa-5">
-      Active: {{ bottomNav }}
-    </div>
-    <v-bottom-nav :active.sync="bottomNav"
-      :value="true"
-      absolute
-      color="transparent">
-      <v-btn color="teal"
-        flat
-        value="recent">
-        <span>Recent</span>
-        <v-icon>history</v-icon>
-      </v-btn>
-
-      <v-btn color="teal"
-        flat
-        value="favorites">
-        <span>Favorites</span>
-        <v-icon>favorite</v-icon>
-      </v-btn>
-
-      <v-btn color="teal"
-        flat
-        value="nearby">
-        <span>Nearby</span>
-        <v-icon>place</v-icon>
-      </v-btn>
-    </v-bottom-nav>
-  </v-card>
+  <v-app>
+    <v-toolbar app flat clipped-left dark>
+      <v-toolbar-side-icon @click="drawerOpen = !drawerOpen" />
+      <v-toolbar-title>{{ title }}</v-toolbar-title>
+      <v-spacer />
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn flat @click="navigate('/')">Home</v-btn>
+        <v-btn flat @click="navigate('/about')">About</v-btn>
+        <v-btn flat @click="navigate('/dashboard')">Dashboard</v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
+    <v-navigation-drawer
+      app
+      clipped
+      dark
+      v-model="drawerOpen">
+        <v-list class="pa-0">
+          <v-list-tile avatar>
+            <v-list-tile-avatar>
+              <img src="https://randomuser.me/api/portraits/men/85.jpg">
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>John Leider</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+          <v-list-tile @click="logout()">
+            <v-list-tile-action>
+              <div>&nbsp;</div>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>Log out</v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+    </v-navigation-drawer>
+    <v-content>
+      <v-container fluid>
+        <slot></slot>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
@@ -38,31 +49,23 @@ export default {
   name: "Navigation",
   data() {
     return {
-      bottomNav: "recent"
+      drawerOpen: false,
+      bottomNav: "recent",
+      title: process.env.VUE_APP_TITLE
     };
   },
-  computed: mapGetters({ currentUser: "auth/currentUser" }),
-  created() {
-    console.log("router", this.$router);
-  },
+  computed: mapGetters({ authUser: "auth/authUser" }),
   methods: {
     async logout() {
       const loggedOut = await this.$store.dispatch("auth/logout");
       if (loggedOut) this.$router.replace("/login");
+    },
+    navigate(link) {
+      this.$router.push(link);
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-nav {
-  text-align: center;
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: var(--primary-color);
-    text-decoration: underline;
-    cursor: pointer;
-  }
-}
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <p>Xin chào quản lý, phẻ hok?</p>
+    <p>Xin chào bạn, phẻ hok?</p>
   </div>
 </template>
 
