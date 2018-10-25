@@ -6,11 +6,11 @@ export const mockVuetifyComponents = [
   "v-flex",
   "v-btn",
   "v-card",
+  "v-card-text",
   "v-card-actions",
   "v-toolbar",
   "v-toolbar-title",
   "v-card-text",
   "v-form",
-  "v-text-field",
-  "v-text-field-text"
+  "v-text-field"
 ];

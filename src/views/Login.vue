@@ -1,41 +1,43 @@
 <template>
-  <form @submit.prevent="onSubmit()">
-    <v-content>
-      <v-container fluid fill-height>
-        <v-layout align-center justify-center>
-          <v-flex xs12 sm8 md4>
-            <v-card class="elevation-12">
-              <v-toolbar dark color="primary">
-                <v-toolbar-title>Login form</v-toolbar-title>
-                </v-toolbar>
-              <v-card-text>
-                <v-form>
-                  <v-text-field
-                    prepend-icon="person"
-                    name="login"
-                    label="Login"
-                    type="text"
-                    :error-messages="error ? error.message : ''"
-                    v-model="email" />
-                  <v-text-field
-                    id="password"
-                    prepend-icon="lock"
-                    name="password"
-                    label="Password"
-                    type="password"
-                    v-model="password" />
-                </v-form>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer />
-                <v-btn color="primary" type="submit">Login</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-flex>
-        </v-layout>
-      </v-container>
-    </v-content>
-  </form>
+  <v-layout align-center justify-center>
+    <v-flex xs12 sm8 md4>
+      <v-card class="elevation-12">
+        <v-toolbar dark color="primary">
+          <v-toolbar-title>Login form</v-toolbar-title>
+        </v-toolbar>
+        <v-form>
+          <v-card-text>
+            <v-text-field
+              id="email"
+              prepend-icon="person"
+              name="login"
+              label="Login"
+              type="text"
+              :error-messages="error ? error.message : ''"
+              v-model="email" />
+            <v-text-field
+              id="password"
+              prepend-icon="lock"
+              name="password"
+              label="Password"
+              type="password"
+              v-model="password" />
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer />
+            <v-btn
+              id="submit"
+              color="primary"
+              type="submit"
+              :disabled="loading"
+              @click.prevent="onSubmit()">
+              Login
+            </v-btn>
+          </v-card-actions>
+        </v-form>
+      </v-card>
+    </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -46,12 +48,13 @@ export default {
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
     };
   },
   computed: mapGetters({
     error: "auth/error",
-    authUser: "auth/authUser"
+    authUser: "auth/authUser",
+    loading: "auth/loading"
   }),
   methods: {
     async onSubmit() {
@@ -62,7 +65,6 @@ export default {
           password: this.password
         }
       );
-      console.log("error", this.error);
       if (success) this.$router.replace("/");
     }
   }

@@ -3,8 +3,6 @@ import App from "./App.vue";
 import router, { globalGuard } from "./router";
 import store from "./store";
 import Vuetify from "vuetify/lib";
-import { components, directives } from "./vuetify";
-// import "vuetify/dist/vuetify.min.css";
 import "vuetify/src/stylus/app.styl";
 import { fireAuth } from "./firebase";
 
@@ -17,7 +15,7 @@ Vue.config.devtools = false;
 
 router.beforeEach(globalGuard(store));
 
-Vue.use(Vuetify, { components, directives });
+Vue.use(Vuetify);
 
 let inited = false;
 

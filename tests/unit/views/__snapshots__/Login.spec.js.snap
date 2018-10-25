@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`views/Login.vue matchs snapshot 1`] = `
+<v-layout-stub align-center="" justify-center="">
+  <v-flex-stub xs12="" sm8="" md4="">
+    <v-card-stub class="elevation-12">
+      <v-toolbar-stub dark="" color="primary">
+        <v-toolbar-title-stub>Login form</v-toolbar-title-stub>
+      </v-toolbar-stub>
+      <v-form-stub>
+        <v-card-text-stub>
+          <v-text-field-stub id="email" prepend-icon="person" name="login" label="Login" type="text" error-messages=""></v-text-field-stub>
+          <v-text-field-stub id="password" prepend-icon="lock" name="password" label="Password" type="password"></v-text-field-stub>
+        </v-card-text-stub>
+        <v-card-actions-stub>
+          <v-spacer-stub></v-spacer-stub>
+          <v-btn-stub id="submit" color="primary" type="submit">
+            Login
+          </v-btn-stub>
+        </v-card-actions-stub>
+      </v-form-stub>
+    </v-card-stub>
+  </v-flex-stub>
+</v-layout-stub>
+`;
