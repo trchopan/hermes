@@ -9,6 +9,6 @@ describe("@/App.vue", () => {
       stubs: ["router-view"],
       localVue
     });
-    expect(wrapper).toBeDefined();
+    expect(wrapper).toMatchSnapshot();
   });
 });

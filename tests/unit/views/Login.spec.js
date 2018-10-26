@@ -10,6 +10,7 @@ describe("views/Login.vue", () => {
   let store;
   let getters;
   let actions;
+  let wrapper;
 
   beforeEach(() => {
     getters = {
@@ -26,15 +27,21 @@ describe("views/Login.vue", () => {
       getters,
       actions
     });
-  });
-  it("submits dispatch store login action", async () => {
-    let wrapper = shallowMount(Login, {
+    wrapper = shallowMount(Login, {
       stubs: mockVuetifyComponents,
       mocks: { $router: { replace: jest.fn() } },
       store,
       localVue
     });
+  });
+  it("has all the tools", () => {
+    expect(wrapper.vm.email).toBeDefined();
+    expect(wrapper.vm.password).toBeDefined();
+    expect(wrapper.vm.onSubmit).toBeDefined();
+  })
+  it("submits and handle error", async () => {
     wrapper.vm.email = "test@test.com";
+
     wrapper.vm.password = "wrong password";
     await wrapper.vm.onSubmit();
     expect(wrapper.vm.$router.replace).not.toBeCalled();
@@ -43,19 +50,15 @@ describe("views/Login.vue", () => {
       password: "wrong password"
     });
 
-    wrapper.vm.password = "correct password"
+    wrapper.vm.password = "correct password";
     await wrapper.vm.onSubmit();
     expect(actions["auth/loginWithEmailPassword"].mock.calls[1][1]).toEqual({
       email: "test@test.com",
       password: "correct password"
-    });expect(wrapper.vm.$router.replace.mock.calls).toEqual([["/"]]);
+    });
+    expect(wrapper.vm.$router.replace.mock.calls).toEqual([["/"]]);
   });
   it("matchs snapshot", () => {
-    let wrapper = shallowMount(Login, {
-      stubs: mockVuetifyComponents,
-      store,
-      localVue
-    });
     expect(wrapper).toMatchSnapshot();
   });
 });
