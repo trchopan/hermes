@@ -1,3 +1,5 @@
+import Vue from "vue";
+import Vuetify from "vuetify/es5";
 import {
   VApp,
   VContainer,
@@ -27,8 +29,9 @@ import {
   transitions
 } from "vuetify/es5/components";
 import { Ripple } from "vuetify/es5/directives";
+import "vuetify/src/stylus/app.styl";
 
-export const components = {
+const components = {
   VApp,
   VContainer,
   VContent,
@@ -56,6 +59,8 @@ export const components = {
   VSpacer,
   transitions
 };
-export const directives = {
+const directives = {
   Ripple
 };
+
+Vue.use(Vuetify, { components, directives });

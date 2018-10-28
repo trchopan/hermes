@@ -1,10 +1,9 @@
 import Vue from "vue";
-import App from "./App.vue";
+import "./vuetify";
 import router, { globalGuard } from "./router";
 import store from "./store";
-import Vuetify from "vuetify/lib";
-import "vuetify/src/stylus/app.styl";
 import { fireAuth } from "./firebase";
+import App from "./App.vue";
 
 Vue.config.productionTip = false;
 console.log(`version %c${process.env.VUE_APP_VERSION}`, "color: #ed1d24;");
@@ -14,8 +13,6 @@ Vue.config.productionTip = false;
 Vue.config.devtools = false;
 
 router.beforeEach(globalGuard(store));
-
-Vue.use(Vuetify);
 
 let inited = false;
 
