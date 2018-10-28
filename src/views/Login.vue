@@ -10,8 +10,8 @@
             <v-text-field
               id="email"
               prepend-icon="person"
-              name="login"
-              label="Login"
+              name="email"
+              label="Email"
               type="text"
               :error-messages="error ? error.message : ''"
               v-model="email" />
@@ -48,7 +48,7 @@ export default {
   data() {
     return {
       email: "",
-      password: "",
+      password: ""
     };
   },
   computed: mapGetters({

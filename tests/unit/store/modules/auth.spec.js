@@ -105,8 +105,12 @@ describe("@/store/modules/auth.js", () => {
   it("mutates when userData changed", () => {
     let fakeAuth = auth();
     let state = fakeAuth.state;
+    state.loading = true;
+    state.error = fakeError;
     fakeAuth.mutations.userDataChanged(state, docData);
     expect(state.userData).toBe(docData);
+    expect(state.loading).toBe(false);
+    expect(state.error).toBe(null);
   });
   it("mutates when loading", () => {
     let fakeAuth = auth();

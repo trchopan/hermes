@@ -78,6 +78,7 @@ const mutations = {
   userDataChanged(state, data) {
     state.userData = data;
     state.loading = false;
+    state.error = null;
     log("UserData changed", data);
   },
   errorCatched(state, error) {
