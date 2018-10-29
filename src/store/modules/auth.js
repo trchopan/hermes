@@ -79,7 +79,7 @@ const mutations = {
     state.profile = data;
     state.loading = false;
     state.error = null;
-    log("UserData changed", data);
+    log("Profile changed", data);
   },
   errorCatched(state, error) {
     state.error = error;

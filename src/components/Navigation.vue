@@ -12,20 +12,20 @@
     </v-toolbar>
     <v-navigation-drawer
       app
-      clipped
       dark
-      stateless
+      clipped
       v-model="drawerOpen">
         <v-list class="pa-0">
-          <v-list-tile avatar>
+          <v-list-tile avatar v-if="profile">
             <v-list-tile-avatar>
-              <img src="https://randomuser.me/api/portraits/men/85.jpg">
+              <img :src="profile.avatar">
             </v-list-tile-avatar>
             <v-list-tile-content>
-              <v-list-tile-title>John Leider</v-list-tile-title>
+              <v-list-tile-title>{{ profile.fullname }}</v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
-          <v-list-tile @click="logout()">
+          <v-divider dark v-if="profile"/>
+          <v-list-tile v-if="!profile" @click="logout()">
             <v-list-tile-action>
               <div>&nbsp;</div>
             </v-list-tile-action>
@@ -55,7 +55,7 @@ export default {
       title: process.env.VUE_APP_TITLE
     };
   },
-  computed: mapGetters({ authUser: "auth/authUser" }),
+  computed: mapGetters({ authUser: "auth/authUser", profile: "auth/profile" }),
   methods: {
     async logout() {
       const loggedOut = await this.$store.dispatch("auth/logout");
