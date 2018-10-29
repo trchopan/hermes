@@ -1,3 +1,5 @@
 <template>
-  <div>Hi from dashboard</div>
+  <div>
+    <my-header>Hi from dashboard</my-header>
+  </div>
 </template>

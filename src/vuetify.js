@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuetify from "vuetify/lib";
 import {
   VApp,
+  VAvatar,
   VContainer,
   VContent,
   VLayout,
@@ -17,6 +18,8 @@ import {
   VToolbarSideIcon,
   VToolbarTitle,
   VToolbarItems,
+  VMenu,
+  VMenuTransition,
   VNavigationDrawer,
   VList,
   VListTile,
@@ -35,6 +38,7 @@ import "vuetify/src/stylus/app.styl";
 
 const components = {
   VApp,
+  VAvatar,
   VContainer,
   VContent,
   VLayout,
@@ -50,6 +54,8 @@ const components = {
   VToolbarSideIcon,
   VToolbarTitle,
   VToolbarItems,
+  VMenu,
+  VMenuTransition,
   VNavigationDrawer,
   VList,
   VListTile,

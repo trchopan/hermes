@@ -1,19 +1,24 @@
 <template>
   <div id="app">
-    <Navigation>
+    <InitMessage v-if="loading" />
+    <Navigation v-else>
       <router-view/>
     </Navigation>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import InitMessage from "@/components/InitMessage";
 import Navigation from "@/components/Navigation";
 
 export default {
   name: "App",
   components: {
-    Navigation
-  }
+    Navigation,
+    InitMessage
+  },
+  computed: mapGetters({ loading: "auth/loading" })
 };
 </script>
 

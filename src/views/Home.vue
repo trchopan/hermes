@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <p>Xin chào bạn, phẻ hok?</p>
+  <div>
+    <my-header>Xin chào bạn, phẻ hok?</my-header>
   </div>
 </template>
 
@@ -11,7 +11,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home {
-  text-align: center;
-}
 </style>

@@ -1,5 +1,6 @@
 import Vue from "vue";
 import "./vuetify";
+import "./components/global";
 import router, { globalGuard } from "./router";
 import store from "./store";
 import { fireAuth } from "./firebase";
