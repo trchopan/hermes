@@ -4,14 +4,14 @@ const log = logger("[auth]");
 
 const state = {
   authUser: null,
-  userData: null,
+  profile: null,
   loading: false,
   error: null
 };
 
 const getters = {
   authUser: state => state.authUser,
-  userData: state => state.userData,
+  profile: state => state.profile,
   loading: state => state.loading,
   error: state => state.error
 };
@@ -20,18 +20,18 @@ const actions = (fireAuth, fireStore) => {
   const changeUser = async ({ commit }, user) => {
     commit("userChanged", user);
     if (!user) {
-      commit("userDataChanged", null);
+      commit("profileChanged", null);
     } else {
       commit("loading");
       try {
         const data = await fireStore
-          .collection("managers")
+          .collection("users")
           .doc(user.uid)
           .get()
           .then(
             snapshot => (snapshot && snapshot.exists ? snapshot.data() : null)
           );
-        commit("userDataChanged", data);
+        commit("profileChanged", data);
       } catch (error) {
         commit("errorCatched", error);
       }
@@ -75,8 +75,8 @@ const mutations = {
     state.loading = false;
     log("User changed", user);
   },
-  userDataChanged(state, data) {
-    state.userData = data;
+  profileChanged(state, data) {
+    state.profile = data;
     state.loading = false;
     state.error = null;
     log("UserData changed", data);

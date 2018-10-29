@@ -5,6 +5,12 @@
         <v-toolbar dark color="primary">
           <v-toolbar-title>Login form</v-toolbar-title>
         </v-toolbar>
+        <v-progress-linear
+          :active="loading"
+          indeterminate
+          dark
+          color="orange"
+          height="3" />
         <v-form>
           <v-card-text>
             <v-text-field
@@ -70,3 +76,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.v-progress-linear {
+  margin: 0;
+}
+</style>

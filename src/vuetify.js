@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Vuetify from "vuetify/es5";
+import Vuetify from "vuetify/lib";
 import {
   VApp,
   VContainer,
@@ -23,12 +23,13 @@ import {
   VListTileContent,
   VListTileTitle,
   VListTileAction,
+  VProgressLinear,
   VBtn,
   VIcon,
-  VSpacer,
-  transitions
-} from "vuetify/es5/components";
-import { Ripple } from "vuetify/es5/directives";
+  VSpacer
+  // transitions
+} from "vuetify/lib/components";
+import { Ripple } from "vuetify/lib/directives";
 import "vuetify/src/stylus/app.styl";
 
 const components = {
@@ -54,10 +55,11 @@ const components = {
   VListTileContent,
   VListTileTitle,
   VListTileAction,
+  VProgressLinear,
   VBtn,
   VIcon,
-  VSpacer,
-  transitions
+  VSpacer
+  // transitions
 };
 const directives = {
   Ripple

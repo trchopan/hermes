@@ -14,6 +14,7 @@
       app
       clipped
       dark
+      stateless
       v-model="drawerOpen">
         <v-list class="pa-0">
           <v-list-tile avatar>

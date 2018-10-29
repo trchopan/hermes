@@ -13,13 +13,13 @@ describe("@/store/modules/auth.js", () => {
     let fakeAuth = auth();
     let state = fakeAuth.state;
     expect(fakeAuth.getters.authUser(state)).toBe(state.authUser);
-    expect(fakeAuth.getters.userData(state)).toBe(state.userData);
+    expect(fakeAuth.getters.profile(state)).toBe(state.profile);
     expect(fakeAuth.getters.loading(state)).toBe(state.loading);
     expect(fakeAuth.getters.error(state)).toBe(state.error);
   });
 
   // Actions
-  it("change and load authUser and userData", async () => {
+  it("change and load authUser and profile", async () => {
     let fakeCommit = jest.fn();
     let fakeAuth = auth(undefined, fireStore);
 
@@ -27,7 +27,7 @@ describe("@/store/modules/auth.js", () => {
     expect(fakeCommit.mock.calls).toEqual([
       // onAuthStateChanged has not any user
       ["userChanged", null],
-      ["userDataChanged", null]
+      ["profileChanged", null]
     ]);
 
     fakeCommit.mockClear();
@@ -36,7 +36,7 @@ describe("@/store/modules/auth.js", () => {
       // onAuthStateChanged has user
       ["userChanged", fakeAuthUser],
       ["loading"],
-      ["userDataChanged", docData]
+      ["profileChanged", docData]
     ]);
 
     fakeCommit.mockClear();
@@ -102,13 +102,13 @@ describe("@/store/modules/auth.js", () => {
     fakeAuth.mutations.userChanged(state, fakeAuthUser);
     expect(state.authUser).toBe(fakeAuthUser);
   });
-  it("mutates when userData changed", () => {
+  it("mutates when profile changed", () => {
     let fakeAuth = auth();
     let state = fakeAuth.state;
     state.loading = true;
     state.error = fakeError;
-    fakeAuth.mutations.userDataChanged(state, docData);
-    expect(state.userData).toBe(docData);
+    fakeAuth.mutations.profileChanged(state, docData);
+    expect(state.profile).toBe(docData);
     expect(state.loading).toBe(false);
     expect(state.error).toBe(null);
   });
