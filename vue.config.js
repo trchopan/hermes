@@ -5,8 +5,8 @@ process.env.VUE_APP_TITLE = "Boba Prince ERP";
 module.exports = {
   configureWebpack: {
     performance: {
-      maxEntrypointSize: 1024000,
-      maxAssetSize: 1024000
+      maxEntrypointSize: 1280000,
+      maxAssetSize: 1280000
     }
   }
 };
