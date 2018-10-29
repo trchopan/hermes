@@ -1,10 +1,15 @@
 export const mockVuetifyComponents = [
+  "v-app",
+  "v-toolbar-items",
+  "v-toolbar-side-icon",
+  "v-navigation-drawer",
   "v-content",
   "v-container",
   "v-layout",
   "v-spacer",
   "v-flex",
   "v-btn",
+  "v-list",
   "v-card",
   "v-card-text",
   "v-card-actions",
@@ -12,5 +17,12 @@ export const mockVuetifyComponents = [
   "v-toolbar-title",
   "v-card-text",
   "v-form",
-  "v-text-field"
+  "v-progress-linear",
+  "v-text-field",
+  "v-list-tile",
+  "v-list-tile-title",
+  "v-divider",
+  "v-icon",
+  "v-list-tile-avatar",
+
 ];
