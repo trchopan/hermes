@@ -1,3 +1,5 @@
+/*eslint no-console: "off"*/
+
 import Vue from "vue";
 import "./vuetify";
 import "./components/global";
