@@ -26,10 +26,12 @@ import {
   VListTileAvatar,
   VListTileContent,
   VListTileTitle,
+  VListTileSubTitle,
   VListTileAction,
   VProgressLinear,
   VBtn,
   VIcon,
+  VSwitch,
   VSpacer
   // transitions
 } from "vuetify/lib/components";
@@ -62,10 +64,12 @@ const components = {
   VListTileAvatar,
   VListTileContent,
   VListTileTitle,
+  VListTileSubTitle,
   VListTileAction,
   VProgressLinear,
   VBtn,
   VIcon,
+  VSwitch,
   VSpacer
   // transitions
 };
@@ -73,4 +77,16 @@ const directives = {
   Ripple
 };
 
-Vue.use(Vuetify, { components, directives });
+Vue.use(Vuetify, {
+  components,
+  directives,
+  theme: {
+    primary: "#1976D2",
+    secondary: "#424242",
+    accent: "#82B1FF",
+    error: "#FF5252",
+    info: "#2196F3",
+    success: "#4CAF50",
+    warning: "#FFC107"
+  }
+});

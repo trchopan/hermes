@@ -1,24 +1,38 @@
 <template>
   <div id="app">
     <InitMessage v-if="loading" />
-    <Navigation v-else>
-      <router-view/>
-    </Navigation>
+    <v-app v-else :dark="darkTheme">
+      <Toolbar />
+      <NavigationDrawer />
+      <v-content>
+        <v-container fluid>
+          <router-view/>
+        </v-container>
+      </v-content>
+    </v-app>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import InitMessage from "@/components/InitMessage";
-import Navigation from "@/components/Navigation";
+import Toolbar from "@/components/Toolbar";
+import NavigationDrawer from "@/components/NavigationDrawer";
 
 export default {
   name: "App",
   components: {
-    Navigation,
+    Toolbar,
+    NavigationDrawer,
     InitMessage
   },
-  computed: mapGetters({ loading: "auth/loading" })
+  computed: mapGetters({
+    darkTheme: "layout/darkTheme",
+    loading: "auth/loading"
+  }),
+  created() {
+    this.$store.dispatch("layout/initLocalStorage");
+  }
 };
 </script>
 
