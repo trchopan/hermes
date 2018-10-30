@@ -62,7 +62,9 @@ export default {
   methods: {
     async logout() {
       const loggedOut = await this.$store.dispatch("auth/logout");
-      if (loggedOut) this.$router.replace("/login");
+      if (loggedOut) {
+        this.$router.replace("/login");
+      }
     },
     changeTheme(theme) {
       this.$store.dispatch("layout/changeTheme", theme);

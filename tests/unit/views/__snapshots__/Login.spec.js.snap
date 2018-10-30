@@ -5,9 +5,9 @@ exports[`views/Login.vue matchs snapshot 1`] = `
   <v-flex-stub xs12="" sm8="" md4="">
     <v-card-stub class="elevation-12">
       <v-toolbar-stub dark="" color="primary">
-        <v-toolbar-title-stub>Login form</v-toolbar-title-stub>
+        <v-toolbar-title-stub>Login</v-toolbar-title-stub>
       </v-toolbar-stub>
-      <v-progress-linear-stub indeterminate="" dark="" color="orange" height="3"></v-progress-linear-stub>
+      <v-progress-linear-stub indeterminate="" color="orange" height="3"></v-progress-linear-stub>
       <v-form-stub>
         <v-card-text-stub>
           <v-text-field-stub id="email" prepend-icon="person" name="email" label="Email" type="text" error-messages=""></v-text-field-stub>

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/layout/NavigationDrawer.vue matches snapshot 1`] = `
+<v-navigation-drawer-stub app="" clipped="" width="200">
+  <v-list-stub class="pa-0">
+    <v-list-tile-stub avatar="" to="/test">
+      <v-list-tile-avatar-stub>
+        <v-icon-stub>test-icon</v-icon-stub>
+      </v-list-tile-avatar-stub>
+      <v-list-tile-title-stub>Test</v-list-tile-title-stub>
+    </v-list-tile-stub>
+    <v-divider-stub></v-divider-stub>
+  </v-list-stub>
+</v-navigation-drawer-stub>
+`;

@@ -1,24 +1,33 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Navigation from "@/components/Navigation.vue";
+import { themes } from "@/store/modules/layout";
+import filters from "@/filters.js";
+import ToolbarMenu from "@/components/layout/ToolbarMenu.vue";
 import { mockVuetifyComponents } from "@/__mocks__/vuetify.js";
 
 const localVue = createLocalVue();
+localVue.filter("titleCase", filters.titleCase);
 localVue.use(Vuex);
 
-describe("components/Navigation.vue", () => {
-  let store;
+describe("components/layout/ToolbarMenu.vue", () => {
   let getters;
   let actions;
+  let store;
   let wrapper;
-  let $vuetify;
 
   beforeEach(() => {
     getters = {
-      "auth/authUser": () => null,
-      "auth/profile": () => null
+      "auth/profile": () => ({
+        fullname: "Tester",
+        email: "test@tester.com",
+        avatar: "avatar",
+        position: "manager"
+      }),
+      "layout/theme": () => themes.light
     };
     actions = {
+      "layout/toggleDrawer": jest.fn(),
+      "layout/changeTheme": jest.fn(),
       "auth/logout": jest
         .fn()
         .mockImplementationOnce(() => Promise.resolve(false))
@@ -28,16 +37,17 @@ describe("components/Navigation.vue", () => {
       getters,
       actions
     });
-    $vuetify = {
-      breakpoint: { name: "lg", mdAndUp: true, lgAndUp: true }
-    };
-    wrapper = shallowMount(Navigation, {
+    wrapper = shallowMount(ToolbarMenu, {
       stubs: mockVuetifyComponents,
-      mocks: { $router: { push: jest.fn(), replace: jest.fn() }, $vuetify },
+      mocks: {
+        $vuetify: { breakpoint: { mdAndUp: true } },
+        $router: { replace: jest.fn() }
+      },
       store,
       localVue
     });
   });
+
   it("logouts and handle error", async () => {
     await wrapper.vm.logout();
     expect(actions["auth/logout"]).toBeCalled();
@@ -46,12 +56,11 @@ describe("components/Navigation.vue", () => {
     await wrapper.vm.logout();
     expect(wrapper.vm.$router.replace.mock.calls).toEqual([["/login"]]);
   });
-  it("navigates", () => {
-    let link = "/link";
-    wrapper.vm.navigate(link);
-    expect(wrapper.vm.$router.push.mock.calls).toEqual([[link]]);
-  })
-  it("matchs snapshot", () => {
+  it("changes theme", () => {
+    wrapper.vm.changeTheme(themes.light);
+    expect(actions["layout/changeTheme"].mock.calls[0][1]).toEqual(themes.light);
+  });
+  it("matches snapshot", () => {
     expect(wrapper).toMatchSnapshot();
   });
 });
