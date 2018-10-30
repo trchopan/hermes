@@ -7,7 +7,7 @@
         <v-list-tile v-for="item in drawerItems"
           :key="'drawer-' + item.name"
           avatar
-          @click="navigate(item.path)">
+          :to="item.path">
           <v-list-tile-avatar>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-avatar>
@@ -39,17 +39,6 @@ export default {
         }
       }
     }
-  },
-  methods: {
-    navigate(link) {
-      this.$router.push(link);
-    }
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.v-avatar {
-  margin: auto;
-}
-</style>

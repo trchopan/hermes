@@ -1,10 +1,11 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
-import Dashboard from "./views/Dashboard.vue";
-import Login from "./views/Login.vue";
-import NotFound from "./views/NotFound";
 import { logger } from "@/helpers";
+import Home from "@/views/Home.vue";
+import Dashboard from "@/views/Dashboard.vue";
+import Profile from "@/views/Profile.vue";
+import Login from "@/views/Login.vue";
+import NotFound from "@/views/NotFound";
 
 Vue.use(Router);
 
@@ -47,6 +48,12 @@ export default new Router({
       path: "/dashboard",
       name: "dashboard",
       component: Dashboard,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: Profile,
       meta: { requiresAuth: true }
     },
     {

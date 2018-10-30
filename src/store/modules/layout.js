@@ -36,6 +36,7 @@ const actions = () => {
 const mutations = {
   themeChanged(state, theme) {
     state.theme = theme;
+    localStorage.setItem("theme", theme);
     log("Theme changed", theme);
   },
   drawerToggled(state) {

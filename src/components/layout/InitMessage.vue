@@ -1,7 +1,7 @@
 <template>
   <div id="initial-loading">
     <img src="/images/bloody-smile.jpg" alt="initializing image" />
-    <p>...Cười phát sống thêm ít phút nào</p>
+    <p>...Let's put a smile on that face</p>
   </div>  
 </template>
 

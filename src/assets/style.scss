@@ -1,48 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons");
 @import "~normalize.css/normalize.css";
 
-:root {
-  --primary-color: #ed1d24;
-  --primary-color-tint: #ffdfe0;
-  --primary-background-tint: #f3e3e3;
-  --secondary-color: #159cd8;
-  --secondary-color-tint: #cfedfa;
-  --warnn-color: #159cd8;
-
-  --text-main-color: #000000;
-  --text-accent-color: #ffffff;
-  --text-secondary-color: #787878;
-  --text-faded-color: #adacac;
-
-  --title-font: Roboto;
-  --title-font__bold: 700;
-  --title-font__normal: 400;
-  --default-font: sans-serif;
-  --text-font: Roboto;
-  --text-font__bold: 700;
-  --text-font__normal: 400;
-}
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  outline: none;
-}
-
-body {
-  font-family: var(--default-font);
-}
-
 #app {
-  font-family: var(--text-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   margin: auto;
-  color: var(--text-main-color);
-}
-
-.error {
-  color: var(--warn-color);
 }

@@ -3,12 +3,11 @@
     <v-flex xs12 sm8 md4>
       <v-card class="elevation-12">
         <v-toolbar dark color="primary">
-          <v-toolbar-title>Login form</v-toolbar-title>
+          <v-toolbar-title>Login</v-toolbar-title>
         </v-toolbar>
         <v-progress-linear
           :active="loading"
           indeterminate
-          dark
           color="orange"
           height="3" />
         <v-form>
