@@ -10,7 +10,7 @@
       <img v-else src="/images/bloody-smile.jpg" alt="avatar" />
     </v-avatar>
 
-    <v-card class="profile-card">
+    <v-card>
       <v-list v-if="profile">
         <v-list-tile avatar to="/profile">
           <v-list-tile-avatar>
@@ -24,7 +24,10 @@
       </v-list>
       <v-divider v-if="profile" />
       <v-list>
-        <v-list-tile>
+        <v-list-tile avatar>
+          <v-list-tile-avatar tile>
+            <img :src="`./icons/${language.code}.svg`" alt="language icon" />
+          </v-list-tile-avatar>
           <v-list-tile-content>
             <v-select
               :value="language.name"
@@ -94,9 +97,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.profile-card {
-  min-width: 250px;
-}
-</style>
