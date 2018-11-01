@@ -1,4 +1,5 @@
 import { logger } from "@/helpers.js";
+import { usersCol } from "@/firebase.js";
 
 const log = logger("[auth]");
 
@@ -17,24 +18,35 @@ const getters = {
 };
 
 const actions = (fireAuth, fireStore) => {
-  const changeUser = async ({ commit }, user) => {
+  let profileSnap;
+
+  const changeUser = ({ commit }, user) => {
     commit("userChanged", user);
     if (!user) {
       commit("profileChanged", null);
-    } else {
-      commit("loading");
-      try {
-        const data = await fireStore
-          .collection("users")
-          .doc(user.uid)
-          .get()
-          .then(
-            snapshot => (snapshot && snapshot.exists ? snapshot.data() : null)
-          );
-        commit("profileChanged", data);
-      } catch (error) {
-        commit("errorCatched", error);
+      if (profileSnap) {
+        profileSnap();
+        profileSnap = undefined;
       }
+    } else {
+      log("Listening to user profile...");
+      commit("loading");
+      profileSnap = fireStore
+        .collection(usersCol)
+        .doc(user.uid)
+        .onSnapshot(
+          snapshot => {
+            if (snapshot && snapshot.exists) {
+              const data = snapshot.data();
+              commit("profileChanged", data);
+            } else {
+              commit("errorCatched", { code: "auth/profile-not-found" });
+            }
+          },
+          error => {
+            commit("errorCatched", error);
+          }
+        );
     }
   };
 
@@ -46,24 +58,52 @@ const actions = (fireAuth, fireStore) => {
       await fireAuth.signInWithEmailAndPassword(email, password);
       return true;
     } catch (error) {
+      log("loginWithEmailPassword error");
       commit("errorCatched", error);
       return false;
     }
   };
 
   const logout = async ({ commit }) => {
-    log("Loggin out...");
+    log("Logging out...");
     commit("loading");
     try {
       await fireAuth.signOut();
       return true;
+    } catch (error) {
+      log("logout error");
+      commit("errorCatched", error);
+      return false;
+    }
+  };
+
+  const updateProfile = async ({ commit, state }, data) => {
+    log("Updating profile...");
+    if (!state.authUser) {
+      log("Not logged in!");
+      return false;
+    }
+    commit("loading");
+    try {
+      setTimeout(async () => {
+        await fireStore
+          .collection(usersCol)
+          .doc(state.authUser.uid)
+          .set(data, { merge: true });
+        return true;
+      }, 1000);
     } catch (error) {
       commit("errorCatched", error);
       return false;
     }
   };
 
-  return Object.freeze({ changeUser, loginWithEmailPassword, logout });
+  return Object.freeze({
+    changeUser,
+    loginWithEmailPassword,
+    logout,
+    updateProfile
+  });
 };
 
 const mutations = {

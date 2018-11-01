@@ -23,6 +23,13 @@ export const languagesMap = {
       dashboard: "Bảng điều khiển",
       about: "Về chúng tôi"
     },
+    profile: {
+      greeting: "Xin chào, bạn phẻ hok?",
+      edit: "Chỉnh sửa",
+      fullname: "Họ tên",
+      avatar: "Avatar",
+      back: "Quay lại"
+    },
     dashboard: {
       header: "Bảng điều khiển"
     }
@@ -45,6 +52,13 @@ export const languagesMap = {
       home: "Home",
       dashboard: "Dashboard",
       about: "About"
+    },
+    profile: {
+      greeting: "Hi there, how are you today?",
+      edit: "Edit",
+      fullname: "Fullname",
+      avatar: "Avatar",
+      back: "Back"
     },
     dashboard: {
       header: "Dashboard"
