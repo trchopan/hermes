@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <InitMessage v-if="loading" />
+    <InitMessage v-if="loading && !profile" />
     <v-app v-else :dark="darkTheme">
       <Toolbar />
       <NavigationDrawer />
@@ -30,7 +30,8 @@ export default {
   },
   computed: mapGetters({
     darkTheme: "layout/darkTheme",
-    loading: "auth/loading"
+    loading: "auth/loading",
+    profile: "auth/profile"
   }),
   created() {
     this.$store.dispatch("layout/initLocalStorage", this.$t);

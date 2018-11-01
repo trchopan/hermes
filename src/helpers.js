@@ -8,6 +8,16 @@ export const logger = className => (message, ...objects) => {
     );
 };
 
+export function debounce(func, delay) {
+  let inDebounce;
+  return function() {
+    const context = this;
+    const args = arguments;
+    clearTimeout(inDebounce);
+    inDebounce = setTimeout(() => func.apply(context, args), delay);
+  };
+}
+
 export function shuffle(array) {
   var currentIndex = array.length,
     temporaryValue,

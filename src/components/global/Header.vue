@@ -1,7 +1,7 @@
 <template>
-  <header>
-    <h2 class="text-xs-center">
+  <v-flex xs12>
+    <h2 class="text-xs-center py-3">
       <slot />
     </h2>
-  </header>
+  </v-flex>
 </template>
