@@ -1,7 +1,7 @@
 <template>
   <header>
-    <h1 class="text-xs-center">
+    <h2 class="text-xs-center">
       <slot />
-    </h1>
+    </h2>
   </header>
 </template>

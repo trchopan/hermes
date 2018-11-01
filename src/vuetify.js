@@ -32,6 +32,7 @@ import {
   VBtn,
   VIcon,
   VSwitch,
+  VSelect,
   VSpacer
   // transitions
 } from "vuetify/lib/components";
@@ -70,6 +71,7 @@ const components = {
   VBtn,
   VIcon,
   VSwitch,
+  VSelect,
   VSpacer
   // transitions
 };

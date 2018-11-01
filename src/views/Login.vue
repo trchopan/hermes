@@ -3,7 +3,7 @@
     <v-flex xs12 sm8 md4>
       <v-card class="elevation-12">
         <v-toolbar dark color="primary">
-          <v-toolbar-title>Login</v-toolbar-title>
+          <v-toolbar-title>{{ $t.login.login }}</v-toolbar-title>
         </v-toolbar>
         <v-progress-linear
           :active="loading"
@@ -24,7 +24,7 @@
               id="password"
               prepend-icon="lock"
               name="password"
-              label="Password"
+              :label="$t.login.password"
               type="password"
               v-model="password" />
           </v-card-text>
@@ -36,7 +36,7 @@
               type="submit"
               :disabled="loading"
               @click.prevent="onSubmit()">
-              Login
+              {{ $t.login.login }}
             </v-btn>
           </v-card-actions>
         </v-form>
@@ -59,7 +59,8 @@ export default {
   computed: mapGetters({
     error: "auth/error",
     authUser: "auth/authUser",
-    loading: "auth/loading"
+    loading: "auth/loading",
+    $t: "layout/$t"
   }),
   methods: {
     async onSubmit() {

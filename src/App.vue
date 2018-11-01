@@ -6,7 +6,9 @@
       <NavigationDrawer />
       <v-content>
         <v-container fluid :class="{ dark: darkTheme }">
-          <router-view/>
+          <transition name="fade" mode="out-in">
+            <router-view/>
+          </transition>
         </v-container>
       </v-content>
     </v-app>
@@ -31,7 +33,7 @@ export default {
     loading: "auth/loading"
   }),
   created() {
-    this.$store.dispatch("layout/initLocalStorage");
+    this.$store.dispatch("layout/initLocalStorage", this.$t);
     if (this.$vuetify.breakpoint.lgAndUp) {
       this.$store.dispatch("layout/toggleDrawer");
     }
@@ -39,13 +41,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-@import url("./assets/style.scss");
-
-.dark {
-  color: white;
-}
-.theme--dark * > .primary--text {
-  color: #95caff !important;
-}
-</style>
+<style lang="scss" src="./style.scss" />

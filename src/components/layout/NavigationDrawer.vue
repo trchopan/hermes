@@ -19,15 +19,10 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "NavigationDrawer",
-  data: () => ({
-    drawerItems: [
-      { path: "/", name: "Home", icon: "home" },
-      { path: "/dashboard", name: "Dashboard", icon: "dashboard" },
-      { path: "/about", name: "About", icon: "" }
-    ]
-  }),
   computed: {
     drawerOpen: {
       get: function() {
@@ -38,6 +33,18 @@ export default {
           this.$store.dispatch("layout/toggleDrawer");
         }
       }
+    },
+    ...mapGetters({ $t: "layout/$t" }),
+    drawerItems() {
+      return [
+        { path: "/", name: this.$t.drawer.home, icon: "home" },
+        {
+          path: "/dashboard",
+          name: this.$t.drawer.dashboard,
+          icon: "dashboard"
+        },
+        { path: "/about", name: this.$t.drawer.about, icon: "" }
+      ];
     }
   }
 };

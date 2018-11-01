@@ -1,20 +1,22 @@
 <template>
   <div id="initial-loading">
     <img src="/images/bloody-smile.jpg" alt="initializing image" />
-    <p>...Let's put a smile on that face</p>
+    <p class="mt-3 title">...{{ $t.init.greeting }}</p>
   </div>  
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
-  name: "InitMessage"
+  name: "InitMessage",
+  computed: mapGetters({ $t: "layout/$t" })
 };
 </script>
 
 
 <style lang="scss" scoped>
 #initial-loading {
-  font-family: Roboto;
   width: 100vw;
   height: 100vh;
   display: flex;
