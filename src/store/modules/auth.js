@@ -1,7 +1,7 @@
 import { logger } from "@/helpers.js";
-import { usersCol } from "@/firebase.js";
 
 const log = logger("[auth]");
+const usersCol = "users"
 
 const state = {
   authUser: null,
