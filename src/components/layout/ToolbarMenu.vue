@@ -87,6 +87,7 @@ export default {
     async logout() {
       const loggedOut = await this.$store.dispatch("auth/logout");
       if (loggedOut) {
+        this.menuOpen = false;
         this.$router.replace("/login");
       }
     },
