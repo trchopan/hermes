@@ -1,6 +1,6 @@
 import Vue from "vue";
 
-const filters = {
+export const filters = {
   titleCase: str =>
     str
       .toLowerCase()

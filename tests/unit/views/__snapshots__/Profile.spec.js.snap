@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`views/Profile.vue matchs snapshot 1`] = `
+<v-layout-stub column="">
+  <my-header-stub>Hi there, how are you today?</my-header-stub>
+  <v-layout-stub row="" wrap="" align-center="" justify-center="">
+    <v-flex-stub xs12="" sm6="" md4="">
+      <v-list-stub class="elevation-1">
+        <v-list-tile-stub avatar="">
+          <v-list-tile-avatar-stub><img src="avatar" alt="big avatar"></v-list-tile-avatar-stub>
+          <v-list-tile-content-stub>
+            <v-list-tile-title-stub>Tester</v-list-tile-title-stub>
+            <v-list-tile-sub-title-stub>Manager</v-list-tile-sub-title-stub>
+          </v-list-tile-content-stub>
+          <v-list-tile-action-stub>
+            <v-btn-stub outline="">
+              Edit
+            </v-btn-stub>
+          </v-list-tile-action-stub>
+        </v-list-tile-stub>
+      </v-list-stub>
+      <!---->
+    </v-flex-stub>
+  </v-layout-stub>
+</v-layout-stub>
+`;
+
+exports[`views/Profile.vue matchs snapshot 2`] = `
+<v-layout-stub column="">
+  <my-header-stub>Hi there, how are you today?</my-header-stub>
+  <v-layout-stub row="" wrap="" align-center="" justify-center="">
+    <v-flex-stub xs12="" sm6="" md4="">
+      <!---->
+      <v-card-stub class="elevation-6 pt-3 px-3 text-xs-center">
+        <v-avatar-stub size="80"><img src="avatar" alt="big avatar"></v-avatar-stub>
+        <v-text-field-stub id="fullname" prepend-icon="person" name="fullname" label="Fullname" type="text" error-messages=""></v-text-field-stub>
+        <v-text-field-stub id="avatar" prepend-icon="lock" name="avatar" label="Avatar" type="text"></v-text-field-stub>
+        <v-card-actions-stub>
+          <v-spacer-stub></v-spacer-stub>
+          <v-icon-stub color="success" class="mr-3">
+            check_circle_outline
+          </v-icon-stub>
+          <v-btn-stub color="primary" type="button">
+            Back
+          </v-btn-stub>
+        </v-card-actions-stub>
+      </v-card-stub>
+    </v-flex-stub>
+  </v-layout-stub>
+</v-layout-stub>
+`;

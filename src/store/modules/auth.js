@@ -1,4 +1,5 @@
 import { logger } from "@/helpers.js";
+import profileParser from "@/store/parsers/profile.js";
 
 const log = logger("[auth]");
 const usersCol = "users";
@@ -20,7 +21,7 @@ const getters = {
 const actions = (fireAuth, fireStore) => {
   /**
    * This variable keeps track of firestore snapshot
-   * Call itself to end the listening
+   * Call it to end unsubscribe to onSnapshot
    */
   let profileSnap;
 
@@ -44,7 +45,7 @@ const actions = (fireAuth, fireStore) => {
           snapshot => {
             if (snapshot && snapshot.exists) {
               const data = snapshot.data();
-              commit("profileChanged", data);
+              commit("profileChanged", profileParser(data));
             } else {
               commit("errorCatched", { code: "auth/profile-not-found" });
             }

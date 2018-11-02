@@ -3,7 +3,7 @@
     <my-header>{{ $t.profile.greeting }}</my-header>
     <v-layout row wrap align-center justify-center>
       <v-flex xs12 sm6 md4>
-        <v-list v-if="profile && !editMode">
+        <v-list v-if="profile && !editMode" class="elevation-1">
           <v-list-tile avatar>
             <v-list-tile-avatar>
               <img :src="profile.avatar" alt="big avatar">
@@ -66,8 +66,7 @@ import { debounce } from "@/helpers";
 export default {
   name: "Profile",
   data: () => ({
-    editMode: false,
-    updated: false
+    editMode: false
   }),
   computed: {
     ...mapGetters({
@@ -92,7 +91,6 @@ export default {
       },
       set: debounce(function(value) {
         if (value !== this.profile.avatar) {
-          console.log("vaalo", value);
           this.$store.dispatch("auth/updateProfile", { avatar: value });
         }
       }, 500)
