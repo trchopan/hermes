@@ -4,7 +4,7 @@ import {
   fakeError,
   docData,
   docSnapshot
-} from "@/__mocks__/firebase-results";
+} from "@tests/unit/__mocks__/firebase-results";
 
 describe("@/store/modules/auth.js", () => {
   const signInWithEmailAndPassword = jest

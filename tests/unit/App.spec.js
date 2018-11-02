@@ -1,5 +1,5 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
-import { mockCustomElements } from "@/__mocks__/custom-elements.js";
+import { mockCustomElements } from "@tests/unit/__mocks__/custom-elements.js";
 import App from "@/App.vue";
 
 const localVue = createLocalVue();

@@ -1,7 +1,7 @@
 import { logger } from "@/helpers.js";
 
 const log = logger("[auth]");
-const usersCol = "users"
+const usersCol = "users";
 
 const state = {
   authUser: null,

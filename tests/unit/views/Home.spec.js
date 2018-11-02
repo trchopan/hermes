@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Home from "@/views/Home.vue";
-import { mockCustomElements } from "@/__mocks__/custom-elements";
+import { mockCustomElements } from "@tests/unit/__mocks__/custom-elements";
 
 const localVue = createLocalVue();
 

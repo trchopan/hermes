@@ -3,8 +3,8 @@ import Vuex from "vuex";
 import { themes } from "@/store/modules/layout";
 import filters from "@/filters.js";
 import ToolbarMenu from "@/components/layout/ToolbarMenu.vue";
-import { mockCustomElements } from "@/__mocks__/custom-elements.js";
-import { docData } from "@/__mocks__/firebase-results";
+import { mockCustomElements } from "@tests/unit/__mocks__/custom-elements.js";
+import { docData } from "@tests/unit/__mocks__/firebase-results";
 import { languages, languagesMap } from "@/languages";
 
 const localVue = createLocalVue();

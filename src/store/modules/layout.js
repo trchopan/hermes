@@ -17,6 +17,7 @@ const state = {
 const getters = {
   theme: state => state.theme,
   darkTheme: state => (state.theme === themes.dark ? true : false),
+  drawerOpen: state => state.drawerOpen,
   language: state => state.language,
   $t: state => languagesMap[state.language.code]
 };
