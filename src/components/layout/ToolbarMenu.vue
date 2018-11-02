@@ -1,6 +1,7 @@
 <template>
   <v-menu
     :close-on-content-click="false"
+    v-model="menuOpen"
     offset-y
     left>
     <v-avatar
@@ -12,7 +13,7 @@
 
     <v-card>
       <v-list v-if="profile">
-        <v-list-tile avatar to="/profile">
+        <v-list-tile avatar to="/profile" @click="menuOpen = false">
           <v-list-tile-avatar>
             <img :src="profile.avatar" alt="big avatar">
           </v-list-tile-avatar>
@@ -54,7 +55,8 @@
         </v-btn>
         <v-btn v-else
           outline
-          to="/login">
+          to="/login"
+          @click="menuOpen = false">
           {{ $t.toolbar.login }}
         </v-btn>
       </v-card-actions>
@@ -72,7 +74,8 @@ export default {
   data: () => ({
     themes,
     languages,
-    title: process.env.VUE_APP_TITLE
+    title: process.env.VUE_APP_TITLE,
+    menuOpen: false
   }),
   computed: mapGetters({
     profile: "auth/profile",
