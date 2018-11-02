@@ -1,5 +1,6 @@
 export const mockCustomElements = [
   "my-header",
+  "router-view",
   "v-app",
   "v-avatar",
   "v-container",

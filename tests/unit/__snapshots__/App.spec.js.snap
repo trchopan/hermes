@@ -2,8 +2,14 @@
 
 exports[`@/App.vue matchs snapshot 1`] = `
 <div id="app">
-  <navigation-stub>
-    <router-view-stub></router-view-stub>
-  </navigation-stub>
+  <v-app-stub dark="true">
+    <toolbar-stub></toolbar-stub>
+    <navigationdrawer-stub></navigationdrawer-stub>
+    <v-content-stub>
+      <v-container-stub fluid="" class="dark">
+        <router-view-stub name="fade" mode="out-in"></router-view-stub>
+      </v-container-stub>
+    </v-content-stub>
+  </v-app-stub>
 </div>
 `;
