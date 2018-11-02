@@ -14,11 +14,44 @@ exports[`components/layout/ToolbarMenu.vue matches snapshot 1`] = `
       </v-list-tile-stub>
     </v-list-stub>
     <v-divider-stub></v-divider-stub>
+    <v-list-stub>
+      <v-list-tile-stub avatar="">
+        <v-list-tile-avatar-stub tile=""><img src="./icons/en.svg" alt="language icon"></v-list-tile-avatar-stub>
+        <v-list-tile-content-stub>
+          <v-select-stub value="English" items="Tiếng Việt,English" label="Select language"></v-select-stub>
+        </v-list-tile-content-stub>
+      </v-list-tile-stub>
+    </v-list-stub>
     <v-card-actions-stub>
-      <v-switch-stub label="Dark theme" input-value="Light" true-value="Dark" false-value="Light" class="pr-3 pt-2"></v-switch-stub>
+      <v-switch-stub label="Light out" input-value="Light" true-value="Dark" false-value="Light" class="pr-3 pt-2"></v-switch-stub>
       <v-spacer-stub></v-spacer-stub>
       <v-btn-stub outline="">
         Log out
+      </v-btn-stub>
+    </v-card-actions-stub>
+  </v-card-stub>
+</v-menu-stub>
+`;
+
+exports[`components/layout/ToolbarMenu.vue matches snapshot 2`] = `
+<v-menu-stub offset-y="" left="">
+  <v-avatar-stub size="42"><img src="/images/bloody-smile.jpg" alt="avatar"></v-avatar-stub>
+  <v-card-stub>
+    <!---->
+    <!---->
+    <v-list-stub>
+      <v-list-tile-stub avatar="">
+        <v-list-tile-avatar-stub tile=""><img src="./icons/en.svg" alt="language icon"></v-list-tile-avatar-stub>
+        <v-list-tile-content-stub>
+          <v-select-stub value="English" items="Tiếng Việt,English" label="Select language"></v-select-stub>
+        </v-list-tile-content-stub>
+      </v-list-tile-stub>
+    </v-list-stub>
+    <v-card-actions-stub>
+      <v-switch-stub label="Light out" input-value="Light" true-value="Dark" false-value="Light" class="pr-3 pt-2"></v-switch-stub>
+      <v-spacer-stub></v-spacer-stub>
+      <v-btn-stub outline="" to="/login">
+        Log in
       </v-btn-stub>
     </v-card-actions-stub>
   </v-card-stub>

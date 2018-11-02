@@ -23,10 +23,22 @@ import { mapGetters } from "vuex";
 
 export default {
   name: "NavigationDrawer",
+  data: () => ({
+    items: [
+      { path: "/", name: "home", icon: "home" },
+      {
+        path: "/dashboard",
+        name: "dashboard",
+        icon: "dashboard"
+      },
+      { path: "/about", name: "about", icon: "" }
+    ]
+  }),
   computed: {
+    ...mapGetters({ $t: "layout/$t", _drawerOpen: "layout/drawerOpen" }),
     drawerOpen: {
       get: function() {
-        return this.$store.state.layout.drawerOpen;
+        return this._drawerOpen;
       },
       set: function(value) {
         if (value !== this.$store.state.layout.drawerOpen) {
@@ -34,17 +46,8 @@ export default {
         }
       }
     },
-    ...mapGetters({ $t: "layout/$t" }),
     drawerItems() {
-      return [
-        { path: "/", name: this.$t.drawer.home, icon: "home" },
-        {
-          path: "/dashboard",
-          name: this.$t.drawer.dashboard,
-          icon: "dashboard"
-        },
-        { path: "/about", name: this.$t.drawer.about, icon: "" }
-      ];
+      return this.items.map(x => ({ ...x, name: this.$t.drawer[x.name] }));
     }
   }
 };

@@ -21,7 +21,8 @@ export const languagesMap = {
     drawer: {
       home: "Trang chủ",
       dashboard: "Bảng điều khiển",
-      about: "Về chúng tôi"
+      about: "Về chúng tôi",
+      test: "Test"
     },
     profile: {
       greeting: "Xin chào, bạn phẻ hok?",
@@ -51,7 +52,8 @@ export const languagesMap = {
     drawer: {
       home: "Home",
       dashboard: "Dashboard",
-      about: "About"
+      about: "About",
+      test: "Test"
     },
     profile: {
       greeting: "Hi there, how are you today?",

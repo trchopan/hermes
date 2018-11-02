@@ -1,4 +1,5 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
+import { mockCustomElements } from "@/__mocks__/custom-elements.js";
 import App from "@/App.vue";
 
 const localVue = createLocalVue();
@@ -6,7 +7,7 @@ const localVue = createLocalVue();
 describe.skip("@/App.vue", () => {
   it("matchs snapshot", () => {
     let wrapper = shallowMount(App, {
-      stubs: ["router-view"],
+      stubs: mockCustomElements,
       localVue
     });
     expect(wrapper).toMatchSnapshot();

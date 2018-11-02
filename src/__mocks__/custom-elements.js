@@ -1,4 +1,5 @@
-export const mockVuetifyComponents = [
+export const mockCustomElements = [
+  "my-header",
   "v-app",
   "v-avatar",
   "v-container",
@@ -30,5 +31,6 @@ export const mockVuetifyComponents = [
   "v-btn",
   "v-icon",
   "v-switch",
+  "v-select",
   "v-spacer"
 ];

@@ -1,7 +1,8 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import Login from "@/views/Login.vue";
-import { mockVuetifyComponents } from "@/__mocks__/vuetify.js";
+import { mockCustomElements } from "@/__mocks__/custom-elements.js";
+import { languagesMap } from "@/languages";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -14,6 +15,7 @@ describe("views/Login.vue", () => {
 
   beforeEach(() => {
     getters = {
+      "layout/$t": () => languagesMap.en,
       "auth/error": () => null,
       "auth/loading": () => false
     };
@@ -28,7 +30,7 @@ describe("views/Login.vue", () => {
       actions
     });
     wrapper = shallowMount(Login, {
-      stubs: mockVuetifyComponents,
+      stubs: mockCustomElements,
       mocks: { $router: { replace: jest.fn() } },
       store,
       localVue
@@ -38,7 +40,7 @@ describe("views/Login.vue", () => {
     expect(wrapper.vm.email).toBeDefined();
     expect(wrapper.vm.password).toBeDefined();
     expect(wrapper.vm.onSubmit).toBeDefined();
-  })
+  });
   it("submits and handle error", async () => {
     wrapper.vm.email = "test@test.com";
 

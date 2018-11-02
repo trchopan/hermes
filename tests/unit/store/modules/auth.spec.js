@@ -1,13 +1,22 @@
 import auth from "@/store/modules/auth.js";
 import {
-  fireAuth,
-  fireStore,
   fakeAuthUser,
   fakeError,
-  docData
+  docData,
+  docSnapshot
 } from "@/__mocks__/firebase.js";
 
 describe("@/store/modules/auth.js", () => {
+  const signInWithEmailAndPassword = jest
+    .fn()
+    .mockImplementationOnce(() => Promise.resolve())
+    .mockImplementationOnce(() => Promise.reject(fakeError));
+  const signOut = jest
+    .fn()
+    .mockImplementationOnce(() => Promise.resolve())
+    .mockImplementationOnce(() => Promise.reject(fakeError));
+  const fireAuth = { signInWithEmailAndPassword, signOut };
+
   // Getters
   it("gets the correct values", () => {
     let fakeAuth = auth();
@@ -19,11 +28,17 @@ describe("@/store/modules/auth.js", () => {
   });
 
   // Actions
-  it("change and load authUser and profile", async () => {
+  it("change authUser and load profile", () => {
+    let fireStore = {
+      collection: () => ({
+        doc: () => ({ onSnapshot: (cb, _) => cb(docSnapshot) })
+      })
+    };
+
     let fakeCommit = jest.fn();
     let fakeAuth = auth(undefined, fireStore);
 
-    await fakeAuth.actions.changeUser({ commit: fakeCommit }, null);
+    fakeAuth.actions.changeUser({ commit: fakeCommit }, null);
     expect(fakeCommit.mock.calls).toEqual([
       // onAuthStateChanged has not any user
       ["userChanged", null],
@@ -31,18 +46,28 @@ describe("@/store/modules/auth.js", () => {
     ]);
 
     fakeCommit.mockClear();
-    await fakeAuth.actions.changeUser({ commit: fakeCommit }, fakeAuthUser);
+    fakeAuth.actions.changeUser({ commit: fakeCommit }, fakeAuthUser);
     expect(fakeCommit.mock.calls).toEqual([
       // onAuthStateChanged has user
       ["userChanged", fakeAuthUser],
       ["loading"],
       ["profileChanged", docData]
     ]);
+  });
 
-    fakeCommit.mockClear();
-    await fakeAuth.actions.changeUser({ commit: fakeCommit }, fakeAuthUser);
+  it("handles firestore error", () => {
+    let fireStore = {
+      collection: () => ({
+        doc: () => ({ onSnapshot: (_, err) => err(fakeError) })
+      })
+    };
+
+    let fakeCommit = jest.fn();
+    let fakeAuth = auth(undefined, fireStore);
+
+    fakeAuth.actions.changeUser({ commit: fakeCommit }, fakeAuthUser);
     expect(fakeCommit.mock.calls).toEqual([
-      // fireStore has error
+      // fireStore snapshot has error
       ["userChanged", fakeAuthUser],
       ["loading"],
       ["errorCatched", fakeError]

@@ -18,12 +18,18 @@ const getters = {
 };
 
 const actions = (fireAuth, fireStore) => {
+  /**
+   * This variable keeps track of firestore snapshot
+   * Call itself to end the listening
+   */
   let profileSnap;
 
   const changeUser = ({ commit }, user) => {
     commit("userChanged", user);
     if (!user) {
       commit("profileChanged", null);
+
+      // Stop listening to profile snapshot change
       if (profileSnap) {
         profileSnap();
         profileSnap = undefined;
