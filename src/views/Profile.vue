@@ -3,57 +3,67 @@
     <my-header>{{ $t.greeting }}</my-header>
     <v-layout row wrap align-center justify-center>
       <v-flex xs12 sm6 md4>
-        <v-list v-if="profile && !editMode" class="elevation-1">
-          <v-list-tile avatar>
-            <v-list-tile-avatar>
+        <transition name="fade" mode="out-in">
+          <v-card v-if="!editMode"
+            key="profile-display"
+            class="elevation-1">
+            <v-list>
+              <v-list-tile avatar>
+                <v-list-tile-avatar>
+                  <img :src="profile.avatar" alt="big avatar">
+                </v-list-tile-avatar>
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ profile.fullname }}</v-list-tile-title>
+                  <v-list-tile-sub-title>{{ profile.position | titleCase }}</v-list-tile-sub-title>
+                </v-list-tile-content>
+                <v-list-tile-action>
+                  <v-btn
+                    outline
+                    @click="editMode = true">
+                    {{ $t.edit }}
+                  </v-btn>
+                </v-list-tile-action>
+              </v-list-tile>
+            </v-list>
+          </v-card>
+          <v-card v-if="editMode"
+            key="profile-edit"
+            class="elevation-6 pt-3 px-3 text-xs-center">
+            <v-avatar size="80">
               <img :src="profile.avatar" alt="big avatar">
-            </v-list-tile-avatar>
-            <v-list-tile-content>
-              <v-list-tile-title>{{ profile.fullname }}</v-list-tile-title>
-              <v-list-tile-sub-title>{{ profile.position | titleCase }}</v-list-tile-sub-title>
-            </v-list-tile-content>
-            <v-list-tile-action>
+            </v-avatar>
+              <v-text-field
+                id="fullname"
+                prepend-icon="person"
+                :label="$t.fullname"
+                type="text"
+                v-model="fullname"
+                required />
+              <v-text-field
+                id="avatar"
+                prepend-icon="lock"
+                :label="$t.avatar"
+                type="text"
+                v-model="avatar"
+                required />
+            <v-card-actions>
+              <v-spacer />
+              <template v-if="!prestine">
+                <v-icon class="mr-1" color="success">
+                  {{ loading ? 'hourglass_empty' : 'check_circle_outline' }}
+                </v-icon>
+                <span class="mr-2" >{{ loading ? $t.loading : $t.done }}</span>
+              </template>
               <v-btn
-                outline
-                @click="editMode = true">
-                {{ $t.edit }}
+                color="primary"
+                type="button"
+                :disabled="loading"
+                @click="back()">
+                {{ $t.back }}
               </v-btn>
-            </v-list-tile-action>
-          </v-list-tile>
-        </v-list>
-        <v-card class="elevation-6 pt-3 px-3 text-xs-center" v-if="profile && editMode">
-          <v-avatar size="80">
-            <img :src="profile.avatar" alt="big avatar">
-          </v-avatar>
-          <v-text-field
-            id="fullname"
-            prepend-icon="person"
-            name="fullname"
-            :label="$t.fullname"
-            type="text"
-            :error-messages="error ? error.message : ''"
-            v-model="fullname" />
-          <v-text-field
-            id="avatar"
-            prepend-icon="lock"
-            name="avatar"
-            :label="$t.avatar"
-            type="text"
-            v-model="avatar" />
-          <v-card-actions>
-            <v-spacer />
-            <v-icon class="mr-3" color="success">
-              {{ loading ? 'hourglass_empty' : 'check_circle_outline' }}
-            </v-icon>
-            <v-btn
-              color="primary"
-              type="button"
-              :disabled="loading"
-              @click="editMode = false">
-              {{ $t.back }}
-            </v-btn>
-          </v-card-actions>
-        </v-card>
+            </v-card-actions>
+          </v-card>
+        </transition>
       </v-flex>
     </v-layout>
   </v-layout>
@@ -69,13 +79,16 @@ const languagesMap = {
   edit: { vi: "Chỉnh sửa", en: "Edit" },
   fullname: { vi: "Họ tên", en: "Fullname" },
   avatar: { vi: "Avatar", en: "Avatar" },
-  back: { vi: "Quay lại", en: "Back" }
+  back: { vi: "Quay lại", en: "Back" },
+  loading: { vi: "Đang lưu", en: "Saving " },
+  done: { vi: "Hoàn tất", en: "Done" }
 };
 
 export default {
   name: "Profile",
   data: () => ({
-    editMode: false
+    editMode: false,
+    prestine: true
   }),
   computed: {
     ...mapGetters({
@@ -93,6 +106,7 @@ export default {
       },
       set: debounce(function(value) {
         if (value !== this.profile.fullname) {
+          this.prestine = false;
           this.$store.dispatch("auth/updateProfile", { fullname: value });
         }
       }, 500)
@@ -103,9 +117,16 @@ export default {
       },
       set: debounce(function(value) {
         if (value !== this.profile.avatar) {
+          this.prestine = false;
           this.$store.dispatch("auth/updateProfile", { avatar: value });
         }
       }, 500)
+    }
+  },
+  methods: {
+    back() {
+      this.editMode = false;
+      this.prestine = true;
     }
   }
 };
