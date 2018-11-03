@@ -2,7 +2,7 @@
 
 exports[`views/Profile.vue matchs snapshot 1`] = `
 <v-layout-stub column="">
-  <my-header-stub>Hi there, how are you today?</my-header-stub>
+  <my-header-stub>Hi, how are you today?</my-header-stub>
   <v-layout-stub row="" wrap="" align-center="" justify-center="">
     <v-flex-stub xs12="" sm6="" md4="">
       <v-list-stub class="elevation-1">
@@ -27,7 +27,7 @@ exports[`views/Profile.vue matchs snapshot 1`] = `
 
 exports[`views/Profile.vue matchs snapshot 2`] = `
 <v-layout-stub column="">
-  <my-header-stub>Hi there, how are you today?</my-header-stub>
+  <my-header-stub>Hi, how are you today?</my-header-stub>
   <v-layout-stub row="" wrap="" align-center="" justify-center="">
     <v-flex-stub xs12="" sm6="" md4="">
       <!---->

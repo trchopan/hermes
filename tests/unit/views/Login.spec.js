@@ -2,7 +2,7 @@ import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import Login from "@/views/Login.vue";
 import { mockCustomElements } from "@tests/unit/__mocks__/custom-elements.js";
-import { languagesMap } from "@/languages";
+import { languages } from "@/store/modules/layout.js";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -15,7 +15,7 @@ describe("views/Login.vue", () => {
 
   beforeEach(() => {
     getters = {
-      "layout/$t": () => languagesMap.en,
+      "layout/language": () => languages.en,
       "auth/error": () => null,
       "auth/loading": () => false
     };

@@ -1,8 +1,8 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import NavigationDrawer from "@/components/layout/NavigationDrawer.vue";
+import NavigationDrawer, { languagesMap } from "@/components/layout/NavigationDrawer.vue";
 import { mockCustomElements } from "@tests/unit/__mocks__/custom-elements.js";
-import { languagesMap } from "@/languages";
+import { languages } from "@/store/modules/layout.js";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -15,16 +15,16 @@ describe("components/layout/NavigationDrawer.vue", () => {
   let wrapper;
   let mocDrawerItems = [
     {
-      path: "/test",
-      name: "test",
-      icon: "test-icon"
+      path: "/",
+      name: "home",
+      icon: "home"
     }
   ];
 
   beforeEach(() => {
     state = { layout: { drawerOpen: false } };
     getters = {
-      "layout/$t": () => languagesMap.en,
+      "layout/language": () => languages.en,
       "layout/drawerOpen": () => false
     };
     actions = {
@@ -49,9 +49,7 @@ describe("components/layout/NavigationDrawer.vue", () => {
     const title = tile.find("v-list-tile-title-stub");
     expect(tile.attributes("to")).toEqual(mocDrawerItems[0].path);
     expect(icon.text()).toEqual(mocDrawerItems[0].icon);
-    expect(title.text()).toEqual(
-      languagesMap.en.drawer[mocDrawerItems[0].name]
-    );
+    expect(title.text()).toEqual(languagesMap.home.en);
   });
   it("toggles drawer", () => {
     wrapper.vm.drawerOpen = true;

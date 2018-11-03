@@ -2,10 +2,10 @@ import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import { themes } from "@/store/modules/layout";
 import { filters } from "@/filters.js";
-import ToolbarMenu from "@/components/layout/ToolbarMenu.vue";
+import ToolbarMenu, { languagesMap } from "@/components/layout/ToolbarMenu.vue";
 import { mockCustomElements } from "@tests/unit/__mocks__/custom-elements.js";
 import { docData } from "@tests/unit/__mocks__/firebase-results";
-import { languages, languagesMap } from "@/languages";
+import { languages } from "@/store/modules/layout.js";
 
 const localVue = createLocalVue();
 localVue.filter("titleCase", filters.titleCase);
@@ -22,7 +22,6 @@ describe("components/layout/ToolbarMenu.vue", () => {
       "auth/profile": () => docData,
       "layout/theme": () => themes.light,
       "layout/language": () => languages.en,
-      "layout/$t": () => languagesMap.en
     };
     actions = {
       "layout/changeTheme": jest.fn(),
@@ -65,7 +64,7 @@ describe("components/layout/ToolbarMenu.vue", () => {
       docData.fullname
     );
     expect(wrapper.find("v-btn-stub").text()).toBe(
-      languagesMap.en.toolbar.logout
+      languagesMap.logout.en
     );
     getters = {
       ...getters,
@@ -85,7 +84,7 @@ describe("components/layout/ToolbarMenu.vue", () => {
       localVue
     });
     expect(wrapper.find("v-btn-stub").text()).toBe(
-      languagesMap.en.toolbar.login
+      languagesMap.login.en
     );
   });
   it("matches snapshot", () => {

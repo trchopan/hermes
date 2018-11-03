@@ -20,6 +20,13 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { translate } from "@/store/modules/layout.js";
+
+export const languagesMap = {
+  home: { vi: "Trang chủ", en: "Home" },
+  dashboard: { vi: "Bảng điều khiển", en: "Dashboard" },
+  about: { vi: "Về chúng tôi", en: "About" }
+};
 
 export default {
   name: "NavigationDrawer",
@@ -35,7 +42,13 @@ export default {
     ]
   }),
   computed: {
-    ...mapGetters({ $t: "layout/$t", _drawerOpen: "layout/drawerOpen" }),
+    ...mapGetters({
+      _drawerOpen: "layout/drawerOpen",
+      language: "layout/language"
+    }),
+    $t() {
+      return translate(languagesMap, this.language.code);
+    },
     drawerOpen: {
       get: function() {
         return this._drawerOpen;
@@ -47,7 +60,7 @@ export default {
       }
     },
     drawerItems() {
-      return this.items.map(x => ({ ...x, name: this.$t.drawer[x.name] }));
+      return this.items.map(x => ({ ...x, name: this.$t[x.name] }));
     }
   }
 };
