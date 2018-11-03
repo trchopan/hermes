@@ -1,16 +1,31 @@
 <template>
   <div id="initial-loading">
     <img src="/images/bloody-smile.jpg" alt="initializing image" />
-    <p class="mt-3 title">...{{ $t.init.greeting }}</p>
+    <p class="mt-3 title">...{{ $t.greeting }}</p>
   </div>  
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import { translate } from "@/store/modules/layout.js";
+
+const languagesMap = {
+  greeting: {
+    vi: "Cười phát sống thêm ít phút nào",
+    en: "Let's put a smile on that face"
+  }
+};
 
 export default {
   name: "InitMessage",
-  computed: mapGetters({ $t: "layout/$t" })
+  computed: {
+    ...mapGetters({
+      language: "layout/language"
+    }),
+    $t() {
+      return translate(languagesMap, this.language.code);
+    }
+  }
 };
 </script>
 

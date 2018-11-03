@@ -1,11 +1,26 @@
 import { logger } from "@/helpers";
-import { languages, languagesMap } from "@/languages";
 
 const log = logger("[layout]");
 
 export const themes = {
   light: "Light",
   dark: "Dark"
+};
+
+export const languages = {
+  vi: { code: "vi", name: "Tiếng Việt" },
+  en: { code: "en", name: "English" }
+};
+
+export const translate = (languagesMap, code) => {
+  let map = {};
+  for (let key in languagesMap) {
+    map[key] =
+      languagesMap[key] && languagesMap[key][code]
+        ? languagesMap[key][code]
+        : "(no translation)";
+  }
+  return map;
 };
 
 const state = {
@@ -18,8 +33,7 @@ const getters = {
   theme: state => state.theme,
   darkTheme: state => (state.theme === themes.dark ? true : false),
   drawerOpen: state => state.drawerOpen,
-  language: state => state.language,
-  $t: state => languagesMap[state.language.code]
+  language: state => state.language
 };
 
 const actions = () => {

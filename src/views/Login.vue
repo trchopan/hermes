@@ -3,7 +3,7 @@
     <v-flex xs12 sm8 md4>
       <v-card class="elevation-12">
         <v-toolbar dark color="primary">
-          <v-toolbar-title>{{ $t.login.login }}</v-toolbar-title>
+          <v-toolbar-title>{{ $t.login }}</v-toolbar-title>
         </v-toolbar>
         <v-progress-linear
           :active="loading"
@@ -24,7 +24,7 @@
               id="password"
               prepend-icon="lock"
               name="password"
-              :label="$t.login.password"
+              :label="$t.password"
               type="password"
               v-model="password" />
           </v-card-text>
@@ -36,7 +36,7 @@
               type="submit"
               :disabled="loading"
               @click.prevent="onSubmit()">
-              {{ $t.login.login }}
+              {{ $t.login }}
             </v-btn>
           </v-card-actions>
         </v-form>
@@ -47,6 +47,12 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { translate } from "@/store/modules/layout.js";
+
+const languagesMap = {
+  login: { vi: "Đăng nhập", en: "Login" },
+  password: { vi: "Mật khẩu", en: "Password" }
+};
 
 export default {
   name: "Login",
@@ -56,12 +62,17 @@ export default {
       password: ""
     };
   },
-  computed: mapGetters({
-    error: "auth/error",
-    authUser: "auth/authUser",
-    loading: "auth/loading",
-    $t: "layout/$t"
-  }),
+  computed: {
+    ...mapGetters({
+      error: "auth/error",
+      authUser: "auth/authUser",
+      loading: "auth/loading",
+      language: "layout/language"
+    }),
+    $t() {
+      return translate(languagesMap, this.language.code);
+    }
+  },
   methods: {
     async onSubmit() {
       const success = await this.$store.dispatch(

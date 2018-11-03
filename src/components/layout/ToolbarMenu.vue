@@ -33,7 +33,7 @@
             <v-select
               :value="language.name"
               :items="Object.values(languages).map(x => x.name)"
-              :label="$t.toolbar.selectLanguage"
+              :label="$t.selectLanguage"
               @change="changeLanguage($event)" />
           </v-list-tile-content>
         </v-list-tile>
@@ -41,7 +41,7 @@
       <v-card-actions>
         <v-switch
           class="pr-3 pt-2"
-          :label="$t.toolbar.darkTheme"
+          :label="$t.darkTheme"
           :input-value="theme"
           :true-value="themes.dark"
           :false-value="themes.light"
@@ -51,13 +51,13 @@
         <v-btn v-if="profile"
           outline
           @click="logout()">
-          {{ $t.toolbar.logout }}
+          {{ $t.logout }}
         </v-btn>
         <v-btn v-else
           outline
           to="/login"
           @click="menuOpen = false">
-          {{ $t.toolbar.login }}
+          {{ $t.login }}
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -66,8 +66,14 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { themes } from "@/store/modules/layout";
-import { languages } from "@/languages";
+import { themes, languages, translate } from "@/store/modules/layout";
+
+const languagesMap = {
+  selectLanguage: { vi: "Chọn ngôn ngữ", en: "Select language" },
+  darkTheme: { vi: "Tắt đèn", en: "Light out" },
+  logout: { vi: "Đăng xuất", en: "Log out" },
+  login: { vi: "Đăng nhập", en: "Log in" }
+};
 
 export default {
   name: "ToolbarMenu",
@@ -77,12 +83,16 @@ export default {
     title: process.env.VUE_APP_TITLE,
     menuOpen: false
   }),
-  computed: mapGetters({
-    profile: "auth/profile",
-    theme: "layout/theme",
-    language: "layout/language",
-    $t: "layout/$t"
-  }),
+  computed: {
+    ...mapGetters({
+      profile: "auth/profile",
+      theme: "layout/theme",
+      language: "layout/language"
+    }),
+    $t() {
+      return translate(languagesMap, this.language.code);
+    }
+  },
   methods: {
     async logout() {
       const loggedOut = await this.$store.dispatch("auth/logout");

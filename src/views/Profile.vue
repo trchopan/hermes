@@ -1,6 +1,6 @@
 <template>
   <v-layout column>
-    <my-header>{{ $t.profile.greeting }}</my-header>
+    <my-header>{{ $t.greeting }}</my-header>
     <v-layout row wrap align-center justify-center>
       <v-flex xs12 sm6 md4>
         <v-list v-if="profile && !editMode" class="elevation-1">
@@ -16,7 +16,7 @@
               <v-btn
                 outline
                 @click="editMode = true">
-                {{ $t.profile.edit }}
+                {{ $t.edit }}
               </v-btn>
             </v-list-tile-action>
           </v-list-tile>
@@ -29,7 +29,7 @@
             id="fullname"
             prepend-icon="person"
             name="fullname"
-            :label="$t.profile.fullname"
+            :label="$t.fullname"
             type="text"
             :error-messages="error ? error.message : ''"
             v-model="fullname" />
@@ -37,7 +37,7 @@
             id="avatar"
             prepend-icon="lock"
             name="avatar"
-            :label="$t.profile.avatar"
+            :label="$t.avatar"
             type="text"
             v-model="avatar" />
           <v-card-actions>
@@ -50,7 +50,7 @@
               type="button"
               :disabled="loading"
               @click="editMode = false">
-              {{ $t.profile.back }}
+              {{ $t.back }}
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -62,6 +62,15 @@
 <script>
 import { mapGetters } from "vuex";
 import { debounce } from "@/helpers";
+import { translate } from "@/store/modules/layout";
+
+const languagesMap = {
+  greeting: { vi: "Xin chào, bạn phẻ hok?", en: "Hi, how are you today?" },
+  edit: { vi: "Chỉnh sửa", en: "Edit" },
+  fullname: { vi: "Họ tên", en: "Fullname" },
+  avatar: { vi: "Avatar", en: "Avatar" },
+  back: { vi: "Quay lại", en: "Back" }
+};
 
 export default {
   name: "Profile",
@@ -70,11 +79,14 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      $t: "layout/$t",
+      language: "layout/language",
       profile: "auth/profile",
       loading: "auth/loading",
       error: "auth/error"
     }),
+    $t() {
+      return translate(languagesMap, this.language.code);
+    },
     fullname: {
       get: function() {
         return this.profile.fullname;
