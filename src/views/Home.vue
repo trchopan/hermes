@@ -1,12 +1,27 @@
 <template>
   <div>
-    <my-header>Xin chào bạn, phẻ hok?</my-header>
+    <my-header>{{ $t.home }}</my-header>
   </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { translate } from "@/store/modules/layout.js";
+
+export const languagesMap = {
+  home: { vi: "Troang chủ", en: "Home page" }
+};
+
 export default {
-  name: "Home"
+  name: "Home",
+  computed: {
+    ...mapGetters({
+      language: "layout/language"
+    }),
+    $t() {
+      return translate(languagesMap, this.language.code);
+    }
+  }
 };
 </script>
 

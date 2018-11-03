@@ -8,8 +8,8 @@ export const themes = {
 };
 
 export const languages = {
-  vi: { code: "vi", name: "Tiếng Việt" },
-  en: { code: "en", name: "English" }
+  vi: { code: "vi", name: "Tiếng Việt", char: "🇻🇳" },
+  en: { code: "en", name: "English", char: "🇬🇧" }
 };
 
 export const translate = (languagesMap, code) => {
@@ -40,12 +40,17 @@ const actions = () => {
   const initLocalStorage = ({ commit }) => {
     if (window.localStorage !== undefined) {
       const theme = localStorage.theme;
-      const language = JSON.parse(localStorage.language);
       if (theme) {
         changeTheme({ commit }, theme);
       }
-      if (language) {
-        changeLanguage({ commit }, language);
+
+      try {
+        const language = JSON.parse(localStorage.language);
+        if (language) {
+          changeLanguage({ commit }, language);
+        }
+      } catch (_) {
+        localStorage.removeItem("language");
       }
     } else {
       log("No Web Storage support");

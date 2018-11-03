@@ -25,14 +25,11 @@
       </v-list>
       <v-divider v-if="profile" />
       <v-list>
-        <v-list-tile avatar>
-          <v-list-tile-avatar tile>
-            <img :src="`./icons/${language.code}.svg`" alt="language icon" />
-          </v-list-tile-avatar>
+        <v-list-tile>
           <v-list-tile-content>
             <v-select
-              :value="language.name"
-              :items="Object.values(languages).map(x => x.name)"
+              :value="language"
+              :items="languages"
               :label="$t.selectLanguage"
               @change="changeLanguage($event)" />
           </v-list-tile-content>
@@ -79,7 +76,10 @@ export default {
   name: "ToolbarMenu",
   data: () => ({
     themes,
-    languages,
+    languages: Object.values(languages).map(x => ({
+      text: x.char + x.name,
+      value: x
+    })),
     title: process.env.VUE_APP_TITLE,
     menuOpen: false
   }),
@@ -105,8 +105,7 @@ export default {
       this.$store.dispatch("layout/changeTheme", theme);
     },
     changeLanguage(language) {
-      const lang = Object.values(languages).find(x => x.name === language);
-      this.$store.dispatch("layout/changeLanguage", lang);
+      this.$store.dispatch("layout/changeLanguage", language);
     }
   }
 };
