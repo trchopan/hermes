@@ -68,7 +68,7 @@
 import { mapGetters } from "vuex";
 import { themes, languages, translate } from "@/store/modules/layout";
 
-const languagesMap = {
+export const languagesMap = {
   selectLanguage: { vi: "Chọn ngôn ngữ", en: "Select language" },
   darkTheme: { vi: "Tắt đèn", en: "Light out" },
   logout: { vi: "Đăng xuất", en: "Log out" },

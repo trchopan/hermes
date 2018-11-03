@@ -22,7 +22,7 @@
 import { mapGetters } from "vuex";
 import { translate } from "@/store/modules/layout.js";
 
-const languagesMap = {
+export const languagesMap = {
   home: { vi: "Trang chủ", en: "Home" },
   dashboard: { vi: "Bảng điều khiển", en: "Dashboard" },
   about: { vi: "Về chúng tôi", en: "About" }

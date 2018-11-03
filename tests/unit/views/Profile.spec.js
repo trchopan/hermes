@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import Profile from "@/views/Profile.vue";
 import { mockCustomElements } from "@tests/unit/__mocks__/custom-elements.js";
 import { docData } from "@tests/unit/__mocks__/firebase-results.js";
-import { languagesMap } from "@/languages";
+import { languages } from "@/store/modules/layout.js";
 import { filters } from "@/filters.js";
 
 const localVue = createLocalVue();
@@ -18,7 +18,7 @@ describe("views/Profile.vue", () => {
 
   beforeEach(() => {
     getters = {
-      "layout/$t": () => languagesMap.en,
+      "layout/language": () => languages.en,
       "auth/profile": () => docData,
       "auth/error": () => null,
       "auth/loading": () => false

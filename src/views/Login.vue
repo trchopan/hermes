@@ -50,7 +50,7 @@ import { mapGetters } from "vuex";
 import { translate } from "@/store/modules/layout.js";
 
 const languagesMap = {
-  login: { vi: "Đăng nhập", en: "Login" },
+  login: { vi: "Đăng nhập", en: "Log in" },
   password: { vi: "Mật khẩu", en: "Password" }
 };
 
