@@ -15,10 +15,9 @@ exports[`components/layout/ToolbarMenu.vue matches snapshot 1`] = `
     </v-list-stub>
     <v-divider-stub></v-divider-stub>
     <v-list-stub>
-      <v-list-tile-stub avatar="">
-        <v-list-tile-avatar-stub tile=""><img src="./icons/en.svg" alt="language icon"></v-list-tile-avatar-stub>
+      <v-list-tile-stub>
         <v-list-tile-content-stub>
-          <v-select-stub value="English" items="Tiếng Việt,English" label="Select language"></v-select-stub>
+          <v-select-stub value="[object Object]" items="[object Object],[object Object]" label="Select language"></v-select-stub>
         </v-list-tile-content-stub>
       </v-list-tile-stub>
     </v-list-stub>
@@ -40,10 +39,9 @@ exports[`components/layout/ToolbarMenu.vue matches snapshot 2`] = `
     <!---->
     <!---->
     <v-list-stub>
-      <v-list-tile-stub avatar="">
-        <v-list-tile-avatar-stub tile=""><img src="./icons/en.svg" alt="language icon"></v-list-tile-avatar-stub>
+      <v-list-tile-stub>
         <v-list-tile-content-stub>
-          <v-select-stub value="English" items="Tiếng Việt,English" label="Select language"></v-select-stub>
+          <v-select-stub value="[object Object]" items="[object Object],[object Object]" label="Select language"></v-select-stub>
         </v-list-tile-content-stub>
       </v-list-tile-stub>
     </v-list-stub>
