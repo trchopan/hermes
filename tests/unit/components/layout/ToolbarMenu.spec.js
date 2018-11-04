@@ -21,10 +21,11 @@ describe("components/layout/ToolbarMenu.vue", () => {
     getters = {
       "auth/profile": () => docData,
       "layout/theme": () => themes.light,
-      "layout/language": () => languages.en,
+      "layout/language": () => languages.en
     };
     actions = {
       "layout/changeTheme": jest.fn(),
+      "layout/changeLanguage": jest.fn(),
       "auth/logout": jest
         .fn()
         .mockImplementationOnce(() => Promise.resolve(false))
@@ -59,13 +60,17 @@ describe("components/layout/ToolbarMenu.vue", () => {
       themes.light
     );
   });
+  it("changes language", () => {
+    wrapper.vm.changeLanguage(languages.vi.code);
+    expect(actions["layout/changeLanguage"].mock.calls[0][1]).toEqual(
+      languages.vi.code
+    );
+  });
   it("renders profile correctly", () => {
     expect(wrapper.find("v-list-tile-title-stub").text()).toBe(
       docData.fullname
     );
-    expect(wrapper.find("v-btn-stub").text()).toBe(
-      languagesMap.logout.en
-    );
+    expect(wrapper.find("v-btn-stub").text()).toBe(languagesMap.logout.en);
     getters = {
       ...getters,
       "auth/profile": () => null
@@ -83,9 +88,7 @@ describe("components/layout/ToolbarMenu.vue", () => {
       store,
       localVue
     });
-    expect(wrapper.find("v-btn-stub").text()).toBe(
-      languagesMap.login.en
-    );
+    expect(wrapper.find("v-btn-stub").text()).toBe(languagesMap.login.en);
   });
   it("matches snapshot", () => {
     expect(wrapper).toMatchSnapshot();

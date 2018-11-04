@@ -77,7 +77,7 @@ export default {
   data: () => ({
     themes,
     languages: Object.values(languages).map(x => ({
-      text: x.char + x.name,
+      text: `${x.char} ${x.name}`,
       value: x
     })),
     title: process.env.VUE_APP_TITLE,
