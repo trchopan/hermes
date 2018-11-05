@@ -34,7 +34,7 @@ export default {
     profile: "auth/profile"
   }),
   created() {
-    this.$store.dispatch("layout/initLocalStorage", this.$t);
+    this.$store.dispatch("layout/initLocalStorage");
     if (this.$vuetify.breakpoint.lgAndUp) {
       this.$store.dispatch("layout/toggleDrawer");
     }
