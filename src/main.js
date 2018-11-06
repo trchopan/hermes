@@ -2,9 +2,9 @@
 
 import Vue from "vue";
 import "./vuetify";
-import "./global";
 import "./filters";
 import "./helpers";
+import "./share";
 import router, { globalGuard } from "./router";
 import store from "./store";
 import { fireAuth } from "./firebase";
