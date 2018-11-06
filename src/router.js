@@ -31,5 +31,5 @@ export const globalGuard = store => (to, from, next) => {
 export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
-  routes: [...auth, ...about, ...home, ...dashboard, ...notFound]
+  routes: [].concat(auth, about, home, dashboard, notFound)
 });

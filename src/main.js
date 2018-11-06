@@ -2,7 +2,7 @@
 
 import Vue from "vue";
 import "./vuetify";
-import "./components/global";
+import "./global";
 import "./filters";
 import "./helpers";
 import router, { globalGuard } from "./router";
