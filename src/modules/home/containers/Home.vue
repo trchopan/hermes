@@ -6,6 +6,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { translate } from "@/share/helpers";
 
 export const languagesMap = {
   home: { vi: "Troang chủ", en: "Home page" }
@@ -17,7 +18,9 @@ export default {
     ...mapGetters({
       language: "layout/language"
     }),
-    $t: this.$helpers.translate(languagesMap, this.language.code)
+    $t() {
+      return translate(languagesMap, this.language.code);
+    }
   }
 };
 </script>

@@ -1,12 +1,12 @@
-import auth from "@/store/modules/auth.js";
+import auth from "./auth.store";
 import {
   fakeAuthUser,
   fakeError,
   docData,
   docSnapshot
-} from "@tests/unit/__mocks__/firebase-results";
+} from "@/__mocks__/firebase-results";
 
-describe("@/store/modules/auth.js", () => {
+describe("auth.store", () => {
   const signInWithEmailAndPassword = jest
     .fn()
     .mockImplementationOnce(() => Promise.resolve())

@@ -1,17 +1,17 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import { themes } from "@/store/modules/layout";
-import { filters } from "@/filters.js";
-import ToolbarMenu, { languagesMap } from "@/components/layout/ToolbarMenu.vue";
-import { mockCustomElements } from "@tests/unit/__mocks__/custom-elements.js";
-import { docData } from "@tests/unit/__mocks__/firebase-results";
-import { languages } from "@/store/modules/layout.js";
+import { themes } from "@/share/models.js";
+import { filters } from "@/share/filters.js";
+import ToolbarMenu, { languagesMap } from "./ToolbarMenu.vue";
+import { mockCustomElements } from "@/__mocks__/custom-elements.js";
+import { docData } from "@/__mocks__/firebase-results";
+import { languages } from "@/share/models.js";
 
 const localVue = createLocalVue();
 localVue.filter("titleCase", filters.titleCase);
 localVue.use(Vuex);
 
-describe("components/layout/ToolbarMenu.vue", () => {
+describe("ToolbarMenu.vue", () => {
   let getters;
   let actions;
   let store;

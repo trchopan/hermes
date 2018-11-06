@@ -47,6 +47,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { translate } from "@/share/helpers";
 
 const languagesMap = {
   login: { vi: "Đăng nhập", en: "Log in" },
@@ -68,7 +69,9 @@ export default {
       loading: "auth/loading",
       language: "layout/language"
     }),
-    $t: this.$helpers.translate(languagesMap, this.language.code)
+    $t() {
+      return translate(languagesMap, this.language.code);
+    }
   },
   methods: {
     async onSubmit() {

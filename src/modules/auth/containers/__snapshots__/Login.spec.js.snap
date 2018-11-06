@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`views/Login.vue matchs snapshot 1`] = `
+exports[`Login.vue matchs snapshot 1`] = `
 <v-layout-stub align-center="" justify-center="">
   <v-flex-stub xs12="" sm8="" md4="">
     <v-card-stub class="elevation-12">

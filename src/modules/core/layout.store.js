@@ -1,16 +1,7 @@
-import { logger } from "@/helpers";
+import { logger } from "@/share/helpers";
+import { themes, languages } from "@/share/models";
 
 const log = logger("[layout]");
-
-export const themes = {
-  light: "Light",
-  dark: "Dark"
-};
-
-export const languages = {
-  vi: { code: "vi", name: "Tiếng Việt", char: "🇻🇳" },
-  en: { code: "en", name: "English", char: "🇬🇧" }
-};
 
 const state = {
   theme: themes.light,

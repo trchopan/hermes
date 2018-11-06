@@ -63,7 +63,8 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { themes, languages } from "../layout.store.js";
+import { themes, languages } from "@/share/models.js";
+import { translate } from "@/share/helpers";
 
 export const languagesMap = {
   selectLanguage: { vi: "Chọn ngôn ngữ", en: "Select language" },
@@ -89,7 +90,9 @@ export default {
       theme: "layout/theme",
       language: "layout/language"
     }),
-    $t: this.$helpers.translate(languagesMap, this.language.code)
+    $t() {
+      return translate(languagesMap, this.language.code);
+    }
   },
   methods: {
     async logout() {

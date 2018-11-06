@@ -1,13 +1,14 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import App from "@/App.vue";
-import { mockCustomElements } from "@tests/unit/__mocks__/custom-elements.js";
-import { docData } from "@tests/unit/__mocks__/firebase-results.js"
+import App from "./App.vue";
+import { helpers } from "@/share/helpers.js";
+import { mockCustomElements } from "@/__mocks__/custom-elements.js";
+import { docData } from "@/__mocks__/firebase-results.js";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 
-describe("@/App.vue", () => {
+describe("App.vue", () => {
   let store;
   let state;
   let getters;
@@ -35,7 +36,7 @@ describe("@/App.vue", () => {
     });
     wrapper = shallowMount(App, {
       stubs: mockCustomElements,
-      mocks: { $vuetify: { breakpoint: { lgAndUp: true } } },
+      mocks: { $vuetify: { breakpoint: { lgAndUp: true } }, $helpers: helpers },
       store,
       localVue
     });

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/layout/NavigationDrawer.vue matches snapshot 1`] = `
+exports[`NavigationDrawer.vue matches snapshot 1`] = `
 <v-navigation-drawer-stub app="" clipped="" width="200">
   <v-list-stub class="pa-0">
     <v-list-tile-stub avatar="" to="/">

@@ -1,5 +1,3 @@
-import Vue from "vue";
-
 export const logger = className => (message, ...objects) => {
   process.env.NODE_ENV === "development" &&
     console.log(
@@ -50,10 +48,3 @@ export function shuffle(array) {
 
   return array;
 }
-
-Vue.prototype.$helpers = {
-  logger,
-  translate,
-  debounce,
-  shuffle
-};

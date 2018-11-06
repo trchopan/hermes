@@ -1,7 +1,7 @@
-import profileParser from "@/store/parsers/profile.js";
-import { docData } from "@tests/unit/__mocks__/firebase-results.js";
+import { profileParser } from "./models.js";
+import { docData } from "@/__mocks__/firebase-results.js";
 
-describe("@/store/modules/auth.js", () => {
+describe("models.js", () => {
   it("parses profile correctly", () => {
     const emptyData = profileParser({});
     expect(emptyData.fullname).toBeDefined();

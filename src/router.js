@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import { logger } from "@/helpers";
+import { logger } from "@/share/helpers";
 import auth from "@/modules/auth/auth.routes.js";
 import about from "@/modules/about/about.routes.js";
 import home from "@/modules/home/home.routes.js";

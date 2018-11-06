@@ -1,10 +1,11 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Profile from "@/views/Profile.vue";
-import { mockCustomElements } from "@tests/unit/__mocks__/custom-elements.js";
-import { docData } from "@tests/unit/__mocks__/firebase-results.js";
-import { languages } from "@/store/modules/layout.js";
-import { filters } from "@/filters.js";
+import Profile from "./Profile.vue";
+import { helpers } from "@/share/helpers.js"
+import { mockCustomElements } from "@/__mocks__/custom-elements.js";
+import { docData } from "@/__mocks__/firebase-results.js";
+import { languages } from "@/share/models.js";
+import { filters } from "@/share/filters.js";
 
 const localVue = createLocalVue();
 localVue.filter("titleCase", filters.titleCase);
@@ -32,6 +33,7 @@ describe("views/Profile.vue", () => {
     });
     wrapper = shallowMount(Profile, {
       stubs: mockCustomElements,
+      mocks: { $helpers: helpers },
       store,
       localVue
     });

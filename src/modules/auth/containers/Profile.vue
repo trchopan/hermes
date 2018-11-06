@@ -71,7 +71,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { debounce } from "@/helpers";
+import { translate, debounce } from "@/share/helpers";
 
 const languagesMap = {
   greeting: { vi: "Xin chào, bạn phẻ hok?", en: "Hi, how are you today?" },
@@ -96,7 +96,9 @@ export default {
       loading: "auth/loading",
       error: "auth/error"
     }),
-    $t: this.$helpers.translate(languagesMap, this.language.code),
+    $t() {
+      return translate(languagesMap, this.language.code);
+    },
     fullname: {
       get: function() {
         return this.profile.fullname;
