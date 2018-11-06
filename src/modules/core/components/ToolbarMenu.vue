@@ -105,6 +105,7 @@ export default {
       this.$store.dispatch("layout/changeTheme", theme);
     },
     changeLanguage(language) {
+      this.menuOpen = false;
       this.$store.dispatch("layout/changeLanguage", language);
     }
   }
