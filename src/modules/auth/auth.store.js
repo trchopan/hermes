@@ -1,5 +1,5 @@
 import { logger } from "@/helpers.js";
-import profileParser from "@/store/parsers/profile.js";
+import profileParser from "@/parsers/profile.parser.js";
 
 const log = logger("[auth]");
 const usersCol = "users";

@@ -1,11 +1,11 @@
 import Vue from "vue";
 import Router from "vue-router";
 import { logger } from "@/helpers";
-import Home from "@/views/Home.vue";
-import Dashboard from "@/views/Dashboard.vue";
-import Profile from "@/views/Profile.vue";
-import Login from "@/views/Login.vue";
-import NotFound from "@/views/NotFound";
+import auth from "@/modules/auth/auth.routes.js";
+import about from "@/modules/about/about.routes.js";
+import home from "@/modules/home/home.routes.js";
+import dashboard from "@/modules/dashboard/dashboard.routes.js";
+import notFound from "@/modules/not-found/not-found.routes.js";
 
 Vue.use(Router);
 
@@ -31,42 +31,5 @@ export const globalGuard = store => (to, from, next) => {
 export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
-  routes: [
-    {
-      path: "/login",
-      name: "login",
-      component: Login,
-      meta: { text: "Login" }
-    },
-    {
-      path: "/",
-      name: "home",
-      component: Home,
-      meta: { text: "Home" }
-    },
-    {
-      path: "/dashboard",
-      name: "dashboard",
-      component: Dashboard,
-      meta: { requiresAuth: true }
-    },
-    {
-      path: "/profile",
-      name: "profile",
-      component: Profile,
-      meta: { requiresAuth: true }
-    },
-    {
-      path: "/about",
-      name: "about",
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue"),
-      meta: { text: "About" }
-    },
-    {
-      path: "**",
-      name: "not-found",
-      component: NotFound
-    }
-  ]
+  routes: [...auth, ...about, ...home, ...dashboard, ...notFound]
 });

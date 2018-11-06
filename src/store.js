@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import layout from "./modules/layout";
-import auth from "./modules/auth";
 import { fireAuth, fireStore } from "@/firebase";
+import auth from "@/modules/auth/auth.store.js";
+import layout from "@/modules/core/layout.store.js";
 
 Vue.use(Vuex);
 

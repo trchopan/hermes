@@ -1,3 +1,5 @@
+import Vue from "vue";
+
 export const logger = className => (message, ...objects) => {
   process.env.NODE_ENV === "development" &&
     console.log(
@@ -6,6 +8,17 @@ export const logger = className => (message, ...objects) => {
       message,
       ...objects
     );
+};
+
+export const translate = (languagesMap, code) => {
+  let map = {};
+  for (let key in languagesMap) {
+    map[key] =
+      languagesMap[key] && languagesMap[key][code]
+        ? languagesMap[key][code]
+        : "(no translation)";
+  }
+  return map;
 };
 
 export function debounce(func, delay) {
@@ -37,3 +50,10 @@ export function shuffle(array) {
 
   return array;
 }
+
+Vue.prototype.$helpers = {
+  logger,
+  translate,
+  debounce,
+  shuffle
+};

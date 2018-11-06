@@ -20,7 +20,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { translate } from "@/store/modules/layout.js";
 
 export const languagesMap = {
   home: { vi: "Trang chủ", en: "Home" },
@@ -47,7 +46,7 @@ export default {
       language: "layout/language"
     }),
     $t() {
-      return translate(languagesMap, this.language.code);
+      return this.$helpers.translate(languagesMap, this.language.code);
     },
     drawerOpen: {
       get: function() {

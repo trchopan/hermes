@@ -12,17 +12,6 @@ export const languages = {
   en: { code: "en", name: "English", char: "🇬🇧" }
 };
 
-export const translate = (languagesMap, code) => {
-  let map = {};
-  for (let key in languagesMap) {
-    map[key] =
-      languagesMap[key] && languagesMap[key][code]
-        ? languagesMap[key][code]
-        : "(no translation)";
-  }
-  return map;
-};
-
 const state = {
   theme: themes.light,
   drawerOpen: false,

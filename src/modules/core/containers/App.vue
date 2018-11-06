@@ -17,9 +17,9 @@
 
 <script>
 import { mapGetters } from "vuex";
-import InitMessage from "@/components/layout/InitMessage";
-import Toolbar from "@/components/layout/Toolbar";
-import NavigationDrawer from "@/components/layout/NavigationDrawer";
+import InitMessage from "../components/InitMessage.vue";
+import Toolbar from "../components/Toolbar.vue";
+import NavigationDrawer from "../components/NavigationDrawer.vue";
 
 export default {
   name: "App",
@@ -42,4 +42,4 @@ export default {
 };
 </script>
 
-<style lang="scss" src="./style.scss" />
+<style lang="scss" src="@/style.scss" />

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import ToolbarMenu from "@/components/layout/ToolbarMenu.vue";
+import ToolbarMenu from "./ToolbarMenu.vue";
 
 export default {
   name: "Toolbar",

@@ -4,10 +4,11 @@ import Vue from "vue";
 import "./vuetify";
 import "./components/global";
 import "./filters";
+import "./helpers";
 import router, { globalGuard } from "./router";
 import store from "./store";
 import { fireAuth } from "./firebase";
-import App from "./App.vue";
+import App from "@/modules/core/containers/App.vue";
 
 Vue.config.productionTip = false;
 console.log(`version %c${process.env.VUE_APP_VERSION}`, "color: #ed1d24;");
