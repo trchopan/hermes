@@ -45,9 +45,7 @@ export default {
       _drawerOpen: "layout/drawerOpen",
       language: "layout/language"
     }),
-    $t() {
-      return this.$helpers.translate(languagesMap, this.language.code);
-    },
+    $t: this.$helpers.translate(languagesMap, this.language.code),
     drawerOpen: {
       get: function() {
         return this._drawerOpen;

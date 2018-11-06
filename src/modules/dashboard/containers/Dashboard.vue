@@ -30,9 +30,7 @@ export default {
     ...mapGetters({
       language: "layout/language"
     }),
-    $t() {
-      return this.$helpers.translate(languagesMap, this.language.code);
-    },
+    $t: this.$helpers.translate(languagesMap, this.language.code),
     localTimeString() {
       return new Date().toLocaleString(this.language.code);
     }

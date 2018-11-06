@@ -68,9 +68,7 @@ export default {
       loading: "auth/loading",
       language: "layout/language"
     }),
-    $t() {
-      return this.$helpers.translate(languagesMap, this.language.code);
-    }
+    $t: this.$helpers.translate(languagesMap, this.language.code)
   },
   methods: {
     async onSubmit() {

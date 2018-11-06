@@ -89,9 +89,7 @@ export default {
       theme: "layout/theme",
       language: "layout/language"
     }),
-    $t() {
-      return this.$helpers.translate(languagesMap, this.language.code);
-    }
+    $t: this.$helpers.translate(languagesMap, this.language.code)
   },
   methods: {
     async logout() {

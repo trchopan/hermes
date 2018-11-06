@@ -96,9 +96,7 @@ export default {
       loading: "auth/loading",
       error: "auth/error"
     }),
-    $t() {
-      return this.$helpers.translate(languagesMap, this.language.code);
-    },
+    $t: this.$helpers.translate(languagesMap, this.language.code),
     fullname: {
       get: function() {
         return this.profile.fullname;
