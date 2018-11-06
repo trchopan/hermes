@@ -1,5 +1,5 @@
 import { logger } from "@/helpers.js";
-import profileParser from "@/parsers/profile.parser.js";
+import { profileParser } from "@/models.js";
 
 const log = logger("[auth]");
 const usersCol = "users";
@@ -21,7 +21,7 @@ const getters = {
 const actions = (fireAuth, fireStore) => {
   /**
    * This variable keeps track of firestore snapshot
-   * Call it to end unsubscribe to onSnapshot
+   * Call it to unsubscribe to onSnapshot
    */
   let profileSnap;
 
