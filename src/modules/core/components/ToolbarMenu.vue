@@ -63,7 +63,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { themes, languages } from "@/share/models.js";
+import { themes, languages } from "@/modules/core/layout.models.js";
 import { translate } from "@/share/helpers";
 
 export const languagesMap = {

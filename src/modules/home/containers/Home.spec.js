@@ -1,7 +1,7 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import Home from "./Home.vue";
-import { languages } from "@/share/models.js";
+import { languages } from "@/modules/core/layout.models.js";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
 
 const localVue = createLocalVue();

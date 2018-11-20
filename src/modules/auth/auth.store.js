@@ -1,5 +1,5 @@
 import { logger } from "@/share/helpers.js";
-import { profileParser } from "@/share/models.js";
+import { profileParser } from "./auth.models.js";
 
 const log = logger("[auth]");
 const usersCol = "users";

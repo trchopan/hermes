@@ -4,7 +4,7 @@ import Profile from "./Profile.vue";
 import { helpers } from "@/share/helpers.js"
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
 import { docData } from "@/__mocks__/firebase-results.js";
-import { languages } from "@/share/models.js";
+import { languages } from "@/modules/core/layout.models.js";
 import { filters } from "@/share/filters.js";
 
 const localVue = createLocalVue();

@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import Login from "./Login.vue";
 import { helpers } from "@/share/helpers.js";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
-import { languages } from "@/share/models.js";
+import { languages } from "@/modules/core/layout.models.js";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);

@@ -4,14 +4,13 @@ module.exports = {
     "^.+\\.vue$": "vue-jest",
     ".+\\.(css|styl|less|sass|scss|svg|png|jpg|ttf|woff|woff2)$":
       "jest-transform-stub",
-    "^.+\\.jsx?$": "babel-jest"
+    "^.+\\.jsx?$": "babel-jest",
+    "^.+\\.js$": "babel-jest"
   },
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1"
   },
   snapshotSerializers: ["jest-serializer-vue"],
-  testMatch: [
-    "**/src/**/*.spec.(js|jsx|ts|tsx)"
-  ],
+  testMatch: ["**/src/**/*.spec.(js|jsx|ts|tsx)"],
   testURL: "http://localhost/"
 };
