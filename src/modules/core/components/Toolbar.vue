@@ -1,10 +1,10 @@
 <template>
   <v-toolbar app dark flat clipped-left color="primary">
-    <v-toolbar-side-icon @click="toggleDrawer()" />
+    <v-toolbar-side-icon @click="toggleDrawer()"/>
     <v-toolbar-title>{{ title }}</v-toolbar-title>
-    <v-spacer />
+    <v-spacer/>
     <v-toolbar-items>
-      <ToolbarMenu />
+      <ToolbarMenu/>
     </v-toolbar-items>
   </v-toolbar>
 </template>

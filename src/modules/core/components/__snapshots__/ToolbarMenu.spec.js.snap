@@ -24,9 +24,7 @@ exports[`ToolbarMenu.vue matches snapshot 1`] = `
     <v-card-actions-stub>
       <v-switch-stub label="Light out" input-value="Light" true-value="Dark" false-value="Light" class="pr-3 pt-2"></v-switch-stub>
       <v-spacer-stub></v-spacer-stub>
-      <v-btn-stub outline="">
-        Log out
-      </v-btn-stub>
+      <v-btn-stub outline="">Log out</v-btn-stub>
     </v-card-actions-stub>
   </v-card-stub>
 </v-menu-stub>
@@ -48,9 +46,7 @@ exports[`ToolbarMenu.vue matches snapshot 2`] = `
     <v-card-actions-stub>
       <v-switch-stub label="Light out" input-value="Light" true-value="Dark" false-value="Light" class="pr-3 pt-2"></v-switch-stub>
       <v-spacer-stub></v-spacer-stub>
-      <v-btn-stub outline="" to="/login">
-        Log in
-      </v-btn-stub>
+      <v-btn-stub outline="" to="/login">Log in</v-btn-stub>
     </v-card-actions-stub>
   </v-card-stub>
 </v-menu-stub>

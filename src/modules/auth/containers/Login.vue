@@ -9,7 +9,8 @@
           :active="loading"
           indeterminate
           color="orange"
-          height="3" />
+          height="3"
+        />
         <v-form>
           <v-card-text>
             <v-text-field
@@ -19,25 +20,26 @@
               label="Email"
               type="text"
               :error-messages="error ? error.message : ''"
-              v-model="email" />
+              v-model="email"
+            />
             <v-text-field
               id="password"
               prepend-icon="lock"
               name="password"
               :label="$t.password"
               type="password"
-              v-model="password" />
+              v-model="password"
+            />
           </v-card-text>
           <v-card-actions>
-            <v-spacer />
+            <v-spacer/>
             <v-btn
               id="submit"
               color="primary"
               type="submit"
               :disabled="loading"
-              @click.prevent="onSubmit()">
-              {{ $t.login }}
-            </v-btn>
+              @click.prevent="onSubmit()"
+            >{{ $t.login }}</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>

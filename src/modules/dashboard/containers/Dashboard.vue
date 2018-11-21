@@ -2,14 +2,16 @@
   <div>
     <my-header>{{ $t.today | format([localTimeString, "Beauti"]) }}</my-header>
     <v-fab-transition>
-      <v-btn v-show="!hidden"
+      <v-btn
+        v-show="!initButton"
         color="pink"
         dark
         fixed
         bottom
         right
         fab
-        @click="showDialog()">
+        @click="showDialog()"
+      >
         <v-icon>add</v-icon>
       </v-btn>
     </v-fab-transition>
@@ -26,7 +28,7 @@ const languagesMap = {
 
 export default {
   name: "Dashboard",
-  data: () => ({ hidden: true }),
+  data: () => ({ initButton: true }),
   computed: {
     ...mapGetters({
       language: "layout/language"
@@ -39,7 +41,7 @@ export default {
     }
   },
   mounted() {
-    this.hidden = false;
+    this.initButton = false;
   }
 };
 </script>

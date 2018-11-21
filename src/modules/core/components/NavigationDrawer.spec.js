@@ -1,5 +1,5 @@
-import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
+import { shallowMount, createLocalVue } from "@vue/test-utils";
 import NavigationDrawer, { languagesMap } from "./NavigationDrawer.vue";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
 import { languages } from "@/modules/core/layout.models.js";

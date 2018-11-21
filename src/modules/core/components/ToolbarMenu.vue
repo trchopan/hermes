@@ -1,16 +1,9 @@
 <template>
-  <v-menu
-    :close-on-content-click="false"
-    v-model="menuOpen"
-    offset-y
-    left>
-    <v-avatar
-      slot="activator"
-      :size="$vuetify.breakpoint.mdAndUp ? 42 : 36">
-      <img v-if="profile" :src="profile.avatar" alt="avatar" />
-      <img v-else src="/images/bloody-smile.jpg" alt="avatar" />
+  <v-menu :close-on-content-click="false" v-model="menuOpen" offset-y left>
+    <v-avatar slot="activator" :size="$vuetify.breakpoint.mdAndUp ? 42 : 36">
+      <img v-if="profile" :src="profile.avatar" alt="avatar">
+      <img v-else src="/images/bloody-smile.jpg" alt="avatar">
     </v-avatar>
-
     <v-card>
       <v-list v-if="profile">
         <v-list-tile avatar to="/profile" @click="menuOpen = false">
@@ -23,7 +16,7 @@
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
-      <v-divider v-if="profile" />
+      <v-divider v-if="profile"/>
       <v-list>
         <v-list-tile>
           <v-list-tile-content>
@@ -31,7 +24,8 @@
               :value="language"
               :items="languages"
               :label="$t.selectLanguage"
-              @change="changeLanguage($event)" />
+              @change="changeLanguage($event)"
+            />
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -42,20 +36,16 @@
           :input-value="theme"
           :true-value="themes.dark"
           :false-value="themes.light"
-          @change="changeTheme($event)">
-        </v-switch>
+          @change="changeTheme($event)"
+        ></v-switch>
         <v-spacer></v-spacer>
-        <v-btn v-if="profile"
-          outline
-          @click="logout()">
-          {{ $t.logout }}
-        </v-btn>
-        <v-btn v-else
+        <v-btn v-if="profile" outline @click="logout()">{{ $t.logout }}</v-btn>
+        <v-btn
+          v-else
           outline
           to="/login"
-          @click="menuOpen = false">
-          {{ $t.login }}
-        </v-btn>
+          @click="menuOpen = false"
+        >{{ $t.login }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-menu>

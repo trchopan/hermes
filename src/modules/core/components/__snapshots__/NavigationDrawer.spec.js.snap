@@ -9,6 +9,18 @@ exports[`NavigationDrawer.vue matches snapshot 1`] = `
       </v-list-tile-avatar-stub>
       <v-list-tile-title-stub>Home</v-list-tile-title-stub>
     </v-list-tile-stub>
+    <v-list-tile-stub avatar="" to="/dashboard">
+      <v-list-tile-avatar-stub>
+        <v-icon-stub>dashboard</v-icon-stub>
+      </v-list-tile-avatar-stub>
+      <v-list-tile-title-stub>Dashboard</v-list-tile-title-stub>
+    </v-list-tile-stub>
+    <v-list-tile-stub avatar="" to="/about">
+      <v-list-tile-avatar-stub>
+        <v-icon-stub></v-icon-stub>
+      </v-list-tile-avatar-stub>
+      <v-list-tile-title-stub>About</v-list-tile-title-stub>
+    </v-list-tile-stub>
     <v-divider-stub></v-divider-stub>
   </v-list-stub>
 </v-navigation-drawer-stub>

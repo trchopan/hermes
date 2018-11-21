@@ -1,12 +1,10 @@
 <template>
   <v-layout column>
     <my-header>{{ $t.greeting }}</my-header>
-    <v-layout row wrap align-center justify-center>
+    <v-layout row wrap="" align-center justify-center>
       <v-flex xs12 sm6 md4>
         <transition name="fade" mode="out-in">
-          <v-card v-if="!editMode"
-            key="profile-display"
-            class="elevation-1">
+          <v-card v-if="!editMode" key="profile-display" class="elevation-1">
             <v-list>
               <v-list-tile avatar>
                 <v-list-tile-avatar>
@@ -17,50 +15,50 @@
                   <v-list-tile-sub-title>{{ profile.position | titleCase }}</v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action>
-                  <v-btn
-                    outline
-                    @click="editMode = true">
-                    {{ $t.edit }}
-                  </v-btn>
+                  <v-btn outline @click="editMode = true">{{ $t.edit }}</v-btn>
                 </v-list-tile-action>
               </v-list-tile>
             </v-list>
           </v-card>
-          <v-card v-if="editMode"
+          <v-card
+            v-if="editMode"
             key="profile-edit"
-            class="elevation-6 pt-3 px-3 text-xs-center">
+            class="elevation-6 pt-3 px-3 text-xs-center"
+          >
             <v-avatar size="80">
               <img :src="profile.avatar" alt="big avatar">
             </v-avatar>
-              <v-text-field
-                id="fullname"
-                prepend-icon="person"
-                :label="$t.fullname"
-                type="text"
-                v-model="fullname"
-                required />
-              <v-text-field
-                id="avatar"
-                prepend-icon="lock"
-                :label="$t.avatar"
-                type="text"
-                v-model="avatar"
-                required />
+            <v-text-field
+              id="fullname"
+              prepend-icon="person"
+              :label="$t.fullname"
+              type="text"
+              v-model="fullname"
+              required
+            />
+            <v-text-field
+              id="avatar"
+              prepend-icon="lock"
+              :label="$t.avatar"
+              type="text"
+              v-model="avatar"
+              required
+            />
             <v-card-actions>
-              <v-spacer />
+              <v-spacer/>
               <template v-if="!prestine">
-                <v-icon class="mr-1" color="success">
-                  {{ loading ? 'hourglass_empty' : 'check_circle_outline' }}
-                </v-icon>
-                <span class="mr-2" >{{ loading ? $t.loading : $t.done }}</span>
+                <v-icon
+                  class="mr-1"
+                  color="success"
+                >{{ loading ? 'hourglass_empty' : 'check_circle_outline' }}</v-icon>
+                <span class="mr-2">{{ loading ? $t.loading : $t.done }}</span>
               </template>
               <v-btn
                 color="primary"
                 type="button"
                 :disabled="loading"
-                @click="back()">
-                {{ $t.back }}
-              </v-btn>
+                @click="back()"
+              >{{ $t.back }}</v-btn>
             </v-card-actions>
           </v-card>
         </transition>

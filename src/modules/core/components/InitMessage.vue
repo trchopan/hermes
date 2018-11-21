@@ -1,8 +1,8 @@
 <template>
   <div id="initial-loading">
-    <img src="/images/bloody-smile.jpg" alt="initializing image" />
+    <img src="/images/bloody-smile.jpg" alt="initializing image">
     <p class="mt-3 title">...{{ $t.greeting }}</p>
-  </div>  
+  </div>
 </template>
 
 <script>
