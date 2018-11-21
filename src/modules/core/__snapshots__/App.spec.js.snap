@@ -6,7 +6,7 @@ exports[`App.vue matchs snapshot 1`] = `
     <toolbar-stub></toolbar-stub>
     <navigationdrawer-stub></navigationdrawer-stub>
     <v-content-stub>
-      <v-container-stub fluid="" class="dark">
+      <v-container-stub fluid="" class="white--text">
         <router-view-stub name="fade" mode="out-in"></router-view-stub>
       </v-container-stub>
     </v-content-stub>

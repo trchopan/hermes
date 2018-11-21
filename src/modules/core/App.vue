@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <InitMessage v-if="loading && !profile"/>
+    <InitMessage v-if="loading && !profile" />
     <v-app v-else :dark="darkTheme">
-      <Toolbar/>
-      <NavigationDrawer/>
+      <Toolbar />
+      <NavigationDrawer />
       <v-content>
         <v-container fluid :class="{ 'white--text': darkTheme }">
           <transition name="fade" mode="out-in">
-            <router-view/>
+            <router-view />
           </transition>
         </v-container>
       </v-content>
@@ -38,7 +38,6 @@ export default {
     if (this.$vuetify.breakpoint.lgAndUp) {
       this.$store.dispatch("layout/toggleDrawer");
     }
-    this.$t();
   }
 };
 </script>

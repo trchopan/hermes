@@ -3,7 +3,7 @@
 exports[`views/Profile.vue matchs snapshot 1`] = `
 <v-layout-stub column="">
   <my-header-stub>Hi, how are you today?</my-header-stub>
-  <v-layout-stub row="" wrap="" align-center="" justify-center="">
+  <v-layout-stub row="" align-center="" justify-center="">
     <v-flex-stub xs12="" sm6="" md4="">
       <v-card-stub class="elevation-1" name="fade" mode="out-in">
         <v-list-stub>
@@ -27,7 +27,7 @@ exports[`views/Profile.vue matchs snapshot 1`] = `
 exports[`views/Profile.vue matchs snapshot 2`] = `
 <v-layout-stub column="">
   <my-header-stub>Hi, how are you today?</my-header-stub>
-  <v-layout-stub row="" wrap="" align-center="" justify-center="">
+  <v-layout-stub row="" align-center="" justify-center="">
     <v-flex-stub xs12="" sm6="" md4="">
       <v-card-stub class="elevation-6 pt-3 px-3 text-xs-center" name="fade" mode="out-in">
         <v-avatar-stub size="80"><img src="avatar" alt="big avatar"></v-avatar-stub>
@@ -36,7 +36,7 @@ exports[`views/Profile.vue matchs snapshot 2`] = `
         <v-card-actions-stub>
           <v-spacer-stub></v-spacer-stub>
           <!---->
-          <v-btn-stub color="primary" type="button">Back</v-btn-stub>
+          <v-btn-stub outline="" color="primary" type="button">Back</v-btn-stub>
         </v-card-actions-stub>
       </v-card-stub>
     </v-flex-stub>

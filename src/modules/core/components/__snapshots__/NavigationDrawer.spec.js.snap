@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`NavigationDrawer.vue matches snapshot 1`] = `
-<v-navigation-drawer-stub app="" clipped="" width="200">
+<v-navigation-drawer-stub app="" clipped="" width="230">
   <v-list-stub class="pa-0">
     <v-list-tile-stub avatar="" to="/">
       <v-list-tile-avatar-stub>
@@ -14,6 +14,12 @@ exports[`NavigationDrawer.vue matches snapshot 1`] = `
         <v-icon-stub>dashboard</v-icon-stub>
       </v-list-tile-avatar-stub>
       <v-list-tile-title-stub>Dashboard</v-list-tile-title-stub>
+    </v-list-tile-stub>
+    <v-list-tile-stub avatar="" to="/user">
+      <v-list-tile-avatar-stub>
+        <v-icon-stub>account_circle</v-icon-stub>
+      </v-list-tile-avatar-stub>
+      <v-list-tile-title-stub>User management</v-list-tile-title-stub>
     </v-list-tile-stub>
     <v-list-tile-stub avatar="" to="/about">
       <v-list-tile-avatar-stub>

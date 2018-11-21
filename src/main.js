@@ -4,7 +4,6 @@ import Vue from "vue";
 import "./vuetify";
 import "./share/filters";
 import "./share/components";
-import "./plugins/translation.js";
 import router, { globalGuard } from "./router";
 import store from "./store";
 import { fireAuth } from "./firebase";
