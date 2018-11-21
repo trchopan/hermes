@@ -1,5 +1,5 @@
 import { logger } from "@/share/helpers";
-import { themes, languages } from "@/share/models";
+import { themes, languages } from "@/modules/core/layout.models.js";
 
 const log = logger("[layout]");
 
