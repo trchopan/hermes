@@ -1,9 +1,6 @@
-import NotFound from "./containers/NotFound.vue";
+import NotFound from "./NotFound.vue";
 
 export default [
-  {
-    path: "**",
-    name: "not-found",
-    component: NotFound
-  }
+  { path: "/not-found", name: "not-found", component: NotFound },
+  { path: "**", redirect: "/not-found" }
 ];

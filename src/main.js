@@ -7,7 +7,7 @@ import "./share/components";
 import router, { globalGuard } from "./router";
 import store from "./store";
 import { fireAuth } from "./firebase";
-import App from "@/modules/core/containers/App.vue";
+import App from "@/modules/core/App.vue";
 
 Vue.config.productionTip = false;
 console.log(`version %c${process.env.VUE_APP_VERSION}`, "color: #ed1d24;");

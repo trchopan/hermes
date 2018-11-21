@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <InitMessage v-if="loading && !profile"/>
+    <InitMessage v-if="loading && !profile" />
     <v-app v-else :dark="darkTheme">
-      <Toolbar/>
-      <NavigationDrawer/>
+      <Toolbar />
+      <NavigationDrawer />
       <v-content>
-        <v-container fluid :class="{ dark: darkTheme }">
+        <v-container fluid :class="{ 'white--text': darkTheme }">
           <transition name="fade" mode="out-in">
-            <router-view/>
+            <router-view />
           </transition>
         </v-container>
       </v-content>
@@ -17,9 +17,9 @@
 
 <script>
 import { mapGetters } from "vuex";
-import InitMessage from "../components/InitMessage.vue";
-import Toolbar from "../components/Toolbar.vue";
-import NavigationDrawer from "../components/NavigationDrawer.vue";
+import InitMessage from "./components/InitMessage.vue";
+import Toolbar from "./components/Toolbar.vue";
+import NavigationDrawer from "./components/NavigationDrawer.vue";
 
 export default {
   name: "App",
