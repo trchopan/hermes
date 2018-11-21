@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
+import colors from "vuetify/es5/util/colors";
+
 import {
   VApp,
   VAvatar,
@@ -83,5 +85,9 @@ const directives = {
 
 Vue.use(Vuetify, {
   components,
-  directives
+  directives,
+  theme: {
+    secondary: colors.pink.lighten1, // #FFCDD2
+    accent: colors.indigo.base // #3F51B5
+  }
 });

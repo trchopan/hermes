@@ -5,7 +5,7 @@
       <Toolbar/>
       <NavigationDrawer/>
       <v-content>
-        <v-container fluid :class="{ dark: darkTheme }">
+        <v-container fluid :class="{ 'white--text': darkTheme }">
           <transition name="fade" mode="out-in">
             <router-view/>
           </transition>
@@ -17,9 +17,9 @@
 
 <script>
 import { mapGetters } from "vuex";
-import InitMessage from "../components/InitMessage.vue";
-import Toolbar from "../components/Toolbar.vue";
-import NavigationDrawer from "../components/NavigationDrawer.vue";
+import InitMessage from "./components/InitMessage.vue";
+import Toolbar from "./components/Toolbar.vue";
+import NavigationDrawer from "./components/NavigationDrawer.vue";
 
 export default {
   name: "App",
@@ -38,6 +38,7 @@ export default {
     if (this.$vuetify.breakpoint.lgAndUp) {
       this.$store.dispatch("layout/toggleDrawer");
     }
+    this.$t();
   }
 };
 </script>

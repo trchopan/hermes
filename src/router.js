@@ -3,6 +3,7 @@ import Router from "vue-router";
 import { logger } from "@/share/helpers";
 import auth from "@/modules/auth/auth.routes.js";
 import about from "@/modules/about/about.routes.js";
+import user from "@/modules/user/user.routes.js";
 import home from "@/modules/home/home.routes.js";
 import dashboard from "@/modules/dashboard/dashboard.routes.js";
 import notFound from "@/modules/not-found/not-found.routes.js";
@@ -31,5 +32,5 @@ export const globalGuard = store => (to, from, next) => {
 export default new Router({
   mode: "history",
   base: process.env.BASE_URL,
-  routes: [].concat(auth, about, home, dashboard, notFound)
+  routes: [].concat(auth, about, user, home, dashboard, notFound)
 });

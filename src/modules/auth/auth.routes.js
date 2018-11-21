@@ -1,12 +1,17 @@
-import Login from "./containers/Login.vue";
-import Profile from "./containers/Profile.vue";
+import SignUp from "./SignUp.vue";
+import Login from "./Login.vue";
+import Profile from "./Profile.vue";
 
 export default [
   {
+    path: "/signup",
+    name: "signup",
+    component: SignUp
+  },
+  {
     path: "/login",
     name: "login",
-    component: Login,
-    meta: { text: "Login" }
+    component: Login
   },
   {
     path: "/profile",

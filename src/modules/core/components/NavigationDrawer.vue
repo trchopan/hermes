@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawerOpen" app clipped width="200">
+  <v-navigation-drawer v-model="drawerOpen" app clipped width="230">
     <v-list class="pa-0">
       <v-list-tile
         v-for="item in drawerItems"
@@ -24,6 +24,7 @@ import { translate } from "@/share/helpers";
 export const languagesMap = {
   home: { vi: "Trang chủ", en: "Home" },
   dashboard: { vi: "Bảng điều khiển", en: "Dashboard" },
+  user: { vi: "Quản lý người dùng", en: "User management" },
   about: { vi: "Về chúng tôi", en: "About" }
 };
 
@@ -34,6 +35,7 @@ export const _drawerItems = [
     name: "dashboard",
     icon: "dashboard"
   },
+  { path: "/user", name: "user", icon: "account_circle" },
   { path: "/about", name: "about", icon: "" }
 ];
 

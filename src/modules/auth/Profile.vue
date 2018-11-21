@@ -1,7 +1,7 @@
 <template>
   <v-layout column>
     <my-header>{{ $t.greeting }}</my-header>
-    <v-layout row wrap="" align-center justify-center>
+    <v-layout row align-center justify-center>
       <v-flex xs12 sm6 md4>
         <transition name="fade" mode="out-in">
           <v-card v-if="!editMode" key="profile-display" class="elevation-1">
@@ -54,6 +54,7 @@
                 <span class="mr-2">{{ loading ? $t.loading : $t.done }}</span>
               </template>
               <v-btn
+                outline
                 color="primary"
                 type="button"
                 :disabled="loading"
