@@ -8,17 +8,6 @@ export const logger = className => (message, ...objects) => {
     );
 };
 
-export const translate = (languagesMap, code) => {
-  let map = {};
-  for (let key in languagesMap) {
-    map[key] =
-      languagesMap[key] && languagesMap[key][code]
-        ? languagesMap[key][code]
-        : "(no translation)";
-  }
-  return map;
-};
-
 export function debounce(func, delay) {
   let inDebounce;
   return function() {

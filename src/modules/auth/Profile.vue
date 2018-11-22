@@ -70,7 +70,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { translate, debounce } from "@/share/helpers";
+import { debounce } from "@/share/helpers";
 
 const languagesMap = {
   greeting: { vi: "Xin chào, bạn phẻ hok?", en: "Hi, how are you today?" },
@@ -96,7 +96,7 @@ export default {
       error: "auth/error"
     }),
     $t() {
-      return translate(languagesMap, this.language.code);
+      return this.$translate(languagesMap, this.language.code);
     },
     fullname: {
       get: function() {

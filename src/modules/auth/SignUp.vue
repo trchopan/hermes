@@ -46,7 +46,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { translate } from "@/share/helpers";
 
 const languagesMap = {
   password: { vi: "Mật khẩu", en: "Password" },
@@ -70,7 +69,7 @@ export default {
       language: "layout/language"
     }),
     $t() {
-      return translate(languagesMap, this.language.code);
+      return this.$translate(languagesMap, this.language.code);
     }
   },
   methods: {

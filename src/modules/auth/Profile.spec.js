@@ -1,5 +1,6 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
+import Translation from "@/plugins/translation.js";
 import Profile from "./Profile.vue";
 import { helpers } from "@/share/helpers.js"
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
@@ -10,6 +11,7 @@ import { filters } from "@/share/filters.js";
 const localVue = createLocalVue();
 localVue.filter("titleCase", filters.titleCase);
 localVue.use(Vuex);
+localVue.use(Translation);
 
 describe("views/Profile.vue", () => {
   let store;

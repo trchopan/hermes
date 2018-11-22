@@ -20,7 +20,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { translate } from "@/share/helpers";
 
 const languagesMap = {
   today: { vi: "Bây giờ là {0}, {1}", en: "Now is {0}, {1}" }
@@ -34,7 +33,7 @@ export default {
       language: "layout/language"
     }),
     $t() {
-      return translate(languagesMap, this.language.code);
+      return this.$translate(languagesMap, this.language.code);
     },
     localTimeString() {
       return new Date().toLocaleString(this.language.code);

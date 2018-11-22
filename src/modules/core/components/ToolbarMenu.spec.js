@@ -1,5 +1,6 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
+import Translation from "@/plugins/translation.js";
 import { themes } from "@/modules/core/layout.models.js";
 import { filters } from "@/share/filters.js";
 import ToolbarMenu, { languagesMap } from "./ToolbarMenu.vue";
@@ -10,6 +11,7 @@ import { languages } from "@/modules/core/layout.models.js";
 const localVue = createLocalVue();
 localVue.filter("titleCase", filters.titleCase);
 localVue.use(Vuex);
+localVue.use(Translation);
 
 describe("ToolbarMenu.vue", () => {
   let getters;
