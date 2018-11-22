@@ -19,18 +19,14 @@ const getters = {
 const actions = () => {
   const initLocalStorage = ({ commit }) => {
     if (window.localStorage !== undefined) {
-      const theme = localStorage.theme;
+      const theme = localStorage.getItem("theme");
       if (theme) {
         changeTheme({ commit }, theme);
       }
 
-      try {
-        const language = JSON.parse(localStorage.language);
-        if (language) {
-          changeLanguage({ commit }, language);
-        }
-      } catch (_) {
-        localStorage.removeItem("language");
+      const language = localStorage.getItem("language");
+      if (language) {
+        changeLanguage({ commit }, JSON.parse(language));
       }
     } else {
       log("No Web Storage support");

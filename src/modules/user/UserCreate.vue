@@ -7,7 +7,6 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { translate } from "@/share/helpers";
 
 const languagesMap = {
   userCreate: { vi: "Tạo người dùng", en: "Create users" }
@@ -20,7 +19,7 @@ export default {
       language: "layout/language"
     }),
     $t() {
-      return translate(languagesMap, this.language.code);
+      return this.$translate(languagesMap, this.language.code);
     }
   }
 };

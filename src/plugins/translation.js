@@ -1,17 +1,14 @@
-import Vue from "vue";
-
-const TranslationPlugin = {
+export default {
   install(Vue) {
-    let _language = "en";
-    Vue.prototype.$t = function() {
-      console.log("translation");
-      return _language;
-    };
-    Vue.prototype.$t.changeLanguage = function(language) {
-      console.log(this);
-      _language = language;
+    Vue.prototype.$translate = (languagesMap, code) => {
+      let map = {};
+      for (let key in languagesMap) {
+        map[key] =
+          languagesMap[key] && languagesMap[key][code]
+            ? languagesMap[key][code]
+            : "(no translation)";
+      }
+      return map;
     };
   }
 };
-
-Vue.use(TranslationPlugin);
