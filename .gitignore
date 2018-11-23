@@ -23,3 +23,7 @@ yarn-error.log*
 # Firebase
 firebase.conf.js
 .firebase
+
+# Functions build
+functions/lib
+functions/src/secrets.ts

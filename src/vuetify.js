@@ -87,7 +87,8 @@ Vue.use(Vuetify, {
   components,
   directives,
   theme: {
-    secondary: colors.pink.lighten1, // #FFCDD2
-    accent: colors.indigo.base // #3F51B5
+    secondary: colors.pink.accent2,
+    accent: colors.indigo.base,
+    warn: colors.red.accent2
   }
 });

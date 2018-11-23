@@ -1,4 +1,4 @@
-import { logger } from "@/share/helpers";
+import { logger } from "@/helpers";
 import { themes, languages } from "./layout.models.js";
 
 const log = logger("[layout]");

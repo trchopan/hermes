@@ -2,7 +2,7 @@ import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import Translation from "@/plugins/translation.js";
 import { themes } from "@/modules/core/layout.models.js";
-import { filters } from "@/share/filters.js";
+import { filters } from "@/filters.js";
 import ToolbarMenu, { languagesMap } from "./ToolbarMenu.vue";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
 import { docData } from "@/__mocks__/firebase-results";

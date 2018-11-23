@@ -2,8 +2,8 @@
 
 import Vue from "vue";
 import "./vuetify";
-import "./share/filters.js";
-import "./share/components";
+import "./filters.js";
+import "./share";
 import Translation from "./plugins/translation.js";
 import router, { globalGuard } from "./router";
 import store from "./store";

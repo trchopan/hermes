@@ -2,7 +2,7 @@ import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import App from "./App.vue";
 import Translation from "@/plugins/translation.js";
-import { helpers } from "@/share/helpers.js";
+import { helpers } from "@/helpers.js";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
 import { docData } from "@/__mocks__/firebase-results.js";
 
