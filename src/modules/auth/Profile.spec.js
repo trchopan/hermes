@@ -4,7 +4,7 @@ import Translation from "@/plugins/translation.js";
 import Profile from "./Profile.vue";
 import { helpers } from "@/helpers.js"
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
-import { docData } from "@/__mocks__/firebase-results.js";
+import { fakeAuthUser, docData } from "@/__mocks__/firebase-results.js";
 import { languages } from "@/modules/core/layout.models.js";
 import { filters } from "@/filters.js";
 
@@ -22,6 +22,7 @@ describe("views/Profile.vue", () => {
   beforeEach(() => {
     getters = {
       "layout/language": () => languages.en,
+      "auth/authUser": () => fakeAuthUser,
       "auth/profile": () => docData,
       "auth/error": () => null,
       "auth/loading": () => false

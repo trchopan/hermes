@@ -11,7 +11,7 @@ exports[`views/Profile.vue matchs snapshot 1`] = `
             <v-list-tile-avatar-stub><img src="avatar" alt="big avatar"></v-list-tile-avatar-stub>
             <v-list-tile-content-stub>
               <v-list-tile-title-stub>Tester</v-list-tile-title-stub>
-              <v-list-tile-sub-title-stub>Manager</v-list-tile-sub-title-stub>
+              <v-list-tile-sub-title-stub>tester@arkham.city</v-list-tile-sub-title-stub>
             </v-list-tile-content-stub>
             <v-list-tile-action-stub>
               <v-btn-stub outline="">Edit</v-btn-stub>

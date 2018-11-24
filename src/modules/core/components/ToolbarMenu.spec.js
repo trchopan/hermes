@@ -5,7 +5,7 @@ import { themes } from "@/modules/core/layout.models.js";
 import { filters } from "@/filters.js";
 import ToolbarMenu, { languagesMap } from "./ToolbarMenu.vue";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
-import { docData } from "@/__mocks__/firebase-results";
+import { fakeAuthUser, docData } from "@/__mocks__/firebase-results";
 import { languages } from "@/modules/core/layout.models.js";
 
 const localVue = createLocalVue();
@@ -21,6 +21,7 @@ describe("ToolbarMenu.vue", () => {
 
   beforeEach(() => {
     getters = {
+      "auth/authUser": () => fakeAuthUser,
       "auth/profile": () => docData,
       "layout/theme": () => themes.light,
       "layout/language": () => languages.en
@@ -75,6 +76,7 @@ describe("ToolbarMenu.vue", () => {
     expect(wrapper.find("v-btn-stub").text()).toBe(languagesMap.logout.en);
     getters = {
       ...getters,
+      "auth/authUser": () => null,
       "auth/profile": () => null
     };
     store = new Vuex.Store({
@@ -96,6 +98,7 @@ describe("ToolbarMenu.vue", () => {
     expect(wrapper).toMatchSnapshot();
     getters = {
       ...getters,
+      "auth/authUser": () => null,
       "auth/profile": () => null
     };
     store = new Vuex.Store({
