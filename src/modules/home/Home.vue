@@ -31,7 +31,7 @@ export default {
       authUser: "auth/authUser"
     }),
     $t() {
-      return this.$translate(languagesMap, this.language.code);
+      return this.$translate(languagesMap, this.language.value);
     }
   }
 };

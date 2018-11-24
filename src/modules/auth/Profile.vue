@@ -15,7 +15,7 @@
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                   <v-list-tile-title>{{ profile.fullname }}</v-list-tile-title>
-                  <v-list-tile-sub-title>{{ profile.position | titleCase }}</v-list-tile-sub-title>
+                  <v-list-tile-sub-title>{{ authUser.email }}</v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action>
                   <v-btn outline @click="editMode = true">{{ $t.edit }}</v-btn>
@@ -99,12 +99,13 @@ export default {
   computed: {
     ...mapGetters({
       language: "layout/language",
+      authUser: "auth/authUser",
       profile: "auth/profile",
       loading: "auth/loading",
       error: "auth/error"
     }),
     $t() {
-      return this.$translate(languagesMap, this.language.code);
+      return this.$translate(languagesMap, this.language.value);
     },
     fullname: {
       get: function() {

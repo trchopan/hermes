@@ -113,7 +113,7 @@ export default {
       darkTheme: "layout/darkTheme"
     }),
     $t() {
-      return this.$translate(languagesMap, this.language.code);
+      return this.$translate(languagesMap, this.language.value);
     }
   },
   methods: {

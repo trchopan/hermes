@@ -24,9 +24,10 @@ const actions = () => {
         changeTheme({ commit }, theme);
       }
 
-      const language = localStorage.getItem("language");
-      if (language) {
-        changeLanguage({ commit }, JSON.parse(language));
+      const languageCode = localStorage.getItem("language");
+      if (languageCode) {
+        const language = languages[languageCode] || languages.vi;
+        changeLanguage({ commit }, language);
       }
     } else {
       log("No Web Storage support");
@@ -53,7 +54,7 @@ const mutations = {
   },
   languageChanged(state, language) {
     state.language = language;
-    localStorage.setItem("language", JSON.stringify(language));
+    localStorage.setItem("language", language.value);
     log("Language changed", language);
   },
   drawerToggled(state) {

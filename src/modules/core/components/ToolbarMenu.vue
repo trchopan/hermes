@@ -13,7 +13,7 @@
           </v-list-tile-avatar>
           <v-list-tile-content v-if="profile">
             <v-list-tile-title>{{ profile.fullname }}</v-list-tile-title>
-            <v-list-tile-sub-title>{{ profile.position | titleCase }}</v-list-tile-sub-title>
+            <v-list-tile-sub-title>{{ authUser.email }}</v-list-tile-sub-title>
           </v-list-tile-content>
           <v-list-tile-content v-else>
             <v-list-tile-title>{{ authUser.email }}</v-list-tile-title>
@@ -78,10 +78,7 @@ export default {
   data: () => ({
     defaultAvatar: process.env.VUE_APP_DEFAULT_AVATAR,
     themes,
-    languages: Object.values(languages).map(x => ({
-      text: `${x.char} ${x.name}`,
-      value: x
-    })),
+    languages: Object.values(languages),
     title: process.env.VUE_APP_TITLE,
     menuOpen: false
   }),
@@ -93,7 +90,7 @@ export default {
       language: "layout/language"
     }),
     $t() {
-      return this.$translate(languagesMap, this.language.code);
+      return this.$translate(languagesMap, this.language.value);
     }
   },
   methods: {
@@ -107,9 +104,9 @@ export default {
     changeTheme(theme) {
       this.$store.dispatch("layout/changeTheme", theme);
     },
-    changeLanguage(language) {
+    changeLanguage(code) {
       this.menuOpen = false;
-      this.$store.dispatch("layout/changeLanguage", language);
+      this.$store.dispatch("layout/changeLanguage", languages[code]);
     }
   }
 };

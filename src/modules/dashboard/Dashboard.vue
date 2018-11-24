@@ -33,10 +33,10 @@ export default {
       language: "layout/language"
     }),
     $t() {
-      return this.$translate(languagesMap, this.language.code);
+      return this.$translate(languagesMap, this.language.value);
     },
     localTimeString() {
-      return new Date().toLocaleString(this.language.code);
+      return new Date().toLocaleString(this.language.value);
     }
   },
   mounted() {

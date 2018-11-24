@@ -9,7 +9,9 @@ export const filters = {
     return str
       .toLowerCase()
       .split(" ")
-      .map(word => word.replace(word[0], word[0].toUpperCase()))
+      .map(
+        word => (word[0] ? word.replace(word[0], word[0].toUpperCase()) : word)
+      )
       .join(" ");
   },
   format

@@ -1,6 +1,6 @@
 export const languages = {
-  vi: { code: "vi", name: "Tiếng Việt", char: "🇻🇳" },
-  en: { code: "en", name: "English", char: "🇬🇧" }
+  vi: { value: "vi", text: "🇻🇳 Tiếng Việt" },
+  en: { value: "en", text: "🇬🇧 English" }
 };
 
 export const themes = {

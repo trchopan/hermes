@@ -36,7 +36,7 @@ export default {
       language: "layout/language"
     }),
     $t() {
-      return this.$translate(languagesMap, this.language.code);
+      return this.$translate(languagesMap, this.language.value);
     }
   }
 };
