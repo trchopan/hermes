@@ -4,12 +4,12 @@ exports[`ToolbarMenu.vue matches snapshot 1`] = `
 <v-menu-stub offset-y="" left="">
   <v-avatar-stub size="42"><img src="avatar" alt="avatar"></v-avatar-stub>
   <v-card-stub>
-    <v-list-stub>
+    <v-list-stub two-line="">
       <v-list-tile-stub avatar="" to="/profile">
         <v-list-tile-avatar-stub><img src="avatar" alt="big avatar"></v-list-tile-avatar-stub>
         <v-list-tile-content-stub>
           <v-list-tile-title-stub>Tester</v-list-tile-title-stub>
-          <v-list-tile-sub-title-stub>Manager</v-list-tile-sub-title-stub>
+          <v-list-tile-sub-title-stub>tester@arkham.city</v-list-tile-sub-title-stub>
         </v-list-tile-content-stub>
       </v-list-tile-stub>
     </v-list-stub>
@@ -20,9 +20,11 @@ exports[`ToolbarMenu.vue matches snapshot 1`] = `
           <v-select-stub value="[object Object]" items="[object Object],[object Object]" label="Select language"></v-select-stub>
         </v-list-tile-content-stub>
       </v-list-tile-stub>
+      <v-list-tile-stub>
+        <v-switch-stub label="Light out" input-value="Light" true-value="Dark" false-value="Light" class="pr-3 pt-2"></v-switch-stub>
+      </v-list-tile-stub>
     </v-list-stub>
     <v-card-actions-stub>
-      <v-switch-stub label="Light out" input-value="Light" true-value="Dark" false-value="Light" class="pr-3 pt-2"></v-switch-stub>
       <v-spacer-stub></v-spacer-stub>
       <v-btn-stub outline="">Log out</v-btn-stub>
     </v-card-actions-stub>
@@ -42,9 +44,11 @@ exports[`ToolbarMenu.vue matches snapshot 2`] = `
           <v-select-stub value="[object Object]" items="[object Object],[object Object]" label="Select language"></v-select-stub>
         </v-list-tile-content-stub>
       </v-list-tile-stub>
+      <v-list-tile-stub>
+        <v-switch-stub label="Light out" input-value="Light" true-value="Dark" false-value="Light" class="pr-3 pt-2"></v-switch-stub>
+      </v-list-tile-stub>
     </v-list-stub>
     <v-card-actions-stub>
-      <v-switch-stub label="Light out" input-value="Light" true-value="Dark" false-value="Light" class="pr-3 pt-2"></v-switch-stub>
       <v-spacer-stub></v-spacer-stub>
       <v-btn-stub outline="" to="/login">Log in</v-btn-stub>
     </v-card-actions-stub>

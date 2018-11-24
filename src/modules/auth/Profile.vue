@@ -2,7 +2,10 @@
   <v-layout column>
     <my-header>{{ $t.greeting }}</my-header>
     <v-layout row align-center justify-center>
-      <v-flex xs12 sm6 md4>
+      <v-flex v-if="!profile" xs12 sm6 md4>
+        <p class="text-xs-center">{{ $t.profileIsBeingCreated }}</p>
+      </v-flex>
+      <v-flex v-else xs12 sm6 md4>
         <transition name="fade" mode="out-in">
           <v-card v-if="!editMode" key="profile-display" class="elevation-1">
             <v-list>
@@ -12,7 +15,7 @@
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                   <v-list-tile-title>{{ profile.fullname }}</v-list-tile-title>
-                  <v-list-tile-sub-title>{{ profile.position | titleCase }}</v-list-tile-sub-title>
+                  <v-list-tile-sub-title>{{ authUser.email }}</v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action>
                   <v-btn outline @click="editMode = true">{{ $t.edit }}</v-btn>
@@ -51,7 +54,7 @@
                   class="mr-1"
                   color="success"
                 >{{ loading ? 'hourglass_empty' : 'check_circle_outline' }}</v-icon>
-                <span class="mr-2">{{ loading ? $t.loading : $t.done }}</span>
+                <span class="mr-2">{{ loading ? $t.loading : $t.saved }}</span>
               </template>
               <v-btn
                 outline
@@ -70,33 +73,39 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { debounce } from "@/share/helpers";
+import { debounce } from "@/helpers";
 
 const languagesMap = {
   greeting: { vi: "Xin chào, bạn phẻ hok?", en: "Hi, how are you today?" },
+  profileIsBeingCreated: {
+    vi: "Tài khoản của bạn đang được tạo",
+    en: "Your profile is being created"
+  },
   edit: { vi: "Chỉnh sửa", en: "Edit" },
   fullname: { vi: "Họ tên", en: "Fullname" },
   avatar: { vi: "Avatar", en: "Avatar" },
   back: { vi: "Quay lại", en: "Back" },
   loading: { vi: "Đang lưu", en: "Saving " },
-  done: { vi: "Hoàn tất", en: "Done" }
+  saved: { vi: "Đã lưu", en: "Saved" }
 };
 
 export default {
   name: "Profile",
   data: () => ({
+    defaultAvatar: process.env.VUE_APP_DEFAULT_AVATAR,
     editMode: false,
     prestine: true
   }),
   computed: {
     ...mapGetters({
       language: "layout/language",
+      authUser: "auth/authUser",
       profile: "auth/profile",
       loading: "auth/loading",
       error: "auth/error"
     }),
     $t() {
-      return this.$translate(languagesMap, this.language.code);
+      return this.$translate(languagesMap, this.language.value);
     },
     fullname: {
       get: function() {

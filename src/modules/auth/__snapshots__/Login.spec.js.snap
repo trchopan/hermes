@@ -2,11 +2,8 @@
 
 exports[`Login.vue matchs snapshot 1`] = `
 <v-layout-stub align-center="" justify-center="">
-  <v-flex-stub xs12="" sm8="" md4="">
+  <v-flex-stub xs12="" sm6="" md4="">
     <v-card-stub class="elevation-12">
-      <v-toolbar-stub dark="" color="primary">
-        <v-toolbar-title-stub>Log in</v-toolbar-title-stub>
-      </v-toolbar-stub>
       <v-progress-linear-stub indeterminate="" color="orange" height="3"></v-progress-linear-stub>
       <v-form-stub>
         <v-card-text-stub>
@@ -15,6 +12,7 @@ exports[`Login.vue matchs snapshot 1`] = `
         </v-card-text-stub>
         <v-card-actions-stub>
           <v-spacer-stub></v-spacer-stub>
+          <v-btn-stub outline="" to="/signup" color="secondary" type="button">Sign up</v-btn-stub>
           <v-btn-stub id="submit" color="primary" type="submit">Log in</v-btn-stub>
         </v-card-actions-stub>
       </v-form-stub>

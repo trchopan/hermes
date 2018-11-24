@@ -1,3 +1,5 @@
+import { createLocalVue } from "@vue/test-utils";
+import Vuex from "vuex";
 import auth from "./auth.store";
 import {
   fakeAuthUser,
@@ -6,28 +8,10 @@ import {
   docSnapshot
 } from "@/__mocks__/firebase-results";
 
+const localVue = createLocalVue();
+localVue.use(Vuex);
+
 describe("auth.store", () => {
-  const signInWithEmailAndPassword = jest
-    .fn()
-    .mockImplementationOnce(() => Promise.resolve())
-    .mockImplementationOnce(() => Promise.reject(fakeError));
-  const signOut = jest
-    .fn()
-    .mockImplementationOnce(() => Promise.resolve())
-    .mockImplementationOnce(() => Promise.reject(fakeError));
-  const fireAuth = { signInWithEmailAndPassword, signOut };
-
-  // Getters
-  it("gets the correct values", () => {
-    let fakeAuth = auth();
-    let state = fakeAuth.state;
-    expect(fakeAuth.getters.authUser(state)).toBe(state.authUser);
-    expect(fakeAuth.getters.profile(state)).toBe(state.profile);
-    expect(fakeAuth.getters.loading(state)).toBe(state.loading);
-    expect(fakeAuth.getters.error(state)).toBe(state.error);
-  });
-
-  // Actions
   it("change authUser and load profile", () => {
     let fireStore = {
       collection: () => ({
@@ -35,24 +19,17 @@ describe("auth.store", () => {
       })
     };
 
-    let fakeCommit = jest.fn();
     let fakeAuth = auth(undefined, fireStore);
+    let store = new Vuex.Store(fakeAuth);
 
-    fakeAuth.actions.changeUser({ commit: fakeCommit }, null);
-    expect(fakeCommit.mock.calls).toEqual([
-      // onAuthStateChanged has not any user
-      ["userChanged", null],
-      ["profileChanged", null]
-    ]);
+    store.dispatch("changeUser", null);
+    expect(store.state.authUser).toBe(null);
+    expect(store.state.profile).toBe(null);
 
-    fakeCommit.mockClear();
-    fakeAuth.actions.changeUser({ commit: fakeCommit }, fakeAuthUser);
-    expect(fakeCommit.mock.calls).toEqual([
-      // onAuthStateChanged has user
-      ["userChanged", fakeAuthUser],
-      ["loading"],
-      ["profileChanged", docData]
-    ]);
+    store.dispatch("changeUser", fakeAuthUser);
+    expect(store.state.authUser).toBe(fakeAuthUser);
+    // docData is parsed from docSnapshot
+    expect(store.state.profile).toEqual(docData);
   });
 
   it("handles firestore error", () => {
@@ -62,94 +39,77 @@ describe("auth.store", () => {
       })
     };
 
-    let fakeCommit = jest.fn();
     let fakeAuth = auth(undefined, fireStore);
+    let store = new Vuex.Store(fakeAuth);
 
-    fakeAuth.actions.changeUser({ commit: fakeCommit }, fakeAuthUser);
-    expect(fakeCommit.mock.calls).toEqual([
-      // fireStore snapshot has error
-      ["userChanged", fakeAuthUser],
-      ["loading"],
-      ["errorCatched", fakeError]
-    ]);
+    store.dispatch("changeUser", fakeAuthUser);
+    expect(store.state.authUser).toBe(fakeAuthUser);
+    expect(store.state.error).toEqual(fakeError);
+  });
+
+  it("creates user", async () => {
+    let fakeUserApiError = { response: { data: fakeError } };
+    let fakeUserApi = {
+      createUser: jest
+        .fn()
+        .mockImplementationOnce(() => Promise.resolve(fakeAuthUser))
+        .mockImplementationOnce(() => Promise.reject(fakeUserApiError))
+    };
+    let fakeAuth = auth(undefined, undefined, fakeUserApi);
+    let store = new Vuex.Store(fakeAuth);
+    let success = await store.dispatch("createUser");
+    expect(success).toBe(true);
+    let fail = await store.dispatch("createUser");
+    expect(fail).toBe(false);
+    expect(store.state.error).toBe(fakeError);
   });
 
   it("logins", async () => {
-    let fakeCommit = jest.fn();
-    let fakeAuth = auth(fireAuth, undefined);
-    let fakeCredential = { email: "test", password: "123" };
+    const signInWithEmailAndPassword = jest
+      .fn()
+      .mockImplementationOnce(() => Promise.resolve())
+      .mockImplementationOnce(() => Promise.reject(fakeError));
+    const fireAuth = { signInWithEmailAndPassword };
+    let fakeAuth = auth(fireAuth);
+    let store = new Vuex.Store(fakeAuth);
 
-    fakeCommit.mockClear();
-    const success = await fakeAuth.actions.loginWithEmailPassword(
-      { commit: fakeCommit },
-      fakeCredential
-    );
-    expect(fireAuth.signInWithEmailAndPassword.mock.calls).toEqual([
-      [fakeCredential.email, fakeCredential.password]
-    ]);
-    expect(success).toEqual(true);
-    expect(fakeCommit.mock.calls).toEqual([["loading"]]);
+    const success = await store.dispatch("loginWithEmailPassword", {
+      email: "test@tester.com",
+      password: "password"
+    });
+    expect(success).toBe(true);
 
-    fakeCommit.mockClear();
-    const fail = await fakeAuth.actions.loginWithEmailPassword(
-      { commit: fakeCommit },
-      fakeCredential
-    );
-    expect(fail).toEqual(false);
-    expect(fakeCommit.mock.calls).toEqual([
-      ["loading"],
-      ["errorCatched", fakeError]
-    ]);
+    const fail = await store.dispatch("loginWithEmailPassword", {
+      email: "test@tester.com",
+      password: "password"
+    });
+    expect(fail).toBe(false);
+    expect(store.state.error).toBe(fakeError);
   });
 
-  it("logouts and handle async api results", async () => {
-    let fakeCommit = jest.fn();
-    let fakeAuth = auth(fireAuth, undefined);
+  it("logouts", async () => {
+    const signOut = jest
+      .fn()
+      .mockImplementationOnce(() => Promise.resolve())
+      .mockImplementationOnce(() => Promise.reject(fakeError));
+    const fireAuth = { signOut };
+    let fakeAuth = auth(fireAuth);
+    let store = new Vuex.Store(fakeAuth);
 
-    fakeCommit.mockClear();
-    const success = await fakeAuth.actions.logout({ commit: fakeCommit });
-    expect(success).toEqual(true);
-    expect(fakeCommit.mock.calls).toEqual([["loading"]]);
+    const success = await store.dispatch("logout");
+    expect(success).toBe(true);
 
-    fakeCommit.mockClear();
-    const fail = await fakeAuth.actions.logout({ commit: fakeCommit });
-    expect(fail).toEqual(false);
-    expect(fakeCommit.mock.calls).toEqual([
-      ["loading"],
-      ["errorCatched", fakeError]
-    ]);
+    const fail = await store.dispatch("logout");
+    expect(fail).toBe(false);
+    expect(store.state.error).toBe(fakeError);
   });
 
-  // Mutations
-  it("mutates when user changed", () => {
+  it("clears error", () => {
     let fakeAuth = auth();
-    let state = fakeAuth.state;
-    fakeAuth.mutations.userChanged(state, fakeAuthUser);
-    expect(state.authUser).toBe(fakeAuthUser);
-  });
-  it("mutates when profile changed", () => {
-    let fakeAuth = auth();
-    let state = fakeAuth.state;
-    state.loading = true;
-    state.error = fakeError;
-    fakeAuth.mutations.profileChanged(state, docData);
-    expect(state.profile).toBe(docData);
-    expect(state.loading).toBe(false);
-    expect(state.error).toBe(null);
-  });
-  it("mutates when loading", () => {
-    let fakeAuth = auth();
-    let state = fakeAuth.state;
-    state.loading = false;
-    fakeAuth.mutations.loading(state);
-    expect(state.loading).toBe(true);
-  });
-  it("mutates when errorCatched", () => {
-    let fakeAuth = auth();
-    let state = fakeAuth.state;
-    state.loading = true;
-    fakeAuth.mutations.errorCatched(state, fakeError);
-    expect(state.loading).toBe(false);
-    expect(state.error).toBe(fakeError);
+    fakeAuth.state.error = fakeError;
+    let store = new Vuex.Store(fakeAuth);
+    expect(store.state.error).toBe(fakeError);
+    store.dispatch("clearError");
+    expect(store.state.error).toBe(null);
   });
 });

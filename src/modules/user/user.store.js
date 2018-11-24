@@ -1,4 +1,4 @@
-import { logger } from "@/share/helpers.js";
+import { logger } from "@/helpers.js";
 import { profileParser } from "./auth.models.js";
 
 const log = logger("[auth]");

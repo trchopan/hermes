@@ -1,4 +1,4 @@
-import { logger } from "@/share/helpers.js";
+import { logger } from "@/helpers.js";
 import { profileParser } from "./auth.models.js";
 
 const log = logger("[auth]");
@@ -18,7 +18,7 @@ const getters = {
   error: state => state.error
 };
 
-const actions = (fireAuth, fireStore) => {
+const actions = (fireAuth, fireStore, userApi) => {
   /**
    * This variable keeps track of firestore snapshot
    * Call it to unsubscribe to onSnapshot
@@ -57,6 +57,16 @@ const actions = (fireAuth, fireStore) => {
     }
   };
 
+  const createUser = async ({ commit }, userProfile) => {
+    try {
+      await userApi.createUser(userProfile);
+      return true;
+    } catch (error) {
+      commit("errorCatched", error.response.data);
+      return false;
+    }
+  };
+
   const loginWithEmailPassword = async ({ commit }, credential) => {
     log("Logging in...");
     commit("loading");
@@ -65,7 +75,6 @@ const actions = (fireAuth, fireStore) => {
       await fireAuth.signInWithEmailAndPassword(email, password);
       return true;
     } catch (error) {
-      log("loginWithEmailPassword error");
       commit("errorCatched", error);
       return false;
     }
@@ -78,7 +87,6 @@ const actions = (fireAuth, fireStore) => {
       await fireAuth.signOut();
       return true;
     } catch (error) {
-      log("logout error");
       commit("errorCatched", error);
       return false;
     }
@@ -105,11 +113,17 @@ const actions = (fireAuth, fireStore) => {
     }
   };
 
+  const clearError = ({ commit }) => {
+    commit("errorCleared");
+  };
+
   return Object.freeze({
     changeUser,
+    createUser,
     loginWithEmailPassword,
     logout,
-    updateProfile
+    updateProfile,
+    clearError
   });
 };
 
@@ -125,20 +139,23 @@ const mutations = {
   profileChanged(state, data) {
     state.profile = data;
     state.loading = false;
-    state.error = null;
     log("Profile changed", data);
   },
   errorCatched(state, error) {
     state.error = error;
     state.loading = false;
     log("Error catched", state.error);
+  },
+  errorCleared(state) {
+    state.error = null;
+    log("Error cleared");
   }
 };
 
-export default (fireAuth, fireStore) => ({
+export default (fireAuth, fireStore, userApi) => ({
   namespaced: true,
   state,
   getters,
-  actions: actions(fireAuth, fireStore),
+  actions: actions(fireAuth, fireStore, userApi),
   mutations
 });

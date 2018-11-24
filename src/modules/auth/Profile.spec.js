@@ -2,11 +2,11 @@ import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import Translation from "@/plugins/translation.js";
 import Profile from "./Profile.vue";
-import { helpers } from "@/share/helpers.js"
+import { helpers } from "@/helpers.js"
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
-import { docData } from "@/__mocks__/firebase-results.js";
+import { fakeAuthUser, docData } from "@/__mocks__/firebase-results.js";
 import { languages } from "@/modules/core/layout.models.js";
-import { filters } from "@/share/filters.js";
+import { filters } from "@/filters.js";
 
 const localVue = createLocalVue();
 localVue.filter("titleCase", filters.titleCase);
@@ -22,6 +22,7 @@ describe("views/Profile.vue", () => {
   beforeEach(() => {
     getters = {
       "layout/language": () => languages.en,
+      "auth/authUser": () => fakeAuthUser,
       "auth/profile": () => docData,
       "auth/error": () => null,
       "auth/loading": () => false

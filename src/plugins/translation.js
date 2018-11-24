@@ -1,11 +1,12 @@
 export default {
   install(Vue) {
-    Vue.prototype.$translate = (languagesMap, code) => {
+    // Convert from { key: { value: [value] } } to { key: [value] }
+    Vue.prototype.$translate = (languagesMap, value) => {
       let map = {};
       for (let key in languagesMap) {
         map[key] =
-          languagesMap[key] && languagesMap[key][code]
-            ? languagesMap[key][code]
+          languagesMap[key] && languagesMap[key][value]
+            ? languagesMap[key][value]
             : "(no translation)";
       }
       return map;

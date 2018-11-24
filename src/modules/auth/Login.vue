@@ -1,10 +1,7 @@
 <template>
   <v-layout align-center justify-center>
-    <v-flex xs12 sm8 md4>
+    <v-flex xs12 sm6 md4>
       <v-card class="elevation-12">
-        <v-toolbar dark color="primary">
-          <v-toolbar-title>{{ $t.login }}</v-toolbar-title>
-        </v-toolbar>
         <v-progress-linear
           :active="loading"
           indeterminate
@@ -19,7 +16,7 @@
               name="email"
               label="Email"
               type="text"
-              :error-messages="error ? error.message : ''"
+              :error-messages="error ? errorMessage : ''"
               v-model="email"
             />
             <v-text-field
@@ -33,6 +30,12 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer/>
+            <v-btn
+              outline
+              to="/signup"
+              color="secondary"
+              type="button"
+            >{{ $t.signUp }}</v-btn>
             <v-btn
               id="submit"
               color="primary"
@@ -51,8 +54,14 @@
 import { mapGetters } from "vuex";
 
 const languagesMap = {
+  signUp: { vi: "Đăng ký", en: "Sign up" },
   login: { vi: "Đăng nhập", en: "Log in" },
-  password: { vi: "Mật khẩu", en: "Password" }
+  password: { vi: "Mật khẩu", en: "Password" },
+  "auth/user-not-found": {
+    vi: "Không tìm thấy tài khoản. Bạn vui lòng kiểm tra lại thông tin",
+    en: "Account not found. Please check your information again."
+  },
+  "auth/invalid-email": { vi: "Email không hợp lệ", en: "Invalid email" }
 };
 
 export default {
@@ -71,7 +80,10 @@ export default {
       language: "layout/language"
     }),
     $t() {
-      return this.$translate(languagesMap, this.language.code);
+      return this.$translate(languagesMap, this.language.value);
+    },
+    errorMessage() {
+      return this.$t[this.error.code];
     }
   },
   methods: {
@@ -85,6 +97,10 @@ export default {
       );
       if (success) this.$router.replace("/");
     }
+  },
+  beforeRouteLeave(to, from, next) {
+    this.$store.dispatch("auth/clearError");
+    next();
   }
 };
 </script>
