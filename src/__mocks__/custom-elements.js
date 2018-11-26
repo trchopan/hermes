@@ -1,3 +1,11 @@
+const VFormStub = {
+  render: () => {
+    return "<v-form-stub><slot /></v-form-stub>";
+  },
+  methods: {
+    validate: jest.fn()
+  }
+};
 export const mockCustomElements = [
   "my-header",
   "router-view",
@@ -29,6 +37,7 @@ export const mockCustomElements = [
   "v-list-tile-sub-title",
   "v-list-tile-action",
   "v-progress-linear",
+  "v-progress-circular",
   "v-btn",
   "v-icon",
   "v-switch",

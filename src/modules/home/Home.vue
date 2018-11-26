@@ -19,7 +19,7 @@ export const languagesMap = {
   },
   pressHereToSignUp: {
     vi: "Hãy nhấn vào đây để đăng ký",
-    en: "Press here to sign up"
+    en: "Click here to sign up"
   }
 };
 

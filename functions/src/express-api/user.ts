@@ -2,8 +2,7 @@ import * as admin from "firebase-admin";
 import * as fetch from "isomorphic-fetch";
 import { logger } from "../helpers";
 import { RECAPTCHA_SECRET } from "../secrets";
-
-export const UsersColletion = "users";
+import { UsersColletion } from "../collections";
 
 const RECAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify";
 const API_NAME = "[createUser]";
@@ -27,6 +26,7 @@ export async function createUserHandler(req, res) {
 
     await admin
       .firestore()
+      .collection(UsersColletion)
       .doc(user.uid)
       .set({ inited: false });
 

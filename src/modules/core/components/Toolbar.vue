@@ -4,6 +4,7 @@
     <v-toolbar-title>{{ title }}</v-toolbar-title>
     <v-spacer/>
     <v-toolbar-items>
+      <ToolbarLoadingMenu/>
       <ToolbarMenu/>
     </v-toolbar-items>
   </v-toolbar>
@@ -11,11 +12,13 @@
 
 <script>
 import ToolbarMenu from "./ToolbarMenu.vue";
+import ToolbarLoadingMenu from "./ToolbarLoadingMenu.vue";
 
 export default {
   name: "Toolbar",
   components: {
-    ToolbarMenu
+    ToolbarMenu,
+    ToolbarLoadingMenu
   },
   data: () => ({
     title: process.env.VUE_APP_TITLE

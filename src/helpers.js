@@ -9,10 +9,7 @@ export const logger = className => (message, ...objects) => {
 };
 
 export function format(str, inputs) {
-  if (typeof str !== "string" || inputs.length === undefined) {
-    return "";
-  }
-  if (!inputs.hasOwnProperty("length")) {
+  if (typeof str !== "string" || !inputs || !inputs.hasOwnProperty("length")) {
     return str;
   }
   let result = str;
