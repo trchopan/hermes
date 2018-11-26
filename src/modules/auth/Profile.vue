@@ -53,14 +53,14 @@
                 <v-icon
                   class="mr-1"
                   color="success"
-                >{{ loading ? 'hourglass_empty' : 'check_circle_outline' }}</v-icon>
-                <span class="mr-2">{{ loading ? $t.loading : $t.saved }}</span>
+                >{{ loading.profile ? 'hourglass_empty' : 'check_circle_outline' }}</v-icon>
+                <span class="mr-2">{{ loading.profile ? $t.loading : $t.saved }}</span>
               </template>
               <v-btn
                 outline
                 color="primary"
                 type="button"
-                :disabled="loading"
+                :disabled="loading.profile"
                 @click="back()"
               >{{ $t.back }}</v-btn>
             </v-card-actions>

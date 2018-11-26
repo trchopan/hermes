@@ -18,8 +18,8 @@ describe("Login.vue", () => {
   beforeEach(() => {
     getters = {
       "layout/language": () => languages.en,
-      "auth/error": () => null,
-      "auth/loading": () => false
+      error: () => [],
+      "auth/loading": () => ({ login: false })
     };
     actions = {
       "auth/loginWithEmailPassword": jest
@@ -38,30 +38,22 @@ describe("Login.vue", () => {
       localVue
     });
   });
-  it("has all the tools", () => {
-    expect(wrapper.vm.email).toBeDefined();
-    expect(wrapper.vm.password).toBeDefined();
-    expect(wrapper.vm.onSubmit).toBeDefined();
-  });
-  it("submits and handle error", async () => {
+
+  it("submits", async () => {
     wrapper.vm.email = "test@test.com";
+    wrapper.vm.password = "password";
 
-    wrapper.vm.password = "wrong password";
-    await wrapper.vm.onSubmit();
-    expect(wrapper.vm.$router.replace).not.toBeCalled();
+    await wrapper.vm.onSubmit(); // auth/loginWithEmailPassword resolve false
     expect(actions["auth/loginWithEmailPassword"].mock.calls[0][1]).toEqual({
-      email: "test@test.com",
-      password: "wrong password"
+      email: wrapper.vm.email,
+      password: wrapper.vm.password
     });
 
-    wrapper.vm.password = "correct password";
-    await wrapper.vm.onSubmit();
-    expect(actions["auth/loginWithEmailPassword"].mock.calls[1][1]).toEqual({
-      email: "test@test.com",
-      password: "correct password"
-    });
+    expect(wrapper.vm.$router.replace).not.toBeCalled();
+    await wrapper.vm.onSubmit(); // auth/loginWithEmailPassword resolve true
     expect(wrapper.vm.$router.replace.mock.calls).toEqual([["/"]]);
   });
+
   it("matchs snapshot", () => {
     expect(wrapper).toMatchSnapshot();
   });

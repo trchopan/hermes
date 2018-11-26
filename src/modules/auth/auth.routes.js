@@ -1,7 +1,6 @@
-import Login from "./Login.vue";
-import Profile from "./Profile.vue";
-
-const SignUp = () => import(/* webpackChunkName: "sign-up" */ "./SignUp.vue");
+const SignUp = () => import(/* webpackChunkName: "auth" */ "./SignUp.vue");
+const Login = () => import(/* webpackChunkName: "auth" */ "./Login.vue");
+const Profile = () => import(/* webpackChunkName: "auth" */ "./Profile.vue");
 
 export default [
   {

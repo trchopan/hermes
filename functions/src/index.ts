@@ -4,10 +4,14 @@ import * as express from "express";
 import * as cors from "cors";
 import * as bodyParser from "body-parser";
 import { createUserHandler } from "./express-api/user";
+import { onAuthDeleteHandler } from "./auth/auth-delete";
 
 admin.initializeApp(functions.config().firebase);
 const firestore = admin.firestore();
 firestore.settings({ timestampsInSnapshots: true });
+
+// Auth
+export const onAuthDelete = functions.auth.user().onDelete(onAuthDeleteHandler);
 
 // Firestore
 

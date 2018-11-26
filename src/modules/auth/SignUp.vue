@@ -3,8 +3,13 @@
     <v-layout row :wrap="true" align-center justify-center>
       <v-flex xs12 sm6 md4>
         <v-card key="profile-edit" class="elevation-6 pt-3 px-3 text-xs-center">
-          <v-form v-model="signUpFormValid" @submit.prevent="signUp()">
+          <v-form
+            ref="signUpForm"
+            v-model="signUpFormValid"
+            @submit.prevent="signUp()"
+          >
             <v-text-field
+              autofocus
               prepend-icon="person"
               label="Email"
               type="text"
@@ -32,17 +37,14 @@
               required
             />
             <Recaptcha @response="recaptchaResponse = $event"/>
-            <span
-              class="warn--text"
-              v-if="requireCaptcha"
-            >{{ $t.verifyCaptcha }}</span>
+            <span class="warn--text" v-if="authError">{{ authError }}</span>
             <v-card-actions>
               <v-spacer/>
               <v-btn
                 outline
                 color="secondary"
                 type="submit"
-                :disabled="loading"
+                :disabled="loading.create"
               >{{ $t.signUp }}</v-btn>
             </v-card-actions>
           </v-form>
@@ -54,7 +56,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { format, validateEmail } from "@/helpers.js";
+import { validateEmail, format } from "@/helpers.js";
 import Recaptcha from "./components/Recaptcha.vue";
 
 const languagesMap = {
@@ -73,9 +75,13 @@ const languagesMap = {
     vi: "Mật khẩu xác nhận không trùng nhau",
     en: "Password confirmation does not match"
   },
-  verifyCaptcha: {
-    vi: "Vui lòng xác thực captcha",
-    en: "Please verify captcha"
+  requireCaptcha: {
+    vi: "Cần xác thực captcha",
+    en: "Require captcha verification"
+  },
+  emailAlreadyExist: {
+    vi: "Đã có tài khoản sử dụng email này",
+    en: "Email is already used by another account"
   }
 };
 
@@ -90,9 +96,6 @@ export default {
       email: "",
       password: "",
       passwordConfirm: "",
-      recaptchaResponse: "",
-      requireCaptcha: false,
-      formError: "",
       emailRules: [v => validateEmail(v) || this.$t.invalidEmail],
       passwordRequiredLength: 6,
       passwordRules: [
@@ -107,43 +110,53 @@ export default {
   },
   computed: {
     ...mapGetters({
-      error: "auth/error",
+      error: "error",
+      authUser: "auth/authUser",
       loading: "auth/loading",
-      language: "layout/language",
-      darkTheme: "layout/darkTheme"
+      language: "layout/language"
     }),
     $t() {
       return this.$translate(languagesMap, this.language.value);
+    },
+    authError() {
+      const lastError = this.error[this.error.length - 1] || null;
+      if (!lastError) {
+        return "";
+      }
+      switch (lastError.code) {
+        case "auth/require-captch":
+          return this.$t.requireCaptcha;
+        case "auth/email-already-exists":
+          return this.$t.emailAlreadyExist;
+        default:
+          return "";
+      }
     }
   },
   methods: {
     async signUp() {
-      if (!this.recaptchaResponse) {
-        this.requireCaptcha = true;
-        return;
-      }
-      if (this.signUpFormValid && this.recaptchaResponse) {
-        const result = await this.$store.dispatch("auth/createUser", {
+      this.$refs.signUpForm.validate();
+      if (this.signUpFormValid) {
+        const success = await this.$store.dispatch("auth/createUser", {
           email: this.email,
           password: this.password,
           response: this.recaptchaResponse
         });
-        console.log("result", result);
-        // try {
-        //   let result = await axios.post(
-        //     process.env.VUE_APP_API + "/user/create",
-        //     {
-        //       email: this.email,
-        //       password: this.password,
-        //       response: this.recaptchaResponse
-        //     }
-        //   );
-        //   console.log("result", result);
-        // } catch (error) {
-        //   console.log("error", error.response.status, error.response.data);
-        // }
+
+        if (success) {
+          this.$router.replace("/login");
+        }
       }
     }
+  },
+  mounted() {
+    if (this.authUser) {
+      this.$router.replace("/");
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    this.$store.dispatch("clearError");
+    next();
   }
 };
 </script>

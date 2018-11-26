@@ -2,21 +2,16 @@
   <v-layout align-center justify-center>
     <v-flex xs12 sm6 md4>
       <v-card class="elevation-12">
-        <v-progress-linear
-          :active="loading"
-          indeterminate
-          color="orange"
-          height="3"
-        />
         <v-form>
           <v-card-text>
             <v-text-field
+              autofocus
               id="email"
               prepend-icon="person"
               name="email"
               label="Email"
               type="text"
-              :error-messages="error ? errorMessage : ''"
+              :error-messages="errorMessage"
               v-model="email"
             />
             <v-text-field
@@ -40,7 +35,7 @@
               id="submit"
               color="primary"
               type="submit"
-              :disabled="loading"
+              :disabled="loading.login"
               @click.prevent="onSubmit()"
             >{{ $t.login }}</v-btn>
           </v-card-actions>
@@ -57,11 +52,11 @@ const languagesMap = {
   signUp: { vi: "Đăng ký", en: "Sign up" },
   login: { vi: "Đăng nhập", en: "Log in" },
   password: { vi: "Mật khẩu", en: "Password" },
-  "auth/user-not-found": {
+  userNotFound: {
     vi: "Không tìm thấy tài khoản. Bạn vui lòng kiểm tra lại thông tin",
     en: "Account not found. Please check your information again."
   },
-  "auth/invalid-email": { vi: "Email không hợp lệ", en: "Invalid email" }
+  invalidEmail: { vi: "Email không hợp lệ", en: "Invalid email" }
 };
 
 export default {
@@ -74,7 +69,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      error: "auth/error",
+      error: "error",
       authUser: "auth/authUser",
       loading: "auth/loading",
       language: "layout/language"
@@ -83,7 +78,18 @@ export default {
       return this.$translate(languagesMap, this.language.value);
     },
     errorMessage() {
-      return this.$t[this.error.code];
+      const lastError = this.error[this.error.length - 1] || null;
+      if (!lastError || !lastError.code) {
+        return "";
+      }
+      switch (lastError.code) {
+        case "auth/user-not-found":
+          return this.$t.userNotFound;
+        case "auth/invalid-email":
+          return this.$t.invalidEmail;
+        default:
+          return "";
+      }
     }
   },
   methods: {
@@ -99,14 +105,8 @@ export default {
     }
   },
   beforeRouteLeave(to, from, next) {
-    this.$store.dispatch("auth/clearError");
+    this.$store.dispatch("clearError");
     next();
   }
 };
 </script>
-
-<style lang="scss" scoped>
-.v-progress-linear {
-  margin: 0;
-}
-</style>

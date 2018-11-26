@@ -33,5 +33,8 @@ export default {
 }
 #recaptcha-container > div > div > iframe {
   transform: scale(0.8);
+  @media (max-width: 375px) {
+    transform: scale(0.7);
+  }
 }
 </style>

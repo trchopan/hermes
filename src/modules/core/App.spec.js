@@ -4,7 +4,6 @@ import App from "./App.vue";
 import Translation from "@/plugins/translation.js";
 import { helpers } from "@/helpers.js";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
-import { docData } from "@/__mocks__/firebase-results.js";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -46,17 +45,6 @@ describe("App.vue", () => {
   it("initializes", () => {
     expect(actions["layout/initLocalStorage"]).toBeCalled();
     expect(actions["layout/toggleDrawer"]).toBeCalled();
-  });
-  it("renders InitMessage correctly", () => {
-    let initPage;
-    state.loading = true;
-    state.profile = null;
-    initPage = wrapper.find("initmessage-stub");
-    expect(initPage.exists()).toBe(true);
-    state.loading = true;
-    state.profile = docData;
-    initPage = wrapper.find("initmessage-stub");
-    expect(initPage.exists()).toBe(false);
   });
   it("matchs snapshot", () => {
     expect(wrapper).toMatchSnapshot();

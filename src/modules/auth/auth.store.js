@@ -7,15 +7,18 @@ const usersCol = "users";
 const state = {
   authUser: null,
   profile: null,
-  loading: false,
-  error: null
+  loading: {
+    profile: false,
+    create: false,
+    login: false,
+    logout: false
+  }
 };
 
 const getters = {
   authUser: state => state.authUser,
   profile: state => state.profile,
-  loading: state => state.loading,
-  error: state => state.error
+  loading: state => state.loading
 };
 
 const actions = (fireAuth, fireStore, userApi) => {
@@ -23,7 +26,7 @@ const actions = (fireAuth, fireStore, userApi) => {
    * This variable keeps track of firestore snapshot
    * Call it to unsubscribe to onSnapshot
    */
-  let profileSnap;
+  let _profileSnap;
 
   const changeUser = ({ commit }, user) => {
     commit("userChanged", user);
@@ -31,14 +34,14 @@ const actions = (fireAuth, fireStore, userApi) => {
       commit("profileChanged", null);
 
       // Stop listening to profile snapshot change
-      if (profileSnap) {
-        profileSnap();
-        profileSnap = undefined;
+      if (_profileSnap) {
+        _profileSnap();
+        _profileSnap = undefined;
       }
     } else {
       log("Listening to user profile...");
-      commit("loading");
-      profileSnap = fireStore
+      commit("loading", { profile: true });
+      _profileSnap = fireStore
         .collection(usersCol)
         .doc(user.uid)
         .onSnapshot(
@@ -47,74 +50,84 @@ const actions = (fireAuth, fireStore, userApi) => {
               const data = snapshot.data();
               commit("profileChanged", profileParser(data));
             } else {
-              commit("errorCatched", { code: "auth/profile-not-found" });
+              commit("profileChanged", null);
+              commit(
+                "errorCatched",
+                { code: "auth/profile-not-found" },
+                { root: true }
+              );
             }
+            commit("loading", { profile: false });
           },
           error => {
-            commit("errorCatched", error);
+            commit("profileChanged", null);
+            commit("errorCatched", error, { root: true });
+            commit("loading", { profile: false });
           }
         );
     }
   };
 
-  const createUser = async ({ commit }, userProfile) => {
+  const createUser = async ({ commit }, userCredentials) => {
+    commit("loading", { create: true });
     try {
-      await userApi.createUser(userProfile);
+      if (!userCredentials.response) {
+        throw { code: "auth/require-captch" };
+      }
+      await userApi.createUser(userCredentials);
+      log("User created");
+      commit("loading", { create: false });
       return true;
     } catch (error) {
-      commit("errorCatched", error.response.data);
+      commit("errorCatched", error, { root: true });
+      commit("loading", { create: false });
       return false;
     }
   };
 
   const loginWithEmailPassword = async ({ commit }, credential) => {
-    log("Logging in...");
-    commit("loading");
+    commit("loading", { login: true });
     const { email, password } = credential;
     try {
       await fireAuth.signInWithEmailAndPassword(email, password);
+      commit("loading", { login: false });
       return true;
     } catch (error) {
-      commit("errorCatched", error);
+      commit("errorCatched", error, { root: true });
+      commit("loading", { login: false });
       return false;
     }
   };
 
   const logout = async ({ commit }) => {
-    log("Logging out...");
-    commit("loading");
+    commit("loading", { logout: true });
     try {
       await fireAuth.signOut();
+      commit("loading", { logout: false });
       return true;
     } catch (error) {
-      commit("errorCatched", error);
+      commit("errorCatched", error, { root: true });
+      commit("loading", { logout: false });
       return false;
     }
   };
 
   const updateProfile = async ({ commit, state }, data) => {
-    log("Updating profile...");
     if (!state.authUser) {
       log("Not logged in!");
       return false;
     }
-    commit("loading");
+    commit("loading", { profile: true });
     try {
       setTimeout(async () => {
         await fireStore
           .collection(usersCol)
           .doc(state.authUser.uid)
           .set(data, { merge: true });
-        return true;
-      }, 1000);
+      }, 2000);
     } catch (error) {
-      commit("errorCatched", error);
-      return false;
+      commit("errorCatched", error, { root: true });
     }
-  };
-
-  const clearError = ({ commit }) => {
-    commit("errorCleared");
   };
 
   return Object.freeze({
@@ -122,33 +135,22 @@ const actions = (fireAuth, fireStore, userApi) => {
     createUser,
     loginWithEmailPassword,
     logout,
-    updateProfile,
-    clearError
+    updateProfile
   });
 };
 
 const mutations = {
-  loading(state) {
-    state.loading = true;
+  loading(state, process) {
+    state.loading = { ...state.loading, ...process };
+    log("Loading", process);
   },
   userChanged(state, user) {
     state.authUser = user;
-    state.loading = false;
     log("User changed", user);
   },
   profileChanged(state, data) {
     state.profile = data;
-    state.loading = false;
     log("Profile changed", data);
-  },
-  errorCatched(state, error) {
-    state.error = error;
-    state.loading = false;
-    log("Error catched", state.error);
-  },
-  errorCleared(state) {
-    state.error = null;
-    log("Error cleared");
   }
 };
 

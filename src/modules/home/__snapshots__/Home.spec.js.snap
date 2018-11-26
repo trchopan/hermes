@@ -12,7 +12,7 @@ exports[`Home.vue matchs snapshot 2`] = `
   <my-header-stub>Home page</my-header-stub>
   <div class="home-container">
     <p>Not yet have account?</p>
-    <v-btn-stub to="/signup" outline="" color="secondary">Press here to sign up</v-btn-stub>
+    <v-btn-stub to="/signup" outline="" color="secondary">Click here to sign up</v-btn-stub>
   </div>
 </div>
 `;
