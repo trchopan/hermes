@@ -1,12 +1,12 @@
-# boba-prince-manager
+# hermes
 
 ## Project
 
-Manager app for Boba Prince
+Manager app for Hermes
 
 ## Status
 
-[![CircleCI](https://circleci.com/gh/trchopan/boba-prince-manager.svg?style=svg)](https://circleci.com/gh/trchopan/boba-prince-manager)
+[![CircleCI](https://circleci.com/gh/trchopan/hermes.svg?style=svg)](https://circleci.com/gh/trchopan/hermes)
 
 ## How to
 
