@@ -2,10 +2,10 @@
   <v-layout column>
     <my-header>{{ $t.greeting }}</my-header>
     <v-layout row align-center justify-center>
-      <v-flex v-if="!profile" xs12 sm6 md4>
+      <v-flex v-if="!profile" xs12 sm8 md6>
         <p class="text-xs-center">{{ $t.profileIsBeingCreated }}</p>
       </v-flex>
-      <v-flex v-else xs12 sm6 md4>
+      <v-flex v-else xs12 sm8 md5>
         <transition name="fade" mode="out-in">
           <v-card v-if="!editMode" key="profile-display" class="elevation-1">
             <v-list>
