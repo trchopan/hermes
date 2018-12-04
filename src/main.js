@@ -4,7 +4,7 @@ import Vue from "vue";
 import "./vuetify";
 import "./filters.js";
 import "./share";
-import Translation from "./plugins/translation.js";
+import Translate from "./plugins/translate.js";
 import router, { globalGuard } from "./router";
 import store from "./store";
 import { fireAuth } from "./firebase";
@@ -17,7 +17,7 @@ console.log(`author %c${process.env.VUE_APP_AUTHOR}`, "color: #159cd8;");
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
 
-Vue.use(Translation);
+Vue.use(Translate);
 
 router.beforeEach(globalGuard(store));
 

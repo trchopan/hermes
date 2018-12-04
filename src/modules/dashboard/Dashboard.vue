@@ -1,6 +1,6 @@
 <template>
   <div>
-    <my-header>{{ $t.today | format([localTimeString, "Beauti"]) }}</my-header>
+    <my-header>{{ $format($t.today, [localTimeString, "Beauti"]) }}</my-header>
     <v-fab-transition>
       <v-btn
         v-show="!initButton"

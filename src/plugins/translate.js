@@ -11,5 +11,19 @@ export default {
       }
       return map;
     };
+    Vue.prototype.$format = (str, inputs) => {
+      if (
+        typeof str !== "string" ||
+        !inputs ||
+        !inputs.hasOwnProperty("length")
+      ) {
+        return str;
+      }
+      let result = str;
+      inputs.forEach(
+        (input, index) => (result = result.replace(`{${index}}`, input))
+      );
+      return result;
+    };
   }
 };
