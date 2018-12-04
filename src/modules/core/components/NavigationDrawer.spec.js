@@ -1,13 +1,13 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Translation from "@/plugins/translation.js";
+import Translate from "@/plugins/translate.js";
 import NavigationDrawer, { languagesMap } from "./NavigationDrawer.vue";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
 import { languages } from "@/modules/core/layout.models.js";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
-localVue.use(Translation);
+localVue.use(Translate);
 
 describe("NavigationDrawer.vue", () => {
   let state;

@@ -1,17 +1,17 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Translation from "@/plugins/translation.js";
+import Translate from "@/plugins/translate.js";
 import { themes } from "@/modules/core/layout.models.js";
 import { filters } from "@/filters.js";
 import ToolbarMenu, { languagesMap } from "./ToolbarMenu.vue";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
-import { fakeAuthUser, docData } from "@/__mocks__/firebase-results";
+import { fakeAuthUser, docData } from "@/__mocks__/firebase.mocks.js";
 import { languages } from "@/modules/core/layout.models.js";
 
 const localVue = createLocalVue();
 localVue.filter("titleCase", filters.titleCase);
 localVue.use(Vuex);
-localVue.use(Translation);
+localVue.use(Translate);
 
 describe("ToolbarMenu.vue", () => {
   let getters;

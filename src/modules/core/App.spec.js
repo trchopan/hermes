@@ -1,13 +1,13 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import App from "./App.vue";
-import Translation from "@/plugins/translation.js";
+import Translate from "@/plugins/translate.js";
 import { helpers } from "@/helpers.js";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
-localVue.use(Translation);
+localVue.use(Translate);
 
 describe("App.vue", () => {
   let store;

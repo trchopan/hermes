@@ -78,7 +78,7 @@ export default {
       return this.$translate(languagesMap, this.language.value);
     },
     errorMessage() {
-      const lastError = this.error[this.error.length - 1] || null;
+      const lastError = this.error[this.error.length - 1];
       if (!lastError || !lastError.code) {
         return "";
       }

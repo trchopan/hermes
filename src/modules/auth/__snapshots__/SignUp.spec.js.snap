@@ -7,7 +7,7 @@ exports[`SignUp.vue matchs snapshot 1`] = `
       <v-card-stub class="elevation-6 pt-3 px-3 text-xs-center">
         <v-form-stub>
           <v-text-field-stub autofocus="" prepend-icon="person" label="Email" type="text" rules="v => (0, _helpers.validateEmail)(v) || this.$t.invalidEmail" validate-on-blur="" required=""></v-text-field-stub>
-          <v-text-field-stub prepend-icon="lock" label="Password" type="password" rules="v => v.length >= this.passwordRequiredLength || (0, _helpers.format)(this.$t.passwordGreaterThan, [this.passwordRequiredLength])" validate-on-blur="" required=""></v-text-field-stub>
+          <v-text-field-stub prepend-icon="lock" label="Password" type="password" rules="v => v.length >= this.passwordRequiredLength || this.$format(this.$t.passwordGreaterThan, [this.passwordRequiredLength])" validate-on-blur="" required=""></v-text-field-stub>
           <v-text-field-stub prepend-icon="lock" label="Confirm Password" type="password" rules="v => v === this.password || this.$t.passwordNotMatch" validate-on-blur="" required=""></v-text-field-stub>
           <recaptcha-stub></recaptcha-stub>
           <!---->

@@ -1,13 +1,13 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
-import Translation from "@/plugins/translation.js";
+import Translate from "@/plugins/translate.js";
 import Login from "./Login.vue";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
 import { languages } from "@/modules/core/layout.models.js";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
-localVue.use(Translation);
+localVue.use(Translate);
 
 describe("Login.vue", () => {
   let store;
@@ -18,8 +18,8 @@ describe("Login.vue", () => {
   beforeEach(() => {
     getters = {
       "layout/language": () => languages.en,
-      error: () => [],
-      "auth/loading": () => ({ login: false })
+      "auth/loading": () => ({ login: false }),
+      error: () => []
     };
     actions = {
       "auth/loginWithEmailPassword": jest

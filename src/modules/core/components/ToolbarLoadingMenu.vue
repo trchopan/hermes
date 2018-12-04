@@ -1,5 +1,10 @@
 <template>
-  <v-menu v-if="loading.length > 0" v-model="menuOpen" offset-y left>
+  <v-menu
+    v-if="loading.length > 0"
+    v-model="menuOpen"
+    offset-y
+    left
+  >
     <v-progress-circular
       indeterminate
       class="mr-3"
@@ -8,7 +13,10 @@
     />
     <v-card>
       <v-list>
-        <v-list-tile v-for="(l, i) in loading" :key="'loading-' + i">
+        <v-list-tile
+          v-for="(l, i) in loading"
+          :key="'loading-' + i"
+        >
           <v-list-tile-content>
             <v-list-tile-title>...{{ $t[l] }}</v-list-tile-title>
           </v-list-tile-content>
@@ -44,6 +52,11 @@ export const languagesMap = {
   }
 };
 
+export const mapLoadingArray = (moduleName, loadings) =>
+  Object.keys(loadings)
+    .filter(key => loadings[key] === true)
+    .map(x => `${moduleName}/${x}`);
+
 export default {
   name: "ToolbarLoadingMenu",
   data: () => ({
@@ -52,16 +65,13 @@ export default {
   computed: {
     ...mapGetters({
       language: "layout/language",
-      authLoading: "auth/loading"
+      authLoadings: "auth/loading"
     }),
     $t() {
       return this.$translate(languagesMap, this.language.value);
     },
     loading() {
-      let authLoadingArray = Object.keys(this.authLoading)
-        .filter(key => this.authLoading[key] === true)
-        .map(x => "auth/" + x);
-      return authLoadingArray;
+      return mapLoadingArray("auth", this.authLoadings);
     }
   }
 };
