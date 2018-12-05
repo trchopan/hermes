@@ -23,6 +23,7 @@ yarn-error.log*
 # Firebase
 firebase.conf.js
 .firebase
+.firebase.rc
 
 # Functions build
 functions/lib
