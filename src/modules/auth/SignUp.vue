@@ -146,7 +146,7 @@ export default {
         case "auth/email-already-exists":
           return this.$t.emailAlreadyExist;
         default:
-          return "";
+          return this.$t.unknownError;
       }
     }
   },
