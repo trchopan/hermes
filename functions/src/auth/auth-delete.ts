@@ -5,7 +5,9 @@ import { UsersColletion } from "../collections";
 const API_NAME = "[onAuthDelete]";
 const log = logger(API_NAME);
 
-export function onAuthDeleteHandler(user) {
+export function onAuthDeleteHandler(
+  user
+): Promise<FirebaseFirestore.WriteResult> {
   log("Removing user profile", user.uid);
   return admin
     .firestore()

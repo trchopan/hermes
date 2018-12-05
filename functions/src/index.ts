@@ -17,7 +17,7 @@ export const onAuthDelete = functions.auth.user().onDelete(onAuthDeleteHandler);
 
 // Express API
 const app = express();
-// app.use(cors({ origin: [/localhost/, /nhavaxe\.vn/] }));
+// app.use(cors({ origin: [/localhost/, /example\.com/] }));
 app.use(cors());
 app.use(bodyParser.json());
 app.use(

@@ -3,12 +3,16 @@ import * as fetch from "isomorphic-fetch";
 import { logger } from "../helpers";
 import { RECAPTCHA_SECRET } from "../secrets";
 import { UsersColletion } from "../collections";
+import { Request, Response } from "express";
 
 const RECAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify";
 const API_NAME = "[createUser]";
 const log = logger(API_NAME);
 
-export async function createUserHandler(req, res) {
+export async function createUserHandler(
+  req: Request,
+  res: Response
+): Promise<Response> {
   log("request createUser", req.body);
 
   try {
