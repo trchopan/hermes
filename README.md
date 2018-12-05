@@ -11,11 +11,19 @@ Manager app for Hermes
 ## How to
 
 - Create a [Firebase](https://console.firebase.google.com) project
-- Get the webapp config from the Project Settings > firebase.conf.js
-- Run these commands
+- Get the Firebase webapp initialize info from the Project Settings and paste into firebase.conf.js
+- Project need to be upgrade to Paid Plan as it will request external source for reCaptcha
+- Recaptcha client key is in `.env`
+- ReCaptcha server secret key is in `functions/src/secrets.ts`
 
+### Client
 ```
 npm install
 npm run test:unit
+npm run serve
+```
+### Server
+```
+cd functions
 npm run serve
 ```
