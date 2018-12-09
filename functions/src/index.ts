@@ -5,10 +5,11 @@ import * as cors from "cors";
 import * as bodyParser from "body-parser";
 import {
   createUserHandler,
-  changeUserRoleByEmailHandler,
-  makeAdminHandler
-} from "./express-api/user";
-import { onAuthDeleteHandler } from "./auth/auth-delete";
+  changeRoleByEmailHandler,
+  makeAdminHandler,
+  listUsersHandler
+} from "./modules/user";
+import { onAuthDeleteHandler } from "./modules/auth";
 
 admin.initializeApp(functions.config().firebase);
 const firestore = admin.firestore();
@@ -34,4 +35,7 @@ app.get("/secret/makeAdmin/:secret/:email", makeAdminHandler);
 export const api = functions.https.onRequest(app);
 
 // OnCalls
-export const changeRoleByEmail = functions.https.onCall(changeUserRoleByEmailHandler);
+export const changeRoleByEmail = functions.https.onCall(
+  changeRoleByEmailHandler
+);
+export const listUsers = functions.https.onCall(listUsersHandler);

@@ -17,7 +17,8 @@ enum ErrorCode {
   failCreateUser = "auth/fail-create-user",
   failInitUserProfile = "auth/fail-init-user-profile",
   noUserFound = "auth/no-user-found",
-  notAuthorized = "auth/not-authorized"
+  notAuthorized = "auth/not-authorized",
+  failListUsers = "auth/fail-list-users"
 }
 
 async function changeRole(
@@ -45,7 +46,7 @@ export async function createUserHandler(
   log("request createUser", req.body);
 
   try {
-    if (!req.params.response || !req.params.email || !req.params.password) {
+    if (!req.body.response || !req.body.email || !req.body.password) {
       throw { code: ErrorCode.wrongParams };
     }
     const recapthcResult = await reCaptchaPromise(req.body.response);
@@ -80,15 +81,15 @@ export async function createUserHandler(
 }
 
 export async function makeAdminHandler(req: Request, res: Response) {
-  log("request makeAdmin", req.params);
+  log("request makeAdmin", req.body);
 
   try {
-    if (!req.params.secret || !req.params.email) {
+    if (!req.body.secret || !req.body.email) {
       throw { code: ErrorCode.wrongParams };
     }
     const hash = crypto
       .createHash("sha256")
-      .update(req.params.secret)
+      .update(req.body.secret)
       .digest("base64");
     if (hash !== ADMIN_SHA256) {
       log("hash is", hash);
@@ -97,7 +98,7 @@ export async function makeAdminHandler(req: Request, res: Response) {
 
     const user = await admin
       .auth()
-      .getUserByEmail(req.params.email)
+      .getUserByEmail(req.body.email)
       .catch(error => {
         log("ERROR", error);
         throw { code: ErrorCode.noUserFound };
@@ -107,25 +108,38 @@ export async function makeAdminHandler(req: Request, res: Response) {
 
     return res.status(200).json({ success: true });
   } catch (error) {
-    log("ERROR", error);
     return res.status(400).json(error);
   }
 }
 
-export async function listUsers(data: any, context: CallableContext) {
+export async function listUsersHandler(data: any, context: CallableContext) {
   log("request listUsers", data);
 
   try {
     if (context.auth.token.admin !== true) {
       throw { code: ErrorCode.notAuthorized };
     }
-    await admin.auth().listUsers(50);
+    const result = await admin
+      .auth()
+      .listUsers(50, data.pageToken)
+      .catch(error => {
+        log("ERROR", error);
+        throw { code: ErrorCode.failListUsers };
+      });
+    return {
+      pageToken: result.pageToken,
+      user: result.users.map(user => ({
+        uid: user.uid,
+        email: user.email,
+        customClaims: user.customClaims
+      }))
+    };
   } catch (error) {
     return error;
   }
 }
 
-export async function changeUserRoleByEmailHandler(
+export async function changeRoleByEmailHandler(
   data: any,
   context: CallableContext
 ): Promise<any> {
@@ -146,6 +160,8 @@ export async function changeUserRoleByEmailHandler(
         log("ERROR", error);
         throw { code: ErrorCode.noUserFound };
       });
+
+    log("woot", user);
 
     await changeRole(user.uid, data.roleSettings);
     return { success: true };
