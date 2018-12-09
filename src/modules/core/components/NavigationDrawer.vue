@@ -1,5 +1,10 @@
 <template>
-  <v-navigation-drawer v-model="drawerOpen" app clipped width="230">
+  <v-navigation-drawer
+    v-model="drawerOpen"
+    app
+    clipped
+    width="230"
+  >
     <v-list class="pa-0">
       <v-list-tile
         v-for="item in drawerItems"
@@ -29,11 +34,7 @@ export const languagesMap = {
 
 export const _drawerItems = [
   { path: "/", name: "home", icon: "home" },
-  {
-    path: "/dashboard",
-    name: "dashboard",
-    icon: "dashboard"
-  },
+  { path: "/dashboard", name: "dashboard", icon: "dashboard" },
   { path: "/user", name: "user", icon: "account_circle" },
   { path: "/about", name: "about", icon: "" }
 ];
