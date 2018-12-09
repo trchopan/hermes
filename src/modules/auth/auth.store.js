@@ -21,6 +21,11 @@ const getters = {
   loading: state => state.loading
 };
 
+/**
+ * @param {firebase.auth.Auth} fireAuth 
+ * @param {firebase.firestore.Firestore} fireStore 
+ * @param {*} userApi 
+ */
 const actions = (fireAuth, fireStore, userApi) => {
   /**
    * This variable keeps track of firestore snapshot
