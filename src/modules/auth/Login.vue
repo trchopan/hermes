@@ -103,10 +103,6 @@ export default {
       );
       if (success) this.$router.replace("/");
     }
-  },
-  beforeRouteLeave(to, from, next) {
-    this.$store.dispatch("clearError");
-    next();
   }
 };
 </script>
