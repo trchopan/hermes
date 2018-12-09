@@ -3,7 +3,11 @@ import * as admin from "firebase-admin";
 import * as express from "express";
 import * as cors from "cors";
 import * as bodyParser from "body-parser";
-import { createUserHandler } from "./express-api/user";
+import {
+  createUserHandler,
+  changeUserRoleByEmailHandler,
+  makeAdminHandler
+} from "./express-api/user";
 import { onAuthDeleteHandler } from "./auth/auth-delete";
 
 admin.initializeApp(functions.config().firebase);
@@ -26,4 +30,8 @@ app.use(
   })
 );
 app.post("/api/user/create", createUserHandler);
+app.get("/secret/makeAdmin/:secret/:email", makeAdminHandler);
 export const api = functions.https.onRequest(app);
+
+// OnCalls
+export const changeRoleByEmail = functions.https.onCall(changeUserRoleByEmailHandler);
