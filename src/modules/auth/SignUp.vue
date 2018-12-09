@@ -72,7 +72,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { validateEmail } from "@/helpers.js";
-import Recaptcha from "./components/Recaptcha.vue";
+import Recaptcha from "@/share/Recaptcha.vue";
 
 const languagesMap = {
   password: { vi: "Mật khẩu", en: "Password" },
@@ -170,10 +170,6 @@ export default {
     if (this.authUser) {
       this.$router.replace("/");
     }
-  },
-  beforeRouteLeave(to, from, next) {
-    this.$store.dispatch("clearError");
-    next();
   }
 };
 </script>
