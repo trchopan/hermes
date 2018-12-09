@@ -1,6 +1,6 @@
 <template>
   <v-menu
-    v-if="loading.length > 0"
+    v-if="filteredLoadings.length > 0"
     v-model="menuOpen"
     offset-y
     left
@@ -14,11 +14,11 @@
     <v-card>
       <v-list>
         <v-list-tile
-          v-for="(l, i) in loading"
+          v-for="(loading, i) in filteredLoadings"
           :key="'loading-' + i"
         >
           <v-list-tile-content>
-            <v-list-tile-title>...{{ $t[l] }}</v-list-tile-title>
+            <v-list-tile-title>...{{ $t[loading] }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -30,10 +30,6 @@
 import { mapGetters } from "vuex";
 
 export const languagesMap = {
-  updateProfile: {
-    vi: "Cập nhật thông tin tài khoản",
-    en: "Please update your profile"
-  },
   "auth/create": {
     vi: "Đang tạo user",
     en: "Creating user"
@@ -47,12 +43,12 @@ export const languagesMap = {
     en: "Logging in"
   },
   "auth/logout": {
-    vi: "Đang đăng nhập",
+    vi: "Đang đăng xuất",
     en: "Logging out"
   }
 };
 
-export const mapLoadingArray = (moduleName, loadings) =>
+const mapLoadingArray = (moduleName, loadings) =>
   Object.keys(loadings)
     .filter(key => loadings[key] === true)
     .map(x => `${moduleName}/${x}`);
@@ -70,7 +66,7 @@ export default {
     $t() {
       return this.$translate(languagesMap, this.language.value);
     },
-    loading() {
+    filteredLoadings() {
       return mapLoadingArray("auth", this.authLoadings);
     }
   }
