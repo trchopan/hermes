@@ -23,8 +23,27 @@ router.beforeEach(globalGuard(store));
 
 let inited = false;
 
-fireAuth.onAuthStateChanged(user => {
-  const authUser = user ? { uid: user.uid, email: user.email } : null;
+fireAuth.onAuthStateChanged(async user => {
+  const role = await user
+    .getIdTokenResult()
+    .then(idToken => {
+      return {
+        admin: idToken.claims.admin ? true : false,
+        manager: idToken.claims.manager ? true : false,
+        worker: idToken.claims.worker ? true : false,
+        customer: idToken.claims.customer ? true : false
+      };
+    })
+    .catch(error => {
+      console.log("init err", error);
+      return {
+        admin: false,
+        manager: false,
+        worker: false,
+        customer: false
+      };
+    });
+  const authUser = user ? { uid: user.uid, email: user.email, role } : null;
   store.dispatch("auth/changeUser", authUser);
   if (!inited) {
     init();
