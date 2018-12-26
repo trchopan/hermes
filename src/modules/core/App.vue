@@ -4,8 +4,14 @@
       <Toolbar/>
       <NavigationDrawer/>
       <v-content>
-        <v-container fluid :class="{ 'white--text': darkTheme }">
-          <transition name="fade" mode="out-in">
+        <v-container
+          fluid
+          :class="{ 'white--text': darkTheme }"
+        >
+          <transition
+            name="fade"
+            mode="out-in"
+          >
             <router-view/>
           </transition>
         </v-container>
@@ -24,6 +30,11 @@ export default {
   components: {
     Toolbar,
     NavigationDrawer
+  },
+  data() {
+    return {
+      backgroundImg: process.env.VUE_APP_BACKGROUND_IMAGE
+    };
   },
   computed: mapGetters({
     darkTheme: "layout/darkTheme",

@@ -21,7 +21,7 @@
 <script>
 import { mapGetters } from "vuex";
 
-const languagesMap = {
+const LANGUAGES_MAP = {
   user: { vi: "Người dùng", en: "Users" }
 };
 
@@ -36,7 +36,7 @@ export default {
       language: "layout/language"
     }),
     $t() {
-      return this.$translate(languagesMap, this.language.value);
+      return this.$translate(LANGUAGES_MAP, this.language.value);
     }
   }
 };

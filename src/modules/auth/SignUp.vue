@@ -48,7 +48,7 @@
               validate-on-blur
               required
             />
-            <Recaptcha @response="recaptchaResponse = $event"/>
+            <Recaptcha @response="recaptcha($event)"/>
             <span
               class="warn--text"
               v-if="authError"
@@ -74,7 +74,7 @@ import { mapGetters } from "vuex";
 import { validateEmail } from "@/helpers.js";
 import Recaptcha from "@/share/Recaptcha.vue";
 
-const languagesMap = {
+const LANGUAGES_MAP = {
   password: { vi: "Mật khẩu", en: "Password" },
   passwordConfirm: { vi: "Xác nhận mật khẩu", en: "Confirm Password" },
   signUp: { vi: "Đăng ký", en: "Sign Up" },
@@ -133,7 +133,7 @@ export default {
       language: "layout/language"
     }),
     $t() {
-      return this.$translate(languagesMap, this.language.value);
+      return this.$translate(LANGUAGES_MAP, this.language.value);
     },
     authError() {
       const lastError = this.error[this.error.length - 1] || null;
@@ -154,16 +154,18 @@ export default {
     async signUp() {
       this.$refs.signUpForm.validate();
       if (this.signUpFormValid) {
-        const success = await this.$store.dispatch("auth/createUser", {
+        await this.$store.dispatch("auth/createUser", {
           email: this.email,
-          password: this.password,
-          response: this.recaptchaResponse
+          password: this.password
         });
 
-        if (success) {
-          this.$router.replace("/login");
-        }
+        // if (success) {
+        //   this.$router.replace("/login");
+        // }
       }
+    },
+    recaptcha(response) {
+      console.log("woot", response);
     }
   },
   mounted() {

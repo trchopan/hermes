@@ -25,7 +25,7 @@
 <script>
 import { mapGetters } from "vuex";
 
-export const languagesMap = {
+export const LANGUAGES_MAP = {
   home: { vi: "Trang chủ", en: "Home" },
   dashboard: { vi: "Bảng điều khiển", en: "Dashboard" },
   user: { vi: "Quản lý người dùng", en: "User management" },
@@ -47,7 +47,7 @@ export default {
       language: "layout/language"
     }),
     $t() {
-      return this.$translate(languagesMap, this.language.value);
+      return this.$translate(LANGUAGES_MAP, this.language.value);
     },
     drawerOpen: {
       get: function() {

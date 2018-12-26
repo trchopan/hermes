@@ -22,11 +22,10 @@ const getters = {
 };
 
 /**
- * @param {firebase.auth.Auth} fireAuth 
- * @param {firebase.firestore.Firestore} fireStore 
- * @param {*} userApi 
+ * @param {firebase.auth.Auth} fireAuth
+ * @param {firebase.firestore.Firestore} fireStore
  */
-const actions = (fireAuth, fireStore, userApi) => {
+const actions = (fireAuth, fireStore) => {
   /**
    * This variable keeps track of firestore snapshot
    * Call it to unsubscribe to onSnapshot
@@ -76,11 +75,11 @@ const actions = (fireAuth, fireStore, userApi) => {
   const createUser = async ({ commit }, userCredentials) => {
     commit("loading", { create: true });
     try {
-      if (!userCredentials.response) {
-        throw { code: "auth/require-captch" };
-      }
-      await userApi.createUser(userCredentials);
-      log("User created");
+      const newUserResult = await fireAuth.createUserWithEmailAndPassword(
+        userCredentials.email,
+        userCredentials.password
+      );
+      log("User created", newUserResult);
       commit("loading", { create: false });
       return true;
     } catch (error) {
@@ -159,10 +158,10 @@ const mutations = {
   }
 };
 
-export default (fireAuth, fireStore, userApi) => ({
+export default (fireAuth, fireStore) => ({
   namespaced: true,
   state,
   getters,
-  actions: actions(fireAuth, fireStore, userApi),
+  actions: actions(fireAuth, fireStore),
   mutations
 });

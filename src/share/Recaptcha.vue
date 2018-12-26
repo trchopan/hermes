@@ -1,25 +1,20 @@
 <template>
-  <div id="recaptcha-container" ref="recaptcha-container"></div>
+  <div
+    id="recaptcha-container"
+    ref="recaptcha-container"
+  ></div>
 </template>
 
 <script>
+import { firebaseApp, ReCaptchaVerifier } from "@/firebase.js";
+
 export default {
   name: "Recaptcha",
-  mounted() {
-    if (
-      window.hasOwnProperty("grecaptcha") &&
-      window.grecaptcha.hasOwnProperty("render")
-    ) {
-      window.grecaptcha.render("recaptcha-container", {
-        sitekey: process.env.VUE_APP_RECAPTCHA_KEY,
-        callback: response => {
-          this.$emit("response", response);
-        }
-      });
-    } else {
-      this.$refs["recaptcha-container"].innerHTML =
-        "Unable to load reCaptcha script";
-    }
+  async mounted() {
+    const recaptcha = new ReCaptchaVerifier("recaptcha-container");
+    await recaptcha.render();
+    const token = await recaptcha.verify();
+    this.$emit("response", token);
   }
 };
 </script>
@@ -28,10 +23,10 @@ export default {
 #recaptcha-container {
   width: 100%;
 }
-#recaptcha-container > div {
+#recaptcha-container > div > div {
   margin: auto;
 }
-#recaptcha-container > div > div > iframe {
+#recaptcha-container > div > div > div > iframe {
   transform: scale(0.8);
   @media (max-width: 375px) {
     transform: scale(0.7);

@@ -10,7 +10,7 @@ import notFound from "@/modules/not-found/not-found.routes.js";
 
 Vue.use(Router);
 
-const log = logger("vue-router");
+const log = logger("[vue-router]");
 const checkMetaKey = (matched, key) => matched.some(record => record.meta[key]);
 
 export const globalGuard = store => (to, from, next) => {
@@ -20,7 +20,7 @@ export const globalGuard = store => (to, from, next) => {
     return;
   }
 
-  if (store.state.auth.authUser && to.name === "login") {
+  if (store.state.auth.authUser && to.name.includes("login")) {
     next("/");
     return;
   }

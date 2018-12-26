@@ -62,7 +62,7 @@
 import { mapGetters } from "vuex";
 import { themes, languages } from "@/modules/core/layout.models.js";
 
-export const languagesMap = {
+export const LANGUAGES_MAP = {
   updateProfile: {
     vi: "Cập nhật thông tin tài khoản",
     en: "Please update your profile"
@@ -90,7 +90,7 @@ export default {
       language: "layout/language"
     }),
     $t() {
-      return this.$translate(languagesMap, this.language.value);
+      return this.$translate(LANGUAGES_MAP, this.language.value);
     }
   },
   methods: {

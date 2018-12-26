@@ -23,6 +23,7 @@ export default {
     Vue.prototype.$format = (str, inputs) => {
       if (
         typeof str !== "string" ||
+        typeof inputs === "string" ||
         !inputs ||
         !inputs.hasOwnProperty("length")
       ) {

@@ -4,7 +4,7 @@ import Translate from "./translate.js";
 let localVue = createLocalVue();
 
 describe("translate.js", () => {
-  const languagesMap = {
+  const LANGUAGES_MAP = {
     test: { vi: "Kiểm choa", en: "Test" }
   };
   it("has install", () => {

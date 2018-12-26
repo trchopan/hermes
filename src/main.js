@@ -8,6 +8,7 @@ import Translate from "./plugins/translate.js";
 import router, { globalGuard } from "./router";
 import store from "./store";
 import { fireAuth } from "./firebase";
+import { authRoles } from "@/modules/auth/auth.models.js";
 import App from "@/modules/core/App.vue";
 
 Vue.config.productionTip = false;
@@ -24,26 +25,29 @@ router.beforeEach(globalGuard(store));
 let inited = false;
 
 fireAuth.onAuthStateChanged(async user => {
-  const role = await user
-    .getIdTokenResult()
-    .then(idToken => {
-      return {
-        admin: idToken.claims.admin ? true : false,
-        manager: idToken.claims.manager ? true : false,
-        worker: idToken.claims.worker ? true : false,
-        customer: idToken.claims.customer ? true : false
-      };
-    })
-    .catch(error => {
-      console.log("init err", error);
-      return {
-        admin: false,
-        manager: false,
-        worker: false,
-        customer: false
-      };
-    });
-  const authUser = user ? { uid: user.uid, email: user.email, role } : null;
+  const role = user
+    ? await user
+        .getIdTokenResult()
+        .then(idToken => {
+          if (idToken.claims.admin) {
+            return authRoles.admin;
+          }
+          if (idToken.claims.manager) {
+            return authRoles.manager;
+          }
+          if (idToken.claims.worker) {
+            return authRoles.worker;
+          }
+          return null;
+        })
+        .catch(error => {
+          console.log("init IdToken error", error);
+          return null;
+        })
+    : null;
+  const authUser = user
+    ? { uid: user.uid, email: user.email, phone: user.phone, role }
+    : null;
   store.dispatch("auth/changeUser", authUser);
   if (!inited) {
     init();

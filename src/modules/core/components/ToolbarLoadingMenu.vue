@@ -29,7 +29,7 @@
 <script>
 import { mapGetters } from "vuex";
 
-export const languagesMap = {
+export const LANGUAGES_MAP = {
   "auth/create": {
     vi: "Đang tạo user",
     en: "Creating user"
@@ -64,7 +64,7 @@ export default {
       authLoadings: "auth/loading"
     }),
     $t() {
-      return this.$translate(languagesMap, this.language.value);
+      return this.$translate(LANGUAGES_MAP, this.language.value);
     },
     filteredLoadings() {
       return mapLoadingArray("auth", this.authLoadings);

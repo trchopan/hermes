@@ -5,3 +5,13 @@ export const profileParser = data => ({
   position: data.position || "",
   avatar: data.avatar || defaultAvatar
 });
+
+export const phoneCountries = {
+  vn: { value: "+84", text: "🇻🇳 Việt Nam (+84)" }
+};
+
+export const authRoles = {
+  admin: "admin",
+  manager: "manager",
+  worker: "worker"
+};

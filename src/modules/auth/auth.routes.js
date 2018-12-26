@@ -1,6 +1,7 @@
-const SignUp = () => import(/* webpackChunkName: "auth" */ "./SignUp.vue");
-const Login = () => import(/* webpackChunkName: "auth" */ "./Login.vue");
-const Profile = () => import(/* webpackChunkName: "auth" */ "./Profile.vue");
+import SignUp from "./SignUp.vue";
+import Login from "./Login.vue";
+import LoginByPhone from "./LoginByPhone.vue";
+import Profile from "./Profile.vue";
 
 export default [
   {
@@ -10,8 +11,12 @@ export default [
   },
   {
     path: "/login",
-    name: "login",
-    component: Login
+    component: Login,
+    children: [
+      { path: "phone", name: "login-by-phone", component: LoginByPhone },
+      { path: "", redirect: "./phone" },
+      { path: "**", redirect: "/not-found" }
+    ]
   },
   {
     path: "/profile",

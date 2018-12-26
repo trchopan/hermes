@@ -1,45 +1,66 @@
+import axios from "axios";
 import { logger } from "@/helpers.js";
-import { profileParser } from "./auth.models.js";
 
-const log = logger("[auth]");
-const usersCol = "users";
+const log = logger("[user]");
+// const usersCol = "users";
 
 const state = {
-  authUser: null,
-  profile: null,
-  loading: false,
+  usersList: {},
+  loading: {
+    list: false
+  },
   error: null
 };
 
 const getters = {
+  usersList: state => state.usersList,
   loading: state => state.loading,
   error: state => state.error
 };
 
-const actions = (fireAuth, fireStore) => {
-  /**
-   * This variable keeps track of firestore snapshot
-   * Call it to unsubscribe to onSnapshot
-   */
-  let profileSnap;
+/**
+ * @param {firebase.functions.Functions} fireFunctions
+ */
+const actions = fireFunctions => {
+  const listUsersCallable = fireFunctions.httpsCallable("listUsers");
 
+  const makeKing = async ({ commit }, payload) => {
+    await axios
+      .post(process.env.VUE_APP_API + "/user/makeAdmin", payload)
+      .then(res => res.data)
+      .catch(error => {
+        throw error.response.data;
+      });
+  };
+
+  const listUsers = async ({ commit }) => {
+    try {
+      const users = await listUsersCallable();
+      log("woot", users.data);
+      commit("listUsersReceived", users);
+    } catch (error) {
+      commit("errorCatched", error, { root: true });
+    }
+  };
+
+  return Object.freeze({ listUsers, makeKing });
 };
 
 const mutations = {
-  loading(state) {
-    state.loading = true;
+  loading(state, process) {
+    state.loading = { ...state.loading, ...process };
+    log("Loading", process);
   },
-  errorCatched(state, error) {
-    state.error = error;
-    state.loading = false;
-    log("Error catched", state.error);
+  listUsersReceived(state, users) {
+    state.usersList = users;
+    log("List users", users);
   }
 };
 
-export default (fireAuth, fireStore) => ({
+export default fireFunctions => ({
   namespaced: true,
   state,
   getters,
-  actions: actions(fireAuth, fireStore),
+  actions: actions(fireFunctions),
   mutations
 });

@@ -1,10 +1,11 @@
 import * as crypto from "crypto";
 import * as admin from "firebase-admin";
-import { logger, reCaptchaPromise } from "../helpers";
+import { logger } from "../helpers";
 import { ADMIN_SHA256 } from "../secrets";
-import { UsersColletion } from "../collections";
-import { Request, Response } from "express";
-import { CallableContext } from "firebase-functions/lib/providers/https";
+import {
+  CallableContext,
+  HttpsError
+} from "firebase-functions/lib/providers/https";
 
 const API_NAME = "[user]";
 const log = logger(API_NAME);
@@ -16,9 +17,9 @@ enum ErrorCode {
   failReCaptcha = "auth/fail-recaptcha",
   failCreateUser = "auth/fail-create-user",
   failInitUserProfile = "auth/fail-init-user-profile",
+  failListUsers = "auth/fail-list-users",
   noUserFound = "auth/no-user-found",
-  notAuthorized = "auth/not-authorized",
-  failListUsers = "auth/fail-list-users"
+  notAuthorized = "auth/not-authorized"
 }
 
 async function changeRole(
@@ -27,88 +28,45 @@ async function changeRole(
     admin?: boolean;
     manager?: boolean;
     worker?: boolean;
-    customer?: boolean;
   }
 ) {
   return await admin
     .auth()
     .setCustomUserClaims(uid, roleSettings)
     .catch(error => {
-      log("ERROR", error);
+      log("ERROR changeRole", error);
       throw { code: ErrorCode.cannotSetCustomClaims };
     });
 }
 
-export async function createUserHandler(
-  req: Request,
-  res: Response
-): Promise<Response> {
-  log("request createUser", req.body);
+export async function makeAdminHandler(
+  data: { secret: string },
+  context: CallableContext
+) {
+  log("request makeAdmin", data);
 
   try {
-    if (!req.body.response || !req.body.email || !req.body.password) {
-      throw { code: ErrorCode.wrongParams };
-    }
-    const recapthcResult = await reCaptchaPromise(req.body.response);
-    if (!recapthcResult.success) {
-      throw { code: ErrorCode.failReCaptcha };
-    }
-
-    const user = await admin
-      .auth()
-      .createUser({ email: req.body.email, password: req.body.password })
-      .catch(error => {
-        log("ERROR", error);
-        throw { code: ErrorCode.failCreateUser };
+    if (!data.secret) {
+      throw new HttpsError("invalid-argument", "", {
+        code: ErrorCode.wrongParams
       });
-
-    await changeRole(user.uid, { customer: true });
-
-    await admin
-      .firestore()
-      .collection(UsersColletion)
-      .doc(user.uid)
-      .set({ inited: false })
-      .catch(error => {
-        log("ERROR", error);
-        throw { code: ErrorCode.failInitUserProfile };
-      });
-
-    return res.status(200).json({ success: true });
-  } catch (error) {
-    return res.status(400).json(error);
-  }
-}
-
-export async function makeAdminHandler(req: Request, res: Response) {
-  log("request makeAdmin", req.body);
-
-  try {
-    if (!req.body.secret || !req.body.email) {
-      throw { code: ErrorCode.wrongParams };
     }
     const hash = crypto
       .createHash("sha256")
-      .update(req.body.secret)
+      .update(data.secret)
       .digest("base64");
+
     if (hash !== ADMIN_SHA256) {
-      log("hash is", hash);
-      throw { code: ErrorCode.wrongSecret };
+      throw new HttpsError("permission-denied", "", {
+        code: ErrorCode.wrongSecret
+      });
     }
 
-    const user = await admin
-      .auth()
-      .getUserByEmail(req.body.email)
-      .catch(error => {
-        log("ERROR", error);
-        throw { code: ErrorCode.noUserFound };
-      });
+    await changeRole(context.auth.uid, { admin: true });
 
-    await changeRole(user.uid, { admin: true });
-
-    return res.status(200).json({ success: true });
+    return { success: true };
   } catch (error) {
-    return res.status(400).json(error);
+    return error;
   }
 }
 
@@ -117,14 +75,16 @@ export async function listUsersHandler(data: any, context: CallableContext) {
 
   try {
     if (context.auth.token.admin !== true) {
-      throw { code: ErrorCode.notAuthorized };
+      throw new HttpsError("permission-denied", "", {
+        code: ErrorCode.notAuthorized
+      });
     }
     const result = await admin
       .auth()
-      .listUsers(50, data.pageToken)
+      .listUsers()
       .catch(error => {
-        log("ERROR", error);
-        throw { code: ErrorCode.failListUsers };
+        log("ERROR listUsers", error);
+        throw new HttpsError("unknown", "", { code: ErrorCode.failListUsers });
       });
     return {
       pageToken: result.pageToken,
@@ -139,31 +99,28 @@ export async function listUsersHandler(data: any, context: CallableContext) {
   }
 }
 
-export async function changeRoleByEmailHandler(
+export async function makeManagerHandler(
   data: any,
   context: CallableContext
 ): Promise<any> {
   log("request changeUserRole ", data);
 
   try {
-    if (!data.email || typeof data.email !== "string") {
-      throw { code: ErrorCode.wrongParams };
-    }
     if (context.auth.token.admin !== true) {
-      throw { code: ErrorCode.notAuthorized };
+      throw new HttpsError("permission-denied", "", {
+        code: ErrorCode.notAuthorized
+      });
     }
 
-    const user = await admin
-      .auth()
-      .getUserByEmail(data.email)
-      .catch(error => {
-        log("ERROR", error);
-        throw { code: ErrorCode.noUserFound };
+    if (data.uid && typeof data.uid === "string") {
+      throw new HttpsError("invalid-argument", "", {
+        code: ErrorCode.wrongParams
       });
+    }
 
-    log("woot", user);
-
-    await changeRole(user.uid, data.roleSettings);
+    await changeRole(data.uid, { manager: true }).catch(error => {
+      throw new HttpsError("unknown", "", error);
+    });
     return { success: true };
   } catch (error) {
     return error;
