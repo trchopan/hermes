@@ -37,11 +37,6 @@
     >
       <v-icon>fiber_manual_record</v-icon>
     </v-btn>
-    <v-btn
-      color="primary"
-      dark
-      @click="predict()"
-    >Predict</v-btn>
     <pre>{{ result }}</pre>
     <v-fab-transition>
       <v-btn
@@ -62,43 +57,13 @@
 
 <script>
 import { mapGetters } from "vuex";
-import * as tf from "@tensorflow/tfjs";
-import { loadFrozenModel } from "@tensorflow/tfjs-converter";
 import { fireFunctions } from "@/firebase.js";
-
-const MODEL_URL =
-  process.env.VUE_APP_ROOT_URL + "/models/tensorflowjs_model.pb";
-const WEIGHTS_URL =
-  process.env.VUE_APP_ROOT_URL + "/models/weights_manifest.json";
 
 const LANGUAGES_MAP = {
   today: { vi: "Bây giờ là {0}, {1}", en: "Now is {0}, {1}" }
 };
 
 const flowerImage = fireFunctions.httpsCallable("flowerImage");
-
-function getTopKClasses(logits, topK) {
-  const predictions = tf.tidy(() => {
-    return tf.softmax(logits);
-  });
-
-  const values = predictions.dataSync();
-  predictions.dispose();
-
-  let predictionList = [];
-  for (let i = 0; i < values.length; i++) {
-    predictionList.push({ value: values[i], index: i });
-  }
-  predictionList = predictionList
-    .sort((a, b) => {
-      return b.value - a.value;
-    })
-    .slice(0, topK);
-
-  return predictionList.map(x => {
-    return { label: x.index, value: x.value };
-  });
-}
 
 export default {
   name: "Dashboard",
@@ -125,13 +90,6 @@ export default {
   },
   async mounted() {
     this.initButton = false;
-    try {
-      this.model = await loadFrozenModel(MODEL_URL, WEIGHTS_URL);
-    } catch (error) {
-      console.log("Unable to load model", error);
-    }
-    // const image = document.getElementById("image");
-    // model.execute({ input: tf.fromPixels(image) });
   },
   methods: {
     startVideo() {
@@ -159,25 +117,11 @@ export default {
       });
       const image = document.getElementById("image");
       image.src = URL.createObjectURL(blob);
-      
+
       const data = canvas.toDataURL();
       const result = await flowerImage({ imageBase64: data });
       console.log("res", result);
       this.result = result.data.result;
-    },
-    predict() {
-      if (this.model) {
-        const image = document.getElementById("image");
-        // const pixels = tf
-        //   .reshape(tf.fromPixels(image), [1, 224, 224, 3])
-        //   .asType("float32");
-        // const result = this.model.predict(pixels);
-        // const topK = getTopKClasses(result, 5);
-        // console.log("result", result.print());
-        // console.log("topK", topK);
-      } else {
-        console.log("No model found");
-      }
     },
     async call() {
       const image = document.getElementById("image");
