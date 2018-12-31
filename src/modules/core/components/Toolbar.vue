@@ -1,7 +1,15 @@
 <template>
-  <v-toolbar app dark flat clipped-left color="primary">
+  <v-toolbar
+    app
+    dark
+    flat
+    clipped-left
+    color="primary"
+  >
     <v-toolbar-side-icon @click="toggleDrawer()"/>
-    <v-toolbar-title>{{ title }}</v-toolbar-title>
+    <v-toolbar-title>
+      <router-link to="/" class="title-link">{{ title }}</router-link>
+    </v-toolbar-title>
     <v-spacer/>
     <v-toolbar-items>
       <ToolbarLoadingMenu/>
@@ -30,3 +38,10 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.title-link {
+  color: inherit;
+  text-decoration: none;
+}
+</style>

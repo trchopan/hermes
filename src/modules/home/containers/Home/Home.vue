@@ -12,35 +12,43 @@
     </section>
     <section id="home-playgrounds">
       <h2 class="headline primary--text mb-3">{{ $t.skillLevel }}</h2>
-      <div
-        v-for="skill in skills"
-        :key="'skill-' + skill.title"
-        class="mb-3"
+      <v-layout
+        row
+        wrap
       >
-        <div class="title secondary--text mb-3">
-          <router-link :to="skill.route">{{ skill.title }}</router-link>
-        </div>
-        <v-rating
-          readonly
-          :value="skill.level"
-          color="primary"
-        ></v-rating>
-        <div v-if="skill.interests.length > 0">
-          <p class="subheading">{{ $t.fieldsOfInterest }}</p>
-          <ul>
-            <li
-              v-for="interest in skill.interests"
-              :key="'interest-' + interest.name"
-            >
-              {{ interest.name }}
-              <v-icon
-                small
-                @click="open(interest.link, true)"
-              >open_in_new</v-icon>
-            </li>
-          </ul>
-        </div>
-      </div>
+        <v-flex
+          v-for="skill in skills"
+          xs12
+          sm6
+          md4
+          :key="'skill-' + skill.title"
+          class="mb-3 pl-3"
+        >
+          <div class="title secondary--text mb-3">
+            <router-link :to="skill.route">{{ skill.title }}</router-link>
+          </div>
+          <v-rating
+            readonly
+            color="primary"
+            :value="skill.level"
+          ></v-rating>
+          <div v-if="skill.interests.length > 0">
+            <p class="subheading mt-2 mb-1">{{ $t.fieldsOfInterest }}</p>
+            <ul>
+              <li
+                v-for="interest in skill.interests"
+                :key="'interest-' + interest.name"
+              >
+                {{ interest.name }}
+                <v-icon
+                  small
+                  @click="open(interest.link, true)"
+                >open_in_new</v-icon>
+              </li>
+            </ul>
+          </div>
+        </v-flex>
+      </v-layout>
     </section>
   </div>
 </template>
@@ -59,55 +67,68 @@ export default {
     $t() {
       return this.$translate(LANGUAGES_MAP, this.language.value);
     },
-    skills() {
-      return [
-        {
-          title: this.$t.vue,
-          route: "/playground/vue",
-          level: 5,
-          interests: [
-            {
-              name: this.$t.vueNuxt,
-              link: "https://nuxtjs.org/"
-            },
-            {
-              name: this.$t.vueTypescript,
-              link: "https://vuejs.org/v2/guide/typescript.html"
-            }
-          ]
-        },
-        {
-          title: this.$t.firebase,
-          route: "/playground/firebase",
-          level: 5,
-          interests: [
-            {
-              name: "Firebase ML Kit",
-              link: "https://firebase.google.com/products/ml-kit/"
-            }
-          ]
-        },
-        {
-          title: this.$t.angular6,
-          route: "/playground/angular",
-          level: 5,
-          interests: [
-            { name: this.$t.angular6Nwrl, link: "https://nrwl.io/nx" }
-          ]
-        },
-        {
-          title: this.$t.react,
-          route: "/playground/react",
-          level: 4,
-          interests: [
-            {
-              name: this.$t.reactHooks,
-              link: "https://reactjs.org/docs/hooks-intro.html"
-            }
-          ]
-        }
-      ];
-    }
+    skills: () => [
+      {
+        title: "Vue",
+        route: "/playground/vue",
+        level: 5,
+        interests: [
+          {
+            name: "Nuxt - Universal Application",
+            link: "https://nuxtjs.org/"
+          },
+          {
+            name: "Vue Typescript",
+            link: "https://vuejs.org/v2/guide/typescript.html"
+          }
+        ]
+      },
+      {
+        title: "Firebase",
+        route: "/playground/firebase",
+        level: 5,
+        interests: [
+          {
+            name: "Firebase ML Kit",
+            link: "https://firebase.google.com/products/ml-kit/"
+          }
+        ]
+      },
+      {
+        title: "Angular 6",
+        route: "/playground/angular",
+        level: 5,
+        interests: [{ name: "Nrwl's Nx", link: "https://nrwl.io/nx" }]
+      },
+      {
+        title: "React",
+        route: "/playground/react",
+        level: 4,
+        interests: [
+          {
+            name: "React's Hooks",
+            link: "https://reactjs.org/docs/hooks-intro.html"
+          }
+        ]
+      },
+      {
+        title: "Machine Learning",
+        route: "/playground/machine",
+        level: 2,
+        interests: [
+          {
+            name: "Tensorflow",
+            link: "https://www.tensorflow.org"
+          }
+        ]
+      },
+      {
+        title: "Python",
+        route: "/playground/python",
+        level: 2,
+        interests: []
+      }
+    ]
   },
   methods: {
     open(link, external) {
