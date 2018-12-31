@@ -28,3 +28,4 @@ firebase.conf.js
 # Functions build
 functions/lib
 functions/src/secrets.ts
+functions/*-service-key-*.json

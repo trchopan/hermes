@@ -92,7 +92,7 @@
 <script>
 import { mapGetters } from "vuex";
 import { fireAuth, ReCaptchaVerifier } from "@/firebase.js";
-import { phoneCountries } from "./auth.models.js";
+import { phoneCountries } from "@/modules/auth/auth.models.js";
 
 const LANGUAGES_MAP = {
   descriptionPhoneNumber: {

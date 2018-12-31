@@ -1,4 +1,5 @@
-const sharedTranslate = {
+const NO_TRANSLATION = "(no translation)";
+const SHARED_TRANSLATE = {
   unknownError: {
     vi: "Lỗi không xác định. Vui lòng liên hệ admin.",
     en: "Unknown Error. Please contact admin."
@@ -10,12 +11,17 @@ export default {
     // Convert from { key: { value: [value] } } to { key: [value] }
     Vue.prototype.$translate = (languagesMap, countryCode) => {
       let result = {};
-      const map = { ...languagesMap, ...sharedTranslate };
+      const map = { ...languagesMap, ...SHARED_TRANSLATE };
       for (let key in map) {
-        result[key] =
-          map[key] && map[key][countryCode]
-            ? map[key][countryCode]
-            : "(no translation)";
+        if (!map[key]) {
+          result[key] = NO_TRANSLATION;
+          continue;
+        }
+        if (map[key]["all"]) {
+          result[key] = map[key]["all"];
+          continue;
+        }
+        result[key] = map[key][countryCode] || "(no translation)";
       }
 
       return result;

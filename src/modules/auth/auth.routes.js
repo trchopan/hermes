@@ -1,7 +1,6 @@
-import SignUp from "./SignUp.vue";
-import Login from "./Login.vue";
-import LoginByPhone from "./LoginByPhone.vue";
-import Profile from "./Profile.vue";
+import { SignUp } from "./containers/SignUp";
+import { Login, LoginByPhone } from "./containers/Login";
+import { Profile } from "./containers/Profile";
 
 export default [
   {

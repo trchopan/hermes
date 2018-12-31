@@ -10,6 +10,7 @@
       id="video"
       autoplay
     ></video>
+    <p>{{ frontCamera ? 'Front' : 'Back'}}</p>
     <v-btn
       color="pink"
       dark
@@ -18,6 +19,15 @@
       @click="startVideo()"
     >
       <v-icon>play_arrow</v-icon>
+    </v-btn>
+    <v-btn
+      color="pink"
+      dark
+      icon
+      fab
+      @click="flipCamera()"
+    >
+      <v-icon>switch_camera</v-icon>
     </v-btn>
     <v-btn
       color="pink"
@@ -75,7 +85,8 @@ export default {
     /** @type {tf.FrozenModel} */
     model: null,
     /** @type {string} */
-    result: ""
+    result: "",
+    frontCamera: false
   }),
   computed: {
     ...mapGetters({
@@ -94,14 +105,27 @@ export default {
   methods: {
     startVideo() {
       const video = document.getElementById("video");
-      navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-        this.stream = stream;
-        video.srcObject = stream;
-      });
+      navigator.mediaDevices
+        .getUserMedia({
+          video: {
+            facingMode: this.frontCamera ? "user" : "environment",
+            frameRate: { ideal: 10, max: 15 }
+          }
+        })
+        .then(stream => {
+          this.stream = stream;
+          video.srcObject = stream;
+        });
+    },
+    flipCamera() {
+      this.frontCamera = !this.frontCamera;
+      this.startVideo();
     },
     pauseVideo() {
-      const tracks = this.stream.getTracks();
-      tracks.forEach(track => track.stop());
+      if (this.stream) {
+        const tracks = this.stream.getTracks();
+        tracks.forEach(track => track.stop());
+      }
     },
     async capturePic() {
       const vid = document.getElementById("video");

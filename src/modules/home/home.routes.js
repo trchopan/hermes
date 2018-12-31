@@ -1,4 +1,4 @@
-import Home from "./Home.vue";
+import { Home } from "./containers/Home";
 
 export default [
   {

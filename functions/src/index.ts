@@ -10,6 +10,7 @@ import {
 } from "./modules/user";
 import { onAuthDeleteHandler, onAuthCreateHandler } from "./modules/auth";
 import { flowerHandler } from "./modules/flower";
+import { helloHandler } from "./modules/hello";
 
 admin.initializeApp(functions.config().firebase);
 const firestore = admin.firestore();
@@ -35,6 +36,7 @@ app.use(
 export const api = functions.https.onRequest(app);
 
 // OnCalls
+export const hello = functions.https.onCall(helloHandler);
 export const makeAdmin = functions.https.onCall(makeAdminHandler);
 export const makeManager = functions.https.onCall(makeManagerHandler);
 export const listUsers = functions.https.onCall(listUsersHandler);
