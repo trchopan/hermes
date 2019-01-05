@@ -1,5 +1,8 @@
 # hermes
 
+This project is deprecated. I have rewrite all into Vue Typescript in another repo.
+[Link](https://github.com/trchopan/hermes-ts)
+
 ## Project
 
 Manager app for Hermes
