@@ -10,5 +10,7 @@ export const fireStore = firebase.firestore();
 const settings = { timestampsInSnapshots: true };
 fireStore.settings(settings);
 export const fireFunctions = firebase.functions();
-firebase.functions().useFunctionsEmulator(process.env.VUE_APP_FIREBASE_URL);
+if (!process.env.NODE_ENV === "production") {
+  firebase.functions().useFunctionsEmulator(process.env.VUE_APP_FIREBASE_URL);
+}
 export const ReCaptchaVerifier = firebase.auth.RecaptchaVerifier;
