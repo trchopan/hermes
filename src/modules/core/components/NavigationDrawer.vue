@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 
 export const LANGUAGES_MAP = {
   home: { vi: "Trang chủ", en: "Home" },
@@ -42,9 +42,9 @@ export const _drawerItems = [
 export default {
   name: "NavigationDrawer",
   computed: {
-    ...mapGetters({
-      _drawerOpen: "layout/drawerOpen",
-      language: "layout/language"
+    ...mapState({
+      _drawerOpen: "drawerOpen",
+      language: "language"
     }),
     $t() {
       return this.$translate(LANGUAGES_MAP, this.language.value);
@@ -54,8 +54,8 @@ export default {
         return this._drawerOpen;
       },
       set: function(value) {
-        if (value !== this.$store.state.layout.drawerOpen) {
-          this.$store.dispatch("layout/toggleDrawer");
+        if (value !== this.$store.state.drawerOpen) {
+          this.$store.dispatch("toggleDrawer");
         }
       }
     },

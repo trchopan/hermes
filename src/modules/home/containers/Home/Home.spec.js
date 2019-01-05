@@ -2,7 +2,7 @@ import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import Translate from "@/plugins/translate.js";
 import Home from "./Home.vue";
-import { languages } from "@/modules/core/layout.models.js";
+import { languages } from "@/modules/core/root.models.js";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
 import { fakeAuthUser } from "@/__mocks__/firebase.mocks.js";
 
@@ -18,7 +18,7 @@ describe("Home.vue", () => {
   it("matchs snapshot", () => {
     getters = {
       "auth/authUser": () => fakeAuthUser,
-      "layout/language": () => languages.en
+      "language": () => languages.en
     };
     store = new Vuex.Store({
       getters

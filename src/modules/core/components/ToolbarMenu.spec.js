@@ -1,12 +1,12 @@
 import { shallowMount, createLocalVue } from "@vue/test-utils";
 import Vuex from "vuex";
 import Translate from "@/plugins/translate.js";
-import { themes } from "@/modules/core/layout.models.js";
+import { themes } from "@/modules/core/root.models.js";
 import { filters } from "@/filters.js";
 import ToolbarMenu, { languagesMap } from "./ToolbarMenu.vue";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
 import { fakeAuthUser, docData } from "@/__mocks__/firebase.mocks.js";
-import { languages } from "@/modules/core/layout.models.js";
+import { languages } from "@/modules/core/root.models.js";
 
 const localVue = createLocalVue();
 localVue.filter("titleCase", filters.titleCase);
@@ -23,12 +23,12 @@ describe("ToolbarMenu.vue", () => {
     getters = {
       "auth/authUser": () => fakeAuthUser,
       "auth/profile": () => docData,
-      "layout/theme": () => themes.light,
-      "layout/language": () => languages.en
+      "theme": () => themes.light,
+      "language": () => languages.en
     };
     actions = {
-      "layout/changeTheme": jest.fn(),
-      "layout/changeLanguage": jest.fn(),
+      "changeTheme": jest.fn(),
+      "changeLanguage": jest.fn(),
       "auth/logout": jest
         .fn()
         .mockImplementationOnce(() => Promise.resolve(false))
@@ -59,13 +59,13 @@ describe("ToolbarMenu.vue", () => {
   });
   it("changes theme", () => {
     wrapper.vm.changeTheme(themes.light);
-    expect(actions["layout/changeTheme"].mock.calls[0][1]).toEqual(
+    expect(actions["changeTheme"].mock.calls[0][1]).toEqual(
       themes.light
     );
   });
   it("changes language", () => {
     wrapper.vm.changeLanguage(languages.vi.code);
-    expect(actions["layout/changeLanguage"].mock.calls[0][1]).toEqual(
+    expect(actions["changeLanguage"].mock.calls[0][1]).toEqual(
       languages.vi.code
     );
   });

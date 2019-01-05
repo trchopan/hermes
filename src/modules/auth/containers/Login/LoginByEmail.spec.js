@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import Translate from "@/plugins/translate.js";
 import LoginByEmail from "./LoginByEmail.vue";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
-import { languages } from "@/modules/core/layout.models.js";
+import { languages } from "@/modules/core/root.models.js";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -17,7 +17,7 @@ describe("LoginByEmail.vue", () => {
 
   beforeEach(() => {
     getters = {
-      "layout/language": () => languages.en,
+      "language": () => languages.en,
       "auth/loading": () => ({ login: false }),
       error: () => []
     };

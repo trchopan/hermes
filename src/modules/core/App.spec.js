@@ -22,13 +22,13 @@ describe("App.vue", () => {
       profile: null
     };
     getters = {
-      "layout/darkTheme": () => true,
+      "darkTheme": () => true,
       "auth/loading": state => state.loading,
       "auth/profile": state => state.profile
     };
     actions = {
-      "layout/initLocalStorage": jest.fn(),
-      "layout/toggleDrawer": jest.fn()
+      "initLocalStorage": jest.fn(),
+      "toggleDrawer": jest.fn()
     };
     store = new Vuex.Store({
       state,
@@ -43,8 +43,8 @@ describe("App.vue", () => {
     });
   });
   it("initializes", () => {
-    expect(actions["layout/initLocalStorage"]).toBeCalled();
-    expect(actions["layout/toggleDrawer"]).toBeCalled();
+    expect(actions["initLocalStorage"]).toBeCalled();
+    expect(actions["toggleDrawer"]).toBeCalled();
   });
   it("matchs snapshot", () => {
     expect(wrapper).toMatchSnapshot();

@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import Translate from "@/plugins/translate.js";
 import NavigationDrawer, { languagesMap } from "./NavigationDrawer.vue";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
-import { languages } from "@/modules/core/layout.models.js";
+import { languages } from "@/modules/core/root.models.js";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -26,11 +26,11 @@ describe("NavigationDrawer.vue", () => {
   beforeEach(() => {
     state = { layout: { drawerOpen: false } };
     getters = {
-      "layout/language": () => languages.en,
-      "layout/drawerOpen": () => false
+      "language": () => languages.en,
+      "drawerOpen": () => false
     };
     actions = {
-      "layout/toggleDrawer": jest.fn()
+      "toggleDrawer": jest.fn()
     };
     store = new Vuex.Store({
       state,
@@ -55,7 +55,7 @@ describe("NavigationDrawer.vue", () => {
   });
   it("toggles drawer", () => {
     wrapper.vm.drawerOpen = true;
-    expect(actions["layout/toggleDrawer"]).toBeCalled();
+    expect(actions["toggleDrawer"]).toBeCalled();
   });
   it("matches snapshot", () => {
     wrapper.vm.items = mocDrawerItems;

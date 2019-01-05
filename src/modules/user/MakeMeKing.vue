@@ -56,7 +56,7 @@ export default {
   computed: {
     ...mapGetters({
       error: "error",
-      language: "layout/language",
+      language: "language",
       authUser: "auth/authUser"
     }),
     $t() {

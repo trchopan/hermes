@@ -17,10 +17,9 @@ export const LANGUAGES_MAP = {
       Tính tôi thích logic và quy cách, cấu trúc, tôi có thể thỏa thích trải nghiệm và tìm tòi những thứ mới mỗi khi đắm mình vào những dòng mã nguồn. \
       Và trang web này phục vụ như là demo những kỹ năng của tôi học được và là sân chơi cho những thứ tôi đang tìm tòi.",
     en:
-      "Software Engineer at first is just a hobby of mine but eventually it became my fuel and fire. \
-      I can satisfy the need for good structure design and to thrive for new thing everytime I begin to flow in the code. \
-      This website serves as a demonstration of my knowledge and skill. \
-      It's also a playground for things I am learning."
+      "At first, Software Engineer is a hobby of mine but eventually it became my passion. \
+      I can satisfy the need for structure design and to thrive for new thing everytime I begin to flow in the code. \
+      This website serves as a demonstration of my coding blog. And also a playground for things I am learning."
   },
   skillLevel: {
     vi: "Trình độ",

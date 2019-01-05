@@ -60,7 +60,7 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      language: "layout/language",
+      language: "language",
       authLoadings: "auth/loading"
     }),
     $t() {

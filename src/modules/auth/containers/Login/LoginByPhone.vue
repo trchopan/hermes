@@ -132,7 +132,7 @@ export default {
       error: "error",
       authUser: "auth/authUser",
       loading: "auth/loading",
-      language: "layout/language"
+      language: "language"
     }),
     $t() {
       return this.$translate(LANGUAGES_MAP, this.language.value);

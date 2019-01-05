@@ -37,14 +37,14 @@ export default {
     };
   },
   computed: mapGetters({
-    darkTheme: "layout/darkTheme",
+    darkTheme: "darkTheme",
     loading: "auth/loading",
     profile: "auth/profile"
   }),
   created() {
-    this.$store.dispatch("layout/initLocalStorage");
+    this.$store.dispatch("initLocalStorage");
     if (this.$vuetify.breakpoint.lgAndUp) {
-      this.$store.dispatch("layout/toggleDrawer");
+      this.$store.dispatch("toggleDrawer");
     }
   }
 };

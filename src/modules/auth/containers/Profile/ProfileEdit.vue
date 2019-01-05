@@ -77,7 +77,7 @@ export default {
   computed: {
     ...mapGetters({
       error: "error",
-      language: "layout/language",
+      language: "language",
       loading: "auth/loading",
       profile: "auth/profile"
     }),

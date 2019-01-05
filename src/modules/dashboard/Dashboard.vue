@@ -90,7 +90,7 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      language: "layout/language"
+      language: "language"
     }),
     $t() {
       return this.$translate(LANGUAGES_MAP, this.language.value);

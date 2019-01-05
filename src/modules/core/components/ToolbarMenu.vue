@@ -60,7 +60,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { themes, languages } from "@/modules/core/layout.models.js";
+import { themes, languages } from "@/modules/core/root.models.js";
 
 export const LANGUAGES_MAP = {
   updateProfile: {
@@ -86,8 +86,8 @@ export default {
     ...mapGetters({
       authUser: "auth/authUser",
       profile: "auth/profile",
-      theme: "layout/theme",
-      language: "layout/language"
+      theme: "theme",
+      language: "language"
     }),
     $t() {
       return this.$translate(LANGUAGES_MAP, this.language.value);
@@ -102,11 +102,11 @@ export default {
       }
     },
     changeTheme(theme) {
-      this.$store.dispatch("layout/changeTheme", theme);
+      this.$store.dispatch("changeTheme", theme);
     },
     changeLanguage(code) {
       this.menuOpen = false;
-      this.$store.dispatch("layout/changeLanguage", languages[code]);
+      this.$store.dispatch("changeLanguage", languages[code]);
     }
   }
 };

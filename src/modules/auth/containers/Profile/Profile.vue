@@ -97,7 +97,7 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      language: "layout/language",
+      language: "language",
       authUser: "auth/authUser",
       profile: "auth/profile",
       loading: "auth/loading"

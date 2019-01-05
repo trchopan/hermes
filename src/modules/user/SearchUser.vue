@@ -20,7 +20,7 @@ export default {
   computed: {
     ...mapGetters({
       error: "error",
-      language: "layout/language",
+      language: "language",
       usersList: "user/usersList"
     }),
     $t() {

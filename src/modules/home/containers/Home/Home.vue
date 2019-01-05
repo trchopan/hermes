@@ -55,13 +55,21 @@
 
 <script>
 import { mapGetters } from "vuex";
-import { LANGUAGES_MAP } from "./languages.js";
+import { LANGUAGES_MAP } from "./Home.languages.js";
 
 export default {
   name: "Home",
+  beforeRouteEnter(to, from, next) {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth"
+    });
+    next();
+  },
   computed: {
     ...mapGetters({
-      language: "layout/language",
+      language: "language",
       authUser: "auth/authUser"
     }),
     $t() {

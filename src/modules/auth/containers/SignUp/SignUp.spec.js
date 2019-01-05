@@ -3,7 +3,7 @@ import Vuex from "vuex";
 import Translate from "@/plugins/translate.js";
 import SignUp from "./SignUp.vue";
 import { mockCustomElements } from "@/__mocks__/custom-elements.js";
-import { languages } from "@/modules/core/layout.models.js";
+import { languages } from "@/modules/core/root.models.js";
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
@@ -18,7 +18,7 @@ describe("SignUp.vue", () => {
   beforeEach(() => {
     getters = {
       error: () => [],
-      "layout/language": () => languages.en,
+      "language": () => languages.en,
       "auth/authUser": () => null,
       "auth/loading": () => ({ create: false })
     };

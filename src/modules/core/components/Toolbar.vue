@@ -33,7 +33,7 @@ export default {
   }),
   methods: {
     toggleDrawer() {
-      this.$store.dispatch("layout/toggleDrawer");
+      this.$store.dispatch("toggleDrawer");
     }
   }
 };
